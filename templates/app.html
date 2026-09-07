@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Studio - ClipGenie Video Processing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #13072e;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #A78BFA 0%, #EC4899 50%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(17, 17, 58, 0.75);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            backdrop-filter: blur(14px);
+        }
+        .file-dropzone {
+            border: 2px dashed rgba(139, 92, 246, 0.4);
+            background: rgba(26, 17, 66, 0.5);
+            transition: all 0.3s ease;
+        }
+        .file-dropzone:hover, .file-dropzone.dragover {
+            border-color: #A78BFA;
+            background: rgba(45, 27, 85, 0.6);
+        }
+        .suggestion-chip {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.2s ease;
+        }
+        .suggestion-chip:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border-color: #A78BFA;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow py-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Studio Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-300 text-xs font-semibold mb-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>AI Video & Concept Studio</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-3">
+                    Find the Exact Moment. <span class="gradient-text">Then Make Sure It Sticks.</span>
+                </h1>
+                <p class="text-purple-200/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                    Upload a lecture, webinar, or talk — or paste a link. ClipGenie automatically finds every key concept and jumps you straight to where it's taught, so you're never scrubbing through an hour to find five minutes. Then, when you're ready, turn that moment into a quick practice session so you know it's actually learned — not just reviewed.
+                </p>
+            </div>
+
+            {% if not current_user %}
+            <!-- Prominent Auth Warning Banner for Guests -->
+            <div class="mb-8 p-5 rounded-2xl bg-gradient-to-r from-purple-950/90 via-indigo-950/90 to-purple-950/90 border border-purple-500/50 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-3 text-center sm:text-left">
+                    <div class="w-10 h-10 rounded-xl bg-purple-900/70 text-purple-300 flex items-center justify-center shrink-0 border border-purple-500/40">
+                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold text-white">Sign In Required to Process Video</div>
+                        <div class="text-xs text-purple-200/70">You must be logged in to generate AI video clips. Use your account or try 1-click Demo Creator.</div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-2 shrink-0">
+                    <a href="/demo-login?next=/app" class="px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-300 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 transition duration-200 shadow hover:scale-[1.02]">
+                        ⚡ 1-Click Demo Login
+                    </a>
+                    <a href="/login?next=/app" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition duration-200 shadow">
+                        Sign In
+                    </a>
+                    <a href="/register?next=/app" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-purple-200 bg-white/10 hover:bg-white/20 border border-purple-400/30 transition duration-200">
+                        Create Account
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Upload Card -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <form id="uploadForm" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    <!-- Source Selection Tabs -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-base font-extrabold text-white">
+                                1. Video Source
+                            </label>
+                            <span class="text-xs sm:text-sm text-purple-200 font-medium">Upload from computer or import from URL</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-purple-950/60 border border-purple-800/50 mb-4">
+                            <button type="button" id="tabUploadBtn" onclick="switchVideoSource('upload')" class="py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center space-x-2 bg-purple-600 text-white shadow-md">
+                                <i class="fa-solid fa-file-arrow-up"></i>
+                                <span>Upload Video File</span>
+                            </button>
+                            <button type="button" id="tabLinkBtn" onclick="switchVideoSource('link')" class="py-3 px-4 rounded-xl text-sm font-bold text-purple-200 hover:text-white transition flex items-center justify-center space-x-2 hover:bg-white/5">
+                                <i class="fa-solid fa-link"></i>
+                                <span>Import from Link (YouTube / Web)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Panel 1: File Dropzone -->
+                    <div id="uploadPanel">
+                        <div id="dropzone" class="file-dropzone rounded-2xl p-8 text-center cursor-pointer relative">
+                            <input id="file" name="file" type="file" class="sr-only" accept=".webm,.mp4">
+                            
+                            <div id="dropzonePrompt" class="space-y-3">
+                                <div class="w-16 h-16 rounded-2xl bg-purple-900/60 border border-purple-500/50 text-purple-200 flex items-center justify-center mx-auto shadow-inner">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                </div>
+                                <div class="text-white font-bold text-base sm:text-lg">
+                                    <span class="text-purple-300 font-extrabold hover:underline">Click to browse</span> or drag and drop video
+                                </div>
+                                <p class="text-sm text-purple-200 font-medium">MP4 or WebM video format • Up to 1GB</p>
+                            </div>
+
+                            <!-- Selected File Banner (Hidden initially) -->
+                            <div id="fileInfo" class="hidden flex items-center justify-center space-x-3 bg-purple-900/60 border border-purple-500/40 rounded-xl p-4 text-left">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                </div>
+                                <div class="overflow-hidden">
+                                    <div id="fileName" class="text-base font-bold text-white truncate max-w-xs sm:max-w-md">video.mp4</div>
+                                    <div id="fileSize" class="text-xs sm:text-sm text-purple-200 font-medium">0 MB</div>
+                                </div>
+                                <button type="button" id="removeFileBtn" class="text-purple-200 hover:text-rose-400 text-xs sm:text-sm font-bold ml-auto pl-4">
+                                    Change
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: Link Import Input -->
+                    <div id="linkPanel" class="hidden space-y-3">
+                        <div class="p-6 rounded-2xl bg-purple-950/60 border border-purple-800/60 space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-white uppercase tracking-wider mb-2">
+                                    Paste Video Link (YouTube, Facebook, or Direct Video)
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-purple-400">
+                                        <i class="fa-solid fa-link text-sm"></i>
+                                    </div>
+                                    <input 
+                                        type="url" 
+                                        id="videoUrlInput" 
+                                        name="video_url" 
+                                        placeholder="https://www.youtube.com/watch?v=... or Facebook / MP4 link"
+                                        class="w-full pl-10 pr-4 py-3.5 rounded-xl bg-purple-900/50 border border-purple-700/70 text-white placeholder-purple-300/50 focus:outline-none focus:border-purple-400 text-base transition"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Quick Sample Link -->
+                            <div class="flex items-center justify-between pt-1">
+                                <span class="text-sm text-purple-200 font-medium">Need a quick test?</span>
+                                <button 
+                                    type="button" 
+                                    onclick="setSampleLink()"
+                                    class="text-sm font-bold text-emerald-300 hover:text-emerald-200 underline decoration-emerald-500/50 flex items-center space-x-1"
+                                >
+                                    <span>⚡ Use Mustafa Suleyman AI Lecture Link</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Keyword Input -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-base font-extrabold text-white">
+                                2. Topic Focus or Concept Filter <span class="text-xs sm:text-sm font-normal text-purple-200">(Optional)</span>
+                            </label>
+                            <span class="text-xs sm:text-sm text-purple-200 font-medium">Leave blank to auto-detect all key moments</span>
+                        </div>
+                        
+                        <textarea
+                            id="prompt"
+                            name="prompt"
+                            rows="2"
+                            class="w-full px-4 py-3.5 rounded-xl bg-purple-950/70 border border-purple-800/70 text-white placeholder-purple-300/50 focus:outline-none focus:border-purple-400 text-base leading-relaxed transition"
+                            placeholder="e.g. neural networks, supply & demand, or leave empty to auto-extract all key lecture concepts..."
+                        ></textarea>
+
+                        <!-- Suggestion Quick Chips -->
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="text-sm font-bold text-purple-200 self-center mr-1">Suggested concepts:</span>
+                            <button type="button" class="suggestion-chip px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-white bg-purple-900/60 hover:bg-purple-800 border border-purple-700/60" onclick="setPrompt('key concepts')">key concepts</button>
+                            <button type="button" class="suggestion-chip px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-white bg-purple-900/60 hover:bg-purple-800 border border-purple-700/60" onclick="setPrompt('core thesis & takeaways')">core thesis & takeaways</button>
+                            <button type="button" class="suggestion-chip px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-white bg-purple-900/60 hover:bg-purple-800 border border-purple-700/60" onclick="setPrompt('step-by-step mechanisms')">mechanisms & models</button>
+                            <button type="button" class="suggestion-chip px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-white bg-purple-900/60 hover:bg-purple-800 border border-purple-700/60" onclick="setPrompt('real-world examples')">real-world examples</button>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2">
+                        <button
+                            type="submit"
+                            id="submitBtn"
+                            class="w-full py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 shadow-xl shadow-purple-600/30 hover:scale-[1.01] active:scale-[0.99] transition duration-200 flex items-center justify-center space-x-2"
+                        >
+                            <i class="fa-solid fa-scissors text-sm"></i>
+                            <span>Find Key Moments & Generate Clips</span>
+                            <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Processing & Progress Overlay -->
+                <div id="processingStatus" class="hidden mt-6 p-6 rounded-2xl bg-purple-950/80 border border-purple-600/50 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-6 h-6 border-2 border-purple-400 border-t-transparent rounded-full animate-spin shrink-0"></div>
+                        <div class="text-sm font-bold text-white" id="statusTitle">
+                            Uploading and analyzing video...
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-purple-900/60 rounded-full h-2.5 overflow-hidden">
+                        <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full w-1/3 transition-all duration-500"></div>
+                    </div>
+
+                    <p class="text-xs text-purple-200/80 leading-relaxed" id="statusDesc">
+                        Extracting audio, running Whisper speech transcription, and calculating Sentence-Transformer vectors.
+                    </p>
+                </div>
+
+                <!-- Error Alert Box -->
+                <div id="errorAlert" class="hidden mt-6 p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-sm flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div id="errorMessage" class="leading-relaxed">An error occurred while processing the video.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sleek Auth Required Modal -->
+    <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-[#11113a] border border-purple-500/50 rounded-3xl p-8 max-w-md w-full shadow-2xl relative text-center space-y-6">
+            <button type="button" onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="w-16 h-16 rounded-2xl bg-purple-900/50 border border-purple-500/40 text-purple-300 flex items-center justify-center mx-auto shadow-inner">
+                <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-2">Sign In Required</h3>
+                <p class="text-sm text-purple-200/80 leading-relaxed" id="modalMessage">
+                    Please log in or create an account to process videos with ClipGenie AI.
+                </p>
+            </div>
+
+            <div class="space-y-3">
+                <a href="/demo-login?next=/app" class="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-emerald-300 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 transition duration-200 flex items-center justify-center space-x-2 shadow-lg hover:scale-[1.02]">
+                    <span>⚡ Instant 1-Click Demo Creator Login</span>
+                </a>
+                <a href="/login?next=/app" class="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-purple-600 hover:bg-purple-500 transition duration-200 block shadow-lg shadow-purple-900/40">
+                    Sign In with Email
+                </a>
+                <a href="/register?next=/app" class="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-purple-200 bg-white/5 hover:bg-white/10 border border-purple-400/30 transition duration-200 block">
+                    Create Free Account
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script>
+        const isAuthenticated = {{ 'true' if current_user else 'false' }};
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('file');
+        const dropzonePrompt = document.getElementById('dropzonePrompt');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeFileBtn = document.getElementById('removeFileBtn');
+        const promptInput = document.getElementById('prompt');
+        const authModal = document.getElementById('authModal');
+        const modalMessage = document.getElementById('modalMessage');
+
+        function openAuthModal(msg) {
+            if (msg) modalMessage.textContent = msg;
+            authModal.classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            authModal.classList.add('hidden');
+        }
+
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) closeAuthModal();
+        });
+
+        // Click to browse
+        dropzone.addEventListener('click', (e) => {
+            if (e.target !== removeFileBtn) {
+                fileInput.click();
+            }
+        });
+
+        // Drag and drop handlers
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+            });
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                updateFileDisplay();
+            }
+        });
+
+        fileInput.addEventListener('change', updateFileDisplay);
+
+        function updateFileDisplay() {
+            if (fileInput.files.length) {
+                const f = fileInput.files[0];
+                fileName.textContent = f.name;
+                fileSize.textContent = `${(f.size / (1024 * 1024)).toFixed(2)} MB`;
+                dropzonePrompt.classList.add('hidden');
+                fileInfo.classList.remove('hidden');
+            } else {
+                dropzonePrompt.classList.remove('hidden');
+                fileInfo.classList.add('hidden');
+            }
+        }
+
+        removeFileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.value = '';
+            updateFileDisplay();
+        });
+
+        function setPrompt(val) {
+            promptInput.value = val;
+            promptInput.focus();
+        }
+
+        let activeSource = 'upload';
+
+        function switchVideoSource(source) {
+            activeSource = source;
+            const tabUpload = document.getElementById('tabUploadBtn');
+            const tabLink = document.getElementById('tabLinkBtn');
+            const uploadPanel = document.getElementById('uploadPanel');
+            const linkPanel = document.getElementById('linkPanel');
+
+            if (source === 'upload') {
+                tabUpload.className = "py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 bg-purple-600 text-white shadow-md";
+                tabLink.className = "py-2.5 px-4 rounded-xl text-xs font-semibold text-purple-300 hover:text-white transition flex items-center justify-center space-x-2 hover:bg-white/5";
+                uploadPanel.classList.remove('hidden');
+                linkPanel.classList.add('hidden');
+            } else {
+                tabLink.className = "py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 bg-purple-600 text-white shadow-md";
+                tabUpload.className = "py-2.5 px-4 rounded-xl text-xs font-semibold text-purple-300 hover:text-white transition flex items-center justify-center space-x-2 hover:bg-white/5";
+                linkPanel.classList.remove('hidden');
+                uploadPanel.classList.add('hidden');
+                document.getElementById('videoUrlInput').focus();
+            }
+        }
+
+        function setSampleLink() {
+            document.getElementById('videoUrlInput').value = "https://www.youtube.com/watch?v=0k1L_cK8C9s";
+            document.getElementById('prompt').value = "artificial intelligence and digital species";
+        }
+
+        // Form Submission
+        document.getElementById('uploadForm').onsubmit = function(e) {
+            // Check auth first!
+            if (!isAuthenticated) {
+                e.preventDefault();
+                openAuthModal("You must sign in or use the sample demo login to process videos.");
+                return false;
+            }
+
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Validation based on active tab
+            if (activeSource === 'upload' && (!fileInput.files || !fileInput.files.length)) {
+                e.preventDefault();
+                errorAlert.classList.remove('hidden');
+                errorMessage.textContent = "Please select an MP4 or WebM video file to upload.";
+                return false;
+            }
+
+            if (activeSource === 'link' && !document.getElementById('videoUrlInput').value.trim()) {
+                e.preventDefault();
+                errorAlert.classList.remove('hidden');
+                errorMessage.textContent = "Please enter a valid YouTube, Facebook, or video link.";
+                return false;
+            }
+
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const statusDiv = document.getElementById('processingStatus');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusDesc = document.getElementById('statusDesc');
+            const progressBar = document.getElementById('progressBar');
+            const submitBtn = document.getElementById('submitBtn');
+
+            errorAlert.classList.add('hidden');
+            statusDiv.classList.remove('hidden');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+
+            statusTitle.textContent = activeSource === 'link' 
+                ? '1/3 Downloading video from link & extracting audio...' 
+                : '1/3 Uploading & extracting audio...';
+            progressBar.style.width = '25%';
+
+            const step1 = setTimeout(() => {
+                statusTitle.textContent = '2/3 Whisper speech transcription & semantic scoring...';
+                progressBar.style.width = '60%';
+            }, 8000);
+
+            const step2 = setTimeout(() => {
+                statusTitle.textContent = '3/3 Stitching complete sentence clips & rendering output...';
+                progressBar.style.width = '85%';
+            }, 25000);
+
+            fetch('/app', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async response => {
+                clearTimeout(step1);
+                clearTimeout(step2);
+
+                if (response.status === 401) {
+                    const data = await response.json();
+                    statusDiv.classList.add('hidden');
+                    openAuthModal(data.error || "Please sign in to process videos.");
+                    throw new Error(data.error || "Authentication required");
+                }
+
+                if (response.redirected) {
+                    progressBar.style.width = '100%';
+                    statusTitle.textContent = 'Video ready! Redirecting to player...';
+                    window.location.href = response.url;
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data && data.error) {
+                    throw new Error(data.error);
+                }
+            })
+            .catch(error => {
+                clearTimeout(step1);
+                clearTimeout(step2);
+                statusDiv.classList.add('hidden');
+                if (error.message !== "Authentication required") {
+                    errorAlert.classList.remove('hidden');
+                    errorMessage.textContent = error.message || 'Video processing failed. Please try again.';
+                }
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+            });
+        };
+    </script>
+</body>
+</html>

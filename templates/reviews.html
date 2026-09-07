@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student & Educator Reviews — ClipGenie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0b031d;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #c084fc 0%, #f472b6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(19, 7, 46, 0.7);
+            border: 1px solid rgba(147, 51, 234, 0.25);
+            backdrop-filter: blur(16px);
+        }
+        .glass-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow py-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-2 block">Student & Faculty Impact</span>
+                <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 leading-tight">
+                    Real Stories from <span class="gradient-text">Students & Educators</span>
+                </h1>
+                <p class="text-purple-200/90 text-lg leading-relaxed">
+                    See how active retrieval practice replaced late-night video cramming and turned passive watching into durable exam success.
+                </p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-16">
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-extrabold text-white mb-1">4.9 / 5</div>
+                    <div class="flex justify-center text-amber-400 mb-2">★★★★★</div>
+                    <div class="text-xs text-purple-200">Learner Satisfaction</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-extrabold text-emerald-400 mb-1">+28%</div>
+                    <div class="text-xs text-gray-300 mb-2 font-medium">Exam Score Lift</div>
+                    <div class="text-xs text-purple-200">Across STEM Cohorts</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-extrabold text-white mb-1">75%</div>
+                    <div class="text-xs text-emerald-400 mb-2 font-medium">Handled Without Help</div>
+                    <div class="text-xs text-purple-200">Independent Recall Rate</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-extrabold text-white mb-1">120+</div>
+                    <div class="text-xs text-purple-300 mb-2 font-medium">Hours Saved</div>
+                    <div class="text-xs text-purple-200">Per Semester per Student</div>
+                </div>
+            </div>
+
+            <!-- Reviews Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- Review 1 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex text-amber-400 text-sm">★★★★★</div>
+                        <h4 class="text-base font-bold text-white leading-snug">"The rule against revealing answers saved my finals."</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            "With ChatGPT, I was just copying answers and convincing myself I knew the material. ClipGenie refused to give me the answer and forced me to explain the biochem pathways myself. It was frustrating at first, but I got the highest exam score in my class."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-purple-900/40 flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
+                            SM
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Sarah M.</div>
+                            <div class="text-[11px] text-gray-400">2nd Year Pre-Med Student</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex text-amber-400 text-sm">★★★★★</div>
+                        <h4 class="text-base font-bold text-white leading-snug">"I finally remember technical talks."</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            "I used to watch hours of distributed systems talks on YouTube and forget 95% of the architecture by Monday morning. Now I paste the link into ClipGenie, and in 20 minutes of targeted practice and real-world tests, it's locked into my brain."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-purple-900/40 flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-xs font-bold text-white">
+                            DK
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">David K.</div>
+                            <div class="text-[11px] text-gray-400">Senior Backend Engineer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex text-amber-400 text-sm">★★★★★</div>
+                        <h4 class="text-base font-bold text-white leading-snug">"The Instructor View tells me what students don't say."</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            "Students rarely raise their hands to say they're confused in a 150-person hall. The Instructor Heatmap showed that 64% of the cohort failed the recursion transfer check. I adjusted my next lecture and fixed the gap before the midterm."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-purple-900/40 flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center text-xs font-bold text-white">
+                            PR
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Prof. Robert Chen</div>
+                            <div class="text-[11px] text-gray-400">Computer Science Department</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center pt-6">
+                <a href="/practice" class="px-10 py-4 rounded-2xl text-base font-black text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/30 transition inline-flex items-center space-x-2">
+                    <span>Try the Practice Studio Free →</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

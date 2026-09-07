@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClipGenie - Video Processing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5B21B6',
+                        secondary: '#8B5CF6',
+                        dark: '#1E1B4B'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #5B21B6 0%, #3730A3 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-dark p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg class="h-8 w-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                <span class="text-white text-xl font-bold">ClipGenie</span>
+            </div>
+            <div class="flex items-center space-x-8">
+                <a href="#" class="text-white hover:text-purple-300">Features</a>
+                <a href="#" class="text-white hover:text-purple-300">Pricing</a>
+                <a href="#" class="text-white hover:text-purple-300">About</a>
+                <a href="#" class="text-white hover:text-purple-300">Contact</a>
+                <button class="bg-white text-primary px-4 py-2 rounded-lg hover:bg-purple-100 transition duration-300">
+                    Try Now →
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto p-8">
+        <div class="text-center mb-12 animate-fade-in">
+            <h1 class="text-4xl font-bold text-dark mb-4">Video Processing Made Simple</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">Transform your long videos into engaging content with AI-powered processing</p>
+        </div>
+
+        <!-- Upload Form -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12 animate-fade-in" style="animation-delay: 0.2s">
+            <form id="uploadForm" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div class="space-y-4">
+                    <label class="block">
+                        <span class="text-gray-700 font-medium">Select Video File</span>
+                        <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-400 transition duration-300">
+                            <div class="space-y-2 text-center">
+                                <div class="flex text-sm text-gray-600">
+                                    <label class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-purple-500">
+                                        <span>Upload a file</span>
+                                        <input id="file" name="file" type="file" class="sr-only" accept=".webm,.mp4" required>
+                                    </label>
+                                </div>
+                                <p class="text-xs text-gray-500">MP4 or WebM up to 10MB</p>
+                            </div>
+                        </div>
+                    </label>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Enter Search Prompt</label>
+                        <textarea
+                            id="prompt"
+                            name="prompt"
+                            rows="4"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                            placeholder="Enter keywords or phrases to search for in the video..."
+                            required
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button
+                        type="submit"
+                        id="submitBtn"
+                        class="gradient-bg text-white px-8 py-3 rounded-lg hover:opacity-90 transition duration-300 flex items-center space-x-2"
+                    >
+                        <span>Process Video</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <div id="status" class="mt-6 p-4 rounded-lg hidden"></div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="feature-card bg-white p-6 rounded-xl shadow-md">
+                <div class="text-primary text-xl font-semibold mb-4">#one</div>
+                <h3 class="text-xl font-bold mb-2">Efficiency</h3>
+                <p class="text-gray-600">Save time with automatic video repurposing, turning long videos into engaging, bite-sized content effortlessly.</p>
+            </div>
+
+            <div class="feature-card bg-white p-6 rounded-xl shadow-md">
+                <div class="text-primary text-xl font-semibold mb-4">#two</div>
+                <h3 class="text-xl font-bold mb-2">Precision</h3>
+                <p class="text-gray-600">Advanced AI ensures precise chapter-marking and keyword extraction, boosting content quality and engagement.</p>
+            </div>
+
+            <div class="feature-card bg-white p-6 rounded-xl shadow-md">
+                <div class="text-primary text-xl font-semibold mb-4">#three</div>
+                <h3 class="text-xl font-bold mb-2">Affordability</h3>
+                <p class="text-gray-600">Flexible pricing options, including free trials and per-video pricing, make ClipGenie accessible to all content creators.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const status = document.getElementById('status');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            status.classList.remove('hidden');
+            status.innerHTML = 'Uploading and processing video... Please wait. This may take several minutes.';
+            status.className = 'mt-6 p-4 rounded-lg bg-blue-50 text-blue-700';
+            submitBtn.disabled = true;
+
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;  // Redirect to videoplayer.html
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data && data.error) {
+                    status.className = 'mt-6 p-4 rounded-lg bg-red-50 text-red-700';
+                    status.innerHTML = `Error: ${data.error}`;
+                }
+            })
+            .catch(error => {
+                status.className = 'mt-6 p-4 rounded-lg bg-red-50 text-red-700';
+                status.innerHTML = `Error: ${error.message}`;
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+            });
+        };
+
+        // File input display
+        const fileInput = document.getElementById('file');
+        fileInput.addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            const label = this.closest('label');
+            if (fileName) {
+                label.querySelector('span').textContent = fileName;
+            } else {
+                label.querySelector('span').textContent = 'Upload a file';
+            }
+        });
+    </script>
+</body>
+</html>

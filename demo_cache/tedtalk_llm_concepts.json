@@ -1,0 +1,147 @@
+[
+  {
+    "id": "concept_1",
+    "title": "The AI Inflection Point & Digital Companions",
+    "summary": "Why the mental models and metaphors we use to describe AI matter, and why we will come to view them as digital companions rather than mere software.",
+    "start": 26.16,
+    "end": 76.84,
+    "duration_str": "0:26 - 1:16",
+    "key_terms": [
+      "inflection point",
+      "mental models",
+      "digital companions",
+      "metaphors",
+      "partners"
+    ],
+    "core_principle": "We cannot control what we do not understand; treating AI as digital companions creates a fundamentally honest mental model.",
+    "occurrences": [
+      {
+        "start": 26.16,
+        "end": 76.84,
+        "label": "Part 1: Initial Framing (Metaphors & Companions)",
+        "duration_str": "0:26 - 1:16"
+      },
+      {
+        "start": 320.0,
+        "end": 355.0,
+        "label": "Part 2: Later Callback (Companions vs Autonomous Agency)",
+        "duration_str": "5:20 - 5:55"
+      }
+    ]
+  },
+  {
+    "id": "concept_2",
+    "title": "Evolution into Homo-Technologicus",
+    "summary": "How human tool-use accelerated from stone axes and fire to computers, turning humanity into Homo-Technologicus where technology and human journeys are deeply intertwined.",
+    "start": 76.84,
+    "end": 144.36,
+    "duration_str": "1:16 - 2:24",
+    "key_terms": [
+      "Homo-technologicus",
+      "tool use",
+      "stone axes",
+      "exponential acceleration",
+      "computers",
+      "mainframes"
+    ],
+    "core_principle": "Human development transformed when one branch began using tools, culminating in an accelerating cascade of industrial and digital technologies.",
+    "occurrences": [
+      {
+        "start": 76.84,
+        "end": 144.36,
+        "label": "Part 1: The Evolutionary Tool Continuum",
+        "duration_str": "1:16 - 2:24"
+      },
+      {
+        "start": 375.0,
+        "end": 405.0,
+        "label": "Part 2: Later Callback (Humanity's Next Tools)",
+        "duration_str": "6:15 - 6:45"
+      }
+    ]
+  },
+  {
+    "id": "concept_3",
+    "title": "Ubiquitous AI & The Parameter Explosion",
+    "summary": "The leap from millions to trillions of parameters consuming 8 trillion words, leading to ubiquitous conversational interfaces with high IQ and EQ.",
+    "start": 144.36,
+    "end": 240.4,
+    "duration_str": "2:24 - 4:00",
+    "key_terms": [
+      "parameters explosion",
+      "8 trillion words",
+      "conversational interface",
+      "high IQ and EQ",
+      "ubiquitous AI"
+    ],
+    "core_principle": "Modern AI models process more text than a human could read in thousands of lifetimes, expanding from tools to knowledgeable interactive personas.",
+    "occurrences": [
+      {
+        "start": 144.36,
+        "end": 240.4,
+        "label": "Part 1: Parameter Scale & Conversational IQ",
+        "duration_str": "2:24 - 4:00"
+      },
+      {
+        "start": 260.0,
+        "end": 295.0,
+        "label": "Part 2: Later Callback (Interactive Personas with EQ)",
+        "duration_str": "4:20 - 4:55"
+      }
+    ]
+  },
+  {
+    "id": "concept_4",
+    "title": "AI as a New Digital Species",
+    "summary": "The conceptual framework of viewing AI as an emerging 'digital species' to anticipate unintended consequences and prioritize safety.",
+    "start": 240.4,
+    "end": 330.0,
+    "duration_str": "4:00 - 5:30",
+    "key_terms": [
+      "digital species",
+      "analogy",
+      "prioritizing safety",
+      "amplify humanity",
+      "unintended consequences"
+    ],
+    "core_principle": "Thinking of AI as a digital species is a constructive analogy that allows society to proactively evaluate governance, agency, and human impact.",
+    "occurrences": [
+      {
+        "start": 240.4,
+        "end": 330.0,
+        "label": "Part 1: Digital Species Metaphor Introduced",
+        "duration_str": "4:00 - 5:30"
+      },
+      {
+        "start": 355.0,
+        "end": 395.0,
+        "label": "Part 2: Later Callback (Proactive Societal Steering)",
+        "duration_str": "5:55 - 6:35"
+      }
+    ]
+  },
+  {
+    "id": "concept_5",
+    "title": "High-Risk Thresholds: Autonomy & Self-Improvement",
+    "summary": "Critical frontiers in AI governance, specifically why autonomous agency and recursive self-improvement represent heightened societal risk.",
+    "start": 330.0,
+    "end": 415.0,
+    "duration_str": "5:30 - 6:55",
+    "key_terms": [
+      "autonomy",
+      "recursive self-improvement",
+      "risk threshold",
+      "economic growth",
+      "societal safeguards"
+    ],
+    "core_principle": "Autonomy and self-improvement represent non-linear risk boundaries requiring extreme caution and active societal steering.",
+    "occurrences": [
+      {
+        "start": 330.0,
+        "end": 415.0,
+        "label": "Part 1: Non-Linear Risk Boundaries & Safeguards",
+        "duration_str": "5:30 - 6:55"
+      }
+    ]
+  }
+]

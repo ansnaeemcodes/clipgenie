@@ -1,0 +1,74 @@
+<!-- ClipGenie Footer -->
+<footer class="border-t border-purple-900/40 bg-[#070114] text-gray-400 py-12 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <!-- Brand Column -->
+            <div class="col-span-1 md:col-span-1 space-y-4">
+                <a href="/" class="flex items-center space-x-2">
+                    <img src="/static/images/log_navbar_horizontal.png" alt="ClipGenie" class="h-10 w-auto object-contain">
+                </a>
+                <p class="text-sm text-purple-200 font-medium leading-relaxed">
+                    Smart AI Video Clipper & Interactive Study Studio. Turn long videos into short highlight clips and test your understanding with zero spoilers.
+                </p>
+                <div class="flex flex-wrap gap-2 text-gray-100">
+                    <span class="text-xs bg-purple-900/60 text-purple-200 px-2.5 py-1 rounded-full font-bold border border-purple-700/50">Key Concept Clips</span>
+                    <span class="text-xs bg-indigo-950/70 text-indigo-200 px-2.5 py-1 rounded-full font-bold border border-indigo-700/50">Speech Recognition</span>
+                    <span class="text-xs bg-emerald-950/70 text-emerald-300 px-2.5 py-1 rounded-full font-bold border border-emerald-700/50">Zero Spoilers</span>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-white text-base font-extrabold uppercase tracking-wider mb-4">Explore</h4>
+                <ul class="space-y-3 text-sm font-medium text-gray-200">
+                    <li><a href="/app" class="hover:text-white font-bold text-purple-300 transition duration-200"><i class="fa-solid fa-scissors mr-1.5 text-xs text-purple-400"></i> Video Studio (Moments & Clips)</a></li>
+                    <li><a href="/practice" class="hover:text-white font-bold text-emerald-300 transition duration-200"><i class="fa-solid fa-graduation-cap mr-1.5 text-xs text-emerald-400"></i> Interactive Practice</a></li>
+                    <li><a href="/dashboard" class="hover:text-purple-300 transition duration-200"><i class="fa-solid fa-chart-line mr-1.5 text-xs text-purple-400"></i> Learning Dashboard</a></li>
+                    <li><a href="/features" class="hover:text-purple-300 transition duration-200">How It Works</a></li>
+                    <li><a href="/pricing" class="hover:text-purple-300 transition duration-200">Pricing & Plans</a></li>
+                    <li><a href="/license" class="hover:text-purple-300 transition duration-200">Open Source License</a></li>
+                </ul>
+            </div>
+
+            <!-- Account & Auth -->
+            <div>
+                <h4 class="text-white text-base font-extrabold uppercase tracking-wider mb-4">Account</h4>
+                <ul class="space-y-3 text-sm font-medium text-gray-200">
+                    {% if current_user %}
+                        <li><a href="/profile" class="hover:text-purple-300 transition duration-200">My Progress</a></li>
+                        <li><a href="/practice" class="hover:text-purple-300 transition duration-200">Resume Practice</a></li>
+                        <li><a href="/logout" class="hover:text-purple-300 transition duration-200">Sign Out</a></li>
+                    {% else %}
+                        <li><a href="/login" class="hover:text-purple-300 transition duration-200">Sign In</a></li>
+                        <li><a href="/register" class="hover:text-purple-300 transition duration-200">Create Free Account</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- Contact & Social -->
+            <div>
+                <h4 class="text-white text-base font-extrabold uppercase tracking-wider mb-4">Contact</h4>
+                <ul class="space-y-3 text-sm font-medium text-gray-200">
+                    <li class="flex items-center space-x-2">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>hello@clipgenie.com</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span>Bano Qabil Hackathon 2026</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-purple-900/30 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
+            <p>© 2026 ClipGenie. "Know It, Don't Just Watch It."</p>
+            <div class="flex space-x-6 mt-4 sm:mt-0">
+                <a href="/practice" class="hover:text-emerald-400 transition">Practice Studio</a>
+                <a href="/dashboard" class="hover:text-purple-400 transition">Learning Dashboard</a>
+                <a href="/features" class="hover:text-purple-400 transition">Features</a>
+                <a href="/license" class="hover:text-purple-400 transition">MIT License</a>
+            </div>
+        </div>
+    </div>
+</footer>

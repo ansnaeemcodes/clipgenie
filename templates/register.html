@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ClipGenie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background-color: #13072e;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .custom-input {
+            background: rgba(19, 7, 46, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 0.75rem;
+            color: white;
+            padding: 0.85rem 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+        }
+
+        .custom-input::placeholder {
+            color: rgba(216, 180, 254, 0.4);
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            transform: translateY(-1px);
+        }
+
+        .custom-dropdown {
+            background: rgba(19, 7, 46, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 0.75rem;
+            color: white;
+            padding: 0.85rem 1rem;
+            width: 100%;
+        }
+
+        .custom-dropdown option {
+            background: #11113a;
+            color: white;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(216, 180, 254, 0.6);
+        }
+
+        .toggle-password:hover {
+            color: #C084FC;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Password toggle
+            const togglePassword = document.querySelector('.toggle-password');
+            const passwordInput = document.getElementById('password');
+
+            togglePassword?.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🔒';
+            });
+
+            // Registration form submission
+            document.getElementById('registerForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const errorDiv = document.getElementById('error');
+                const submitBtn = document.getElementById('submitBtn');
+
+                errorDiv.textContent = '';
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Creating Account...';
+
+                try {
+                    const response = await fetch('/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password, firstName, lastName }),
+                        credentials: 'include'
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Registration failed. Please check your inputs.');
+                    }
+
+                    // Redirect directly to the interactive practice studio!
+                    window.location.href = data.redirect || '/practice';
+
+                } catch (error) {
+                    errorDiv.textContent = error.message;
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Free Account';
+                }
+            });
+        });
+    </script>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="flex flex-col lg:flex-row gap-12 items-center">
+            <!-- Left Info Panel -->
+            <div class="w-full lg:w-5/12 space-y-6">
+                <div class="p-8 rounded-3xl bg-[#11113a]/80 border border-purple-800/40 shadow-2xl">
+                    <div class="w-full max-w-xs mb-6 p-5 rounded-2xl bg-[#13072e]/90 border border-purple-500/40 shadow-xl flex items-center justify-center">
+                        <img src="/static/images/logo_navbar.png" alt="ClipGenie Logo" class="w-full h-auto object-contain drop-shadow-md">
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2 block">Socratic Learning Studio & Study Lab</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">
+                        Active Recall & Deep Conceptual Mastery
+                    </h2>
+                    <p class="text-purple-200 text-base font-normal leading-relaxed mb-8">
+                        Stop passively rewatching 2-hour lectures. Test your genuine understanding with intelligent practice challenges, instant feedback without spoilers, and real-world application tests.
+                    </p>
+
+                    <div class="space-y-4 text-base text-gray-100 font-medium">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-900/60 text-purple-300 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <span>Targeted practice challenges grounded in every video clip</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-900/60 text-purple-300 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <span>Intelligent feedback with strict anti-spoiler protection</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-900/60 text-purple-300 flex items-center justify-center shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <span>AI Context Guard with double-checked transcript audits</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-8 mt-8 border-t border-purple-900/40 text-sm text-purple-200">
+                        Need assistance? Contact us at <span class="text-purple-300 font-bold">hello@clipgenie.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Registration Form -->
+            <div class="w-full lg:w-7/12">
+                <div class="p-8 sm:p-10 rounded-3xl bg-[#11113a] border border-purple-800/50 shadow-2xl">
+                    <h3 class="text-2xl sm:text-3xl font-black text-white mb-2">Create Your Free Account</h3>
+                    <p class="text-base text-purple-200 font-medium mb-6">Start active retrieval practice and lock in lasting mastery today.</p>
+
+                    <form id="registerForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="col-span-1">
+                            <label class="block text-sm font-bold text-white mb-1.5">First Name*</label>
+                            <input type="text" id="firstName" placeholder="Jane" class="custom-input text-base text-white placeholder-purple-300/40" required>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block text-sm font-bold text-white mb-1.5">Last Name*</label>
+                            <input type="text" id="lastName" placeholder="Doe" class="custom-input text-base text-white placeholder-purple-300/40" required>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-bold text-white mb-1.5">Email Address*</label>
+                            <input type="email" id="email" placeholder="jane@example.com" class="custom-input text-base text-white placeholder-purple-300/40" required>
+                        </div>
+                        <div class="col-span-2 password-container">
+                            <label class="block text-sm font-bold text-white mb-1.5">Password*</label>
+                            <input type="password" id="password" placeholder="At least 6 characters" class="custom-input text-base text-white placeholder-purple-300/40" required>
+                            <span class="toggle-password">👁️</span>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-bold text-white mb-1.5">How did you hear about us?</label>
+                            <select class="custom-dropdown text-base text-white">
+                                <option value="youtube">YouTube / Social Media</option>
+                                <option value="podcast">Podcast</option>
+                                <option value="friend">Friend / Colleague</option>
+                                <option value="other">Search Engine / Other</option>
+                            </select>
+                        </div>
+                        <div class="col-span-2 pt-2">
+                            <button type="submit" id="submitBtn" class="submit-button py-4 rounded-xl text-white font-black text-base w-full shadow-lg shadow-purple-900/40">
+                                Create Free Account
+                            </button>
+                        </div>
+                        <div id="error" class="text-rose-400 text-sm font-semibold col-span-2 min-h-[16px]"></div>
+                        <div class="col-span-2 text-center text-sm text-gray-200 font-medium pt-2 border-t border-purple-900/30">
+                            Already have an account? <a href="/login" class="text-purple-300 font-extrabold hover:text-white ml-1">Sign In here →</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

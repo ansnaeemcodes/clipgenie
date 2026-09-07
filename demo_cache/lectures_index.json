@@ -1,0 +1,11 @@
+[
+  {
+    "id": "tedtalk",
+    "title": "Tedtalk",
+    "filename": "tedtalk.mp4",
+    "video_url": "/static/tedtalk.mp4",
+    "duration_str": "6:50",
+    "source": "local_upload",
+    "concepts_count": 5
+  }
+]

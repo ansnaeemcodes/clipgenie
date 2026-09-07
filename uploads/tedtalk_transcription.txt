@@ -1,0 +1,132 @@
+0.00s 2.44s  and curious and optimistic little guy.
+2.44s 4.96s  He'd been talking to buy about how cool it would be.
+4.96s 9.12s  If one day in the future, he could visit dinosaurs at the zoo
+9.12s 12.92s  and how he could make infinite amounts of chocolate at home.
+12.92s 16.76s  And why pie couldn't yet play ice pie?
+16.76s 18.92s  Well, I said, it's a clever piece of software
+18.92s 21.48s  that's read most of the text on the open internet
+21.48s 23.92s  and it can talk to you about anything you want
+23.92s 26.16s  you've known before.
+26.16s 29.00s  It is clear that we are an inflection point
+29.00s 31.96s  in the history of humanity.
+31.96s 35.48s  On our current trajectory, we're headed towards the emergence
+35.48s 39.32s  of something that we are all struggling to describe.
+39.32s 45.12s  And yet, we cannot control what we don't understand.
+45.12s 49.32s  And so the metaphors, the mental models, the names,
+49.32s 52.44s  these all matter if we're to get the most out of AI
+52.44s 55.64s  whilst digital species.
+55.64s 57.92s  Now, don't take this too literally,
+57.92s 60.24s  but I predict that we'll come to see them
+60.24s 64.28s  as digital companions, new partners in the journeys
+64.28s 65.88s  of all our lives.
+65.88s 70.00s  Whether you think we're on a 10, 20 or 30-year path here,
+70.00s 72.56s  this is, in my view, the most accurate
+72.56s 76.84s  and most fundamentally honest way of describing what's actually
+76.84s 79.44s  great, then a few million years ago,
+79.44s 81.88s  something began to shift.
+81.88s 85.56s  After countless cycles of growth and adaptation,
+85.56s 89.56s  one of life's branches began using tools.
+89.56s 92.48s  And that branch grew into us.
+92.48s 96.60s  We went on to produce a mesmerizing variety of tools.
+96.60s 100.28s  At first slowly, and then with astonishing speed,
+100.28s 103.96s  we went from stone axes and fire
+103.96s 109.60s  to language, writing, and eventually industrial technologies.
+109.60s 112.88s  One invention unleashed 1,000 more.
+112.96s 117.36s  And in time, we became homo-technologicus.
+117.36s 120.32s  Around 80 years ago, another new branch of technology
+120.32s 121.68s  began.
+121.68s 124.00s  With the invention of computers, we quickly
+124.00s 126.80s  jumped from the first mainframes and transistors
+126.80s 130.32s  to today's smartphones and virtual reality headsets.
+130.32s 133.48s  Information, knowledge that we are in the fastest
+133.48s 136.96s  and most consequential wave ever.
+136.96s 139.24s  The journeys of humanity and technology
+139.24s 141.60s  are now deeply intertwined.
+141.60s 144.36s  In just 18 months, over a billion people
+144.36s 146.84s  have used large language models.
+146.84s 150.80s  We've witnessed one landmark event after another.
+150.80s 155.24s  Just a few years ago, people said that AI would never be creative.
+155.24s 158.92s  And yet, AI has grown from first tens of millions of parameters
+158.92s 163.20s  to then billions of parameters and very soon tens of trillions
+163.20s 164.44s  of parameters.
+164.44s 167.64s  If someone did nothing but read 24 hours a day
+167.64s 172.60s  for their entire life, they'd consume 8 billion words.
+172.60s 174.48s  And of course, that's a lot of words.
+174.48s 179.88s  But today, the most advanced AI's consume more than 8 trillion words
+179.88s 185.00s  to is ushering in a new era of ubiquitous AI's.
+185.00s 187.36s  Everything will soon be represented
+187.36s 190.96s  by a conversational interface, or to put it another way,
+190.96s 193.32s  a personal AI.
+193.32s 195.68s  And these AI's will be infinitely knowledgeable.
+195.68s 199.60s  And soon, they'll be factually accurate and reliable.
+199.60s 202.44s  They'll have near perfect IQ.
+202.44s 204.00s  They'll also have exceptional eqs
+204.00s 206.64s  as their ability to actually get stuff done
+206.64s 208.96s  in the digital and physical world.
+208.96s 212.48s  And before long, it won't just be people that have AI's.
+212.48s 215.36s  Strangers, it may sound every organization
+215.36s 218.72s  from small business to nonprofit to national government,
+218.72s 220.92s  each will have their own.
+220.92s 223.64s  Every town, building, and object
+223.64s 227.36s  will be represented by a unique interactive persona.
+227.36s 230.32s  And these won't just be mechanistic assistance.
+230.32s 235.52s  There'll be companions, confidence, colleagues,
+235.52s 240.40s  friends and partners as varied and unique as we all are.
+240.40s 243.76s  At this point, AI's will convincingly imitate humans
+243.76s 245.84s  at most tasks.
+245.84s 249.04s  And we'll fill this at the most intimate of scales,
+249.04s 252.72s  an AI organizing a community get together for an elderly neighbor,
+252.72s 255.36s  a sympathetic expert helping you make sense
+255.36s 257.32s  of a difficult diagnosis.
+257.32s 260.16s  But we'll also feel it at the largest scales,
+260.16s 262.76s  excels streams and streams of information,
+262.76s 265.52s  faster passing what any one of us could consume
+265.52s 267.64s  in a thousand lifetime.
+267.64s 269.84s  So what is this?
+269.84s 273.28s  What are these AI's?
+273.28s 277.88s  If we are to prioritize safety above all else,
+277.88s 280.44s  to ensure that this new wave always serves
+280.44s 283.52s  and amplifies humanity, then we need
+283.52s 285.92s  to find the right, more unintended consequences
+285.92s 287.80s  that are likely to arise.
+287.80s 289.48s  We should start to think about them
+289.48s 293.16s  as we might a new kind of digital species.
+293.16s 294.96s  Now it's just an analogy.
+294.96s 298.04s  It's not a literal description, and it's not perfect.
+298.04s 300.16s  For a start, they clearly aren't biological
+300.16s 302.16s  in any traditional sense.
+302.16s 305.92s  But just pause for a moment and really think about what
+305.92s 307.56s  they already do.
+307.56s 310.28s  They communicate and accept it as a given.
+310.28s 313.76s  We all must choose what we create, what
+313.76s 319.48s  ayes we bring into the world, or not.
+319.48s 322.32s  These are the questions for all of us here today.
+322.32s 325.56s  And all of us are live at this moment.
+325.56s 329.84s  For me, the benefits of this technology are stunningly obvious.
+329.84s 333.56s  And they inspire my life's work, every single moment crisis.
+333.56s 337.52s  And if AI delivers just a fraction of its potential,
+337.52s 340.60s  the next decade is going to be the most productive
+340.60s 343.32s  in human history.
+343.32s 345.36s  Here's another way to think about it.
+345.36s 348.44s  In the past, unlocking economic growth
+348.44s 351.12s  often came with huge downsides.
+351.12s 354.88s  The economy expanded as people discovered new continents
+354.88s 356.72s  and opened up new frontiers.
+356.72s 360.16s  And these really are the very most appropriate metaphors
+360.16s 361.52s  that we have today.
+361.52s 364.56s  Since the beginning of life on Earth,
+364.56s 369.20s  we've been evolving, changing, and then creating everything
+369.20s 372.32s  around us in our human world today.
+372.32s 375.68s  And AI isn't something outside of this story.
+375.68s 379.24s  In fact, it's the very opposite.
+379.24s 382.92s  It's the whole of everything that we have created distilled
+382.92s 386.68s  down into something that we can all interact with and benefit
+386.68s 388.88s  harm and LLM has caused.
+388.88s 391.20s  But that doesn't mean that that's what the trajectory is
+391.20s 392.68s  going to be over the next 10 years.
+392.68s 396.80s  So I think if you pay attention to a few specific capabilities,
+396.80s 398.68s  take, for example, autonomy.
+398.68s 401.92s  Autonomy is very obviously a threshold over which
+401.92s 403.88s  we increase risk in our society.
+403.88s 406.84s  And it's something that we should step towards very, very closely.
+406.84s 410.32s  The other would be something like recursive self-improvement.

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClipGenie — Instructor Cohort Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0d041f;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .glass-panel {
+            background: rgba(22, 12, 49, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(139, 92, 246, 0.22);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-600/20 border border-purple-500/30 text-purple-300 text-xs font-semibold mb-2">
+                    <i class="fa-solid fa-chalkboard-user mr-1"></i>
+                    <span>Feature 8: Instructor Aggregate Gap Intelligence</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Lecture Cohort Mastery & Gap Analysis</h1>
+                <p class="text-sm text-gray-400 mt-1">Course: CS 480 — Frontiers in AI & Human Agency • Demonstration Cohort Model (48 Students)</p>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="/practice" class="px-4 py-2.5 rounded-xl font-bold text-sm text-white bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-600/30 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span>Back to Student Practice</span>
+                </a>
+                <button onclick="alert('Cohort summary report exported to PDF!')" class="px-4 py-2.5 rounded-xl font-semibold text-sm text-purple-200 bg-white/10 hover:bg-white/20 border border-purple-400/30 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-download text-xs"></i>
+                    <span>Export Report</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Metric KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-purple-500">
+                <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Active Students</div>
+                <div class="text-2xl font-black text-white mt-1">48 / 50</div>
+                <div class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-arrow-up mr-1"></i> 96% completion rate</div>
+            </div>
+
+            <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500">
+                <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Handled Without Help Rate</div>
+                <div class="text-2xl font-black text-emerald-400 font-mono mt-1">74.2%</div>
+                <div class="text-xs text-gray-400 mt-1">Students master concepts without spoon-feeding</div>
+            </div>
+
+            <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500">
+                <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Average Retry Delta</div>
+                <div class="text-2xl font-black text-amber-400 font-mono mt-1">+27.4%</div>
+                <div class="text-xs text-amber-300 mt-1">Gap closure after socratic cue</div>
+            </div>
+
+            <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-rose-500">
+                <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Critical Concept Gaps</div>
+                <div class="text-2xl font-black text-rose-400 mt-1">1 Concept</div>
+                <div class="text-xs text-rose-300 mt-1">Concept 5 requires lecture recap</div>
+            </div>
+        </div>
+
+        <!-- Heatmap / Concept Breakdown Table -->
+        <div class="glass-panel p-6 rounded-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-simple text-purple-400"></i>
+                        <span>Per-Concept Cohort Performance Breakdown</span>
+                    </h2>
+                    <p class="text-xs text-gray-400">Aggregate mastery levels across first attempt, retry, and transfer check</p>
+                </div>
+                <span class="text-xs text-purple-300 bg-purple-950/90 px-3 py-1 rounded-xl border border-purple-700/60 font-medium flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Cohort Model • 48 Simulated Students</span>
+                </span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-purple-950/60 text-purple-200 uppercase text-[11px] font-bold border-b border-purple-800/40">
+                        <tr>
+                            <th class="py-3 px-4">Concept Name</th>
+                            <th class="py-3 px-4">Timestamp Range</th>
+                            <th class="py-3 px-4">Mastered (1st / Transfer)</th>
+                            <th class="py-3 px-4">Improved (After Retry)</th>
+                            <th class="py-3 px-4">Still Struggling</th>
+                            <th class="py-3 px-4">Action Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-purple-900/30 text-xs">
+                        <tr class="hover:bg-purple-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">1. The AI Inflection Point & Digital Companions</td>
+                            <td class="py-3.5 px-4 font-mono text-purple-300">0:26 - 1:16</td>
+                            <td class="py-3.5 px-4 text-emerald-400 font-bold">82% (39 students)</td>
+                            <td class="py-3.5 px-4 text-amber-300">14% (7 students)</td>
+                            <td class="py-3.5 px-4 text-rose-400">4% (2 students)</td>
+                            <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Solid Grounding</span></td>
+                        </tr>
+                        <tr class="hover:bg-purple-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">2. Evolution into Homo-Technologicus</td>
+                            <td class="py-3.5 px-4 font-mono text-purple-300">1:16 - 2:24</td>
+                            <td class="py-3.5 px-4 text-emerald-400 font-bold">78% (37 students)</td>
+                            <td class="py-3.5 px-4 text-amber-300">18% (9 students)</td>
+                            <td class="py-3.5 px-4 text-rose-400">4% (2 students)</td>
+                            <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Solid Grounding</span></td>
+                        </tr>
+                        <tr class="hover:bg-purple-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">3. Ubiquitous AI & The Parameter Explosion</td>
+                            <td class="py-3.5 px-4 font-mono text-purple-300">2:24 - 4:00</td>
+                            <td class="py-3.5 px-4 text-emerald-400 font-bold">65% (31 students)</td>
+                            <td class="py-3.5 px-4 text-amber-300">25% (12 students)</td>
+                            <td class="py-3.5 px-4 text-rose-400">10% (5 students)</td>
+                            <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">Minor Gap</span></td>
+                        </tr>
+                        <tr class="hover:bg-purple-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">4. AI as a New Digital Species</td>
+                            <td class="py-3.5 px-4 font-mono text-purple-300">4:00 - 5:30</td>
+                            <td class="py-3.5 px-4 text-emerald-400 font-bold">54% (26 students)</td>
+                            <td class="py-3.5 px-4 text-amber-300">29% (14 students)</td>
+                            <td class="py-3.5 px-4 text-rose-400">17% (8 students)</td>
+                            <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">Requires Focus</span></td>
+                        </tr>
+                        <tr class="hover:bg-purple-900/20 bg-rose-950/20">
+                            <td class="py-3.5 px-4 font-bold text-rose-200">5. High-Risk Thresholds: Autonomy & Self-Improvement</td>
+                            <td class="py-3.5 px-4 font-mono text-purple-300">5:30 - 6:55</td>
+                            <td class="py-3.5 px-4 text-emerald-400 font-bold">41% (20 students)</td>
+                            <td class="py-3.5 px-4 text-amber-300">35% (17 students)</td>
+                            <td class="py-3.5 px-4 text-rose-400 font-bold">24% (11 students)</td>
+                            <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse">Class Gap Alert</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Class-Wide Misconceptions & Pedagogical Interventions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-panel p-6 rounded-2xl space-y-3 border-l-4 border-l-rose-500">
+                <div class="flex items-center space-x-2 text-rose-400">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3 class="text-sm font-bold uppercase tracking-wider">Top Detected Misconceptions</h3>
+                </div>
+                <div class="space-y-3 text-xs text-gray-300">
+                    <div class="p-3 bg-black/40 rounded-xl border border-rose-900/40">
+                        <strong class="text-white block mb-1">1. Conflating Autonomy with General Intelligence</strong>
+                        <span>Many students treated autonomy purely as answering complex questions rather than taking real-world actions without human-in-the-loop oversight.</span>
+                    </div>
+                    <div class="p-3 bg-black/40 rounded-xl border border-rose-900/40">
+                        <strong class="text-white block mb-1">2. Missing the "Digital Species" Analogy Boundary</strong>
+                        <span>28% of students attempted to interpret the biological metaphor literally instead of as a regulatory and safety mental model.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl space-y-3 border-l-4 border-l-indigo-500">
+                <div class="flex items-center space-x-2 text-indigo-400">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h3 class="text-sm font-bold uppercase tracking-wider">Recommended Instructor Interventions</h3>
+                </div>
+                <div class="space-y-3 text-xs text-gray-300">
+                    <div class="p-3 bg-black/40 rounded-xl border border-indigo-900/40">
+                        <strong class="text-white block mb-1">🎯 5-Minute Lecture Kickoff on Autonomy</strong>
+                        <span>Replay clip 5:30–6:20 in next recitation. Differentiate software automation from recursive self-improvement.</span>
+                    </div>
+                    <div class="p-3 bg-black/40 rounded-xl border border-indigo-900/40">
+                        <strong class="text-white block mb-1">📊 Targeted Socratic Poll</strong>
+                        <span>Launch a 1-question in-class pulse check comparing spreadsheet tools with agentic digital companions.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

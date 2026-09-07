@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learner Profile & Mastery Analytics — ClipGenie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #13072e;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #A78BFA 0%, #EC4899 50%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(17, 17, 58, 0.75);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            backdrop-filter: blur(14px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow py-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Profile Header Card -->
+            <div class="glass-card rounded-3xl p-8 mb-10 shadow-2xl relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                    <!-- User Avatar Badge -->
+                    <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-extrabold text-3xl text-white shadow-xl shadow-purple-900/50 uppercase shrink-0 border border-purple-400/40">
+                        {{ user.displayName[:2] if user.displayName else 'CL' }}
+                    </div>
+
+                    <!-- User Details -->
+                    <div class="flex-grow text-center sm:text-left space-y-2">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                            <h1 class="text-3xl sm:text-4xl font-extrabold text-white">{{ user.displayName }}</h1>
+                            <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mx-auto sm:mx-0 w-fit">
+                                <i class="fa-solid fa-graduation-cap mr-2 text-sm"></i> Independent Learner • Active
+                            </span>
+                        </div>
+                        <p class="text-base text-purple-200 font-mono font-semibold">{{ user.email }}</p>
+                        <p class="text-sm text-gray-300 font-medium">Account ID: <span class="font-mono text-white font-bold">#CG-{{ user.id or user.uid }}</span></p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-row sm:flex-col gap-3 shrink-0">
+                        <a href="/practice" class="px-6 py-3 rounded-xl text-base font-black text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 transition duration-200 text-center shadow-lg shadow-emerald-500/30 hover:scale-[1.02]">
+                            <i class="fa-solid fa-play mr-1.5"></i> Practice Studio
+                        </a>
+                        <a href="/logout" class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-200 bg-white/10 hover:bg-white/20 hover:text-white transition duration-200 text-center border border-white/20">
+                            Log Out
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Learning Analytics Stats Bar -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t border-purple-900/40 text-center">
+                    <div class="p-5 rounded-2xl bg-purple-950/70 border border-purple-800/40 shadow-md">
+                        <div class="text-3xl sm:text-4xl font-black text-white">{{ stats.total_concepts_practiced if stats else '0' }}</div>
+                        <div class="text-sm font-bold text-purple-200 mt-1.5">Concepts Practiced</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-purple-950/70 border border-purple-800/40 shadow-md">
+                        <div class="text-3xl sm:text-4xl font-black text-emerald-400">{{ stats.total_mastered if stats else '0' }}</div>
+                        <div class="text-sm font-bold text-emerald-200 mt-1.5">Concepts Mastered</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-purple-950/70 border border-purple-800/40 shadow-md">
+                        <div class="text-3xl sm:text-4xl font-black text-amber-300 font-mono">{{ stats.independence_rate if stats else '--' }}</div>
+                        <div class="text-sm font-bold text-amber-200 mt-1.5" title="Concepts solved on Attempt 1 with zero hints">Solved on First Try</div>
+                        <div class="text-xs text-gray-300 font-semibold mt-0.5">Zero hints needed</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-purple-950/70 border border-purple-800/40 shadow-md">
+                        <div class="text-3xl sm:text-4xl font-black text-purple-200">{{ stats.total_lectures if stats else '0' }}</div>
+                        <div class="text-sm font-bold text-purple-200 mt-1.5">Lectures Studied</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Anti-ChatGPT Advantage Callout -->
+            <div class="mb-10 p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-purple-950 via-indigo-950 to-purple-950 border border-purple-400/40 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+                <div class="space-y-2">
+                    <div class="text-base sm:text-lg font-black text-white flex items-center space-x-2.5">
+                        <span class="text-amber-400 text-xl"><i class="fa-solid fa-lightbulb"></i></span>
+                        <span>Why ClipGenie Beats ChatGPT for Studying</span>
+                    </div>
+                    <p class="text-sm sm:text-base text-gray-100 leading-relaxed max-w-3xl font-normal">
+                        ChatGPT simply hands you the answer, creating a false illusion of understanding that fades before your exam. <strong class="text-white font-bold">ClipGenie never gives away answers</strong> — it uses Socratic hints to guide your recall and verifies you can apply it to an unfamiliar <strong class="text-emerald-300 font-bold">Real-World Test</strong> scenario.
+                    </p>
+                </div>
+                <div class="shrink-0">
+                    <span class="text-xs sm:text-sm font-mono font-bold px-4 py-2 rounded-xl bg-emerald-500/25 text-emerald-300 border border-emerald-400/50 inline-flex items-center space-x-2 shadow-lg">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                        <span>Zero Spoon-Fed Spoilers</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Recent Concept Mastery History -->
+            <div class="mb-10">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-white flex items-center space-x-2.5">
+                            <i class="fa-solid fa-clock-rotate-left text-purple-400"></i>
+                            <span>Concept Mastery & Real-World Application History</span>
+                        </h2>
+                        <p class="text-sm text-purple-200 font-medium mt-1">Track how well you understood lecture concepts and whether you solved the real-world application test.</p>
+                    </div>
+                    <a href="/practice" class="text-sm sm:text-base font-bold text-purple-300 hover:text-white transition shrink-0 ml-4 underline decoration-purple-500/60">
+                        Open Practice Studio →
+                    </a>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-purple-950/60 border border-purple-700/50 text-sm text-purple-100 mb-5 flex items-start sm:items-center space-x-3 shadow-inner">
+                    <i class="fa-solid fa-circle-question text-purple-400 text-base shrink-0 mt-0.5 sm:mt-0"></i>
+                    <span><strong class="text-white font-bold">What is the Real-World Test?</strong> It's a novel challenge scenario not mentioned in the video that proves you can apply the concept in practice, not just memorize words.</span>
+                </div>
+
+                {% if stats and stats.recent_activity %}
+                    <div class="space-y-3.5">
+                        {% for act in stats.recent_activity %}
+                            <div class="glass-card rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-purple-400/60 transition shadow-lg">
+                                <div class="space-y-1.5">
+                                    <div class="flex items-center space-x-2.5">
+                                        <span class="w-3 h-3 rounded-full {% if act.mastery_status == 'Mastered' %}bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]{% elif act.mastery_status == 'Improved' %}bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]{% else %}bg-purple-400{% endif %}"></span>
+                                        <h3 class="text-base sm:text-lg font-extrabold text-white">{{ act.concept_title or 'Lecture Concept' }}</h3>
+                                    </div>
+                                    <p class="text-xs sm:text-sm text-purple-200 font-mono font-medium">
+                                        Lecture: <span class="text-white font-bold">{{ act.video_id }}</span> • Last Practiced: <span class="text-gray-300">{{ act.updated_at }}</span>
+                                    </p>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3 shrink-0">
+                                    {% if act.transfer_score %}
+                                        <span class="text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-xl bg-indigo-950/90 text-indigo-200 border border-indigo-500/60 flex items-center space-x-2 shadow">
+                                            <i class="fa-solid fa-flask text-indigo-400"></i>
+                                            <span>Real-World Test: <strong class="text-white font-mono text-sm sm:text-base">{{ act.transfer_score }}%</strong></span>
+                                        </span>
+                                    {% endif %}
+                                    <span class="text-xs sm:text-sm font-black px-4 py-1.5 rounded-full border shadow {% if act.mastery_status == 'Mastered' %}bg-emerald-500/25 text-emerald-300 border-emerald-400/60{% elif act.mastery_status == 'Improved' %}bg-amber-500/25 text-amber-300 border-amber-400/60{% else %}bg-purple-950 text-purple-200 border-purple-700{% endif %}">
+                                        {{ act.mastery_status }}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="glass-card rounded-3xl p-10 text-center space-y-4 border border-purple-800/40">
+                        <i class="fa-solid fa-graduation-cap text-4xl text-purple-300"></i>
+                        <h3 class="text-xl font-extrabold text-white">No Practice History Yet</h3>
+                        <p class="text-sm text-gray-200 max-w-md mx-auto leading-relaxed">
+                            Jump into the Practice Studio, test your recall on video segments, and watch your mastery score build over time.
+                        </p>
+                        <a href="/practice" class="inline-flex items-center space-x-2 px-6 py-3 rounded-xl text-sm font-black text-black bg-gradient-to-r from-emerald-400 to-teal-300 shadow-lg hover:scale-[1.02] transition">
+                            <span>Start First Practice Session</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Processed Videos Link -->
+            <div class="pt-6 border-t border-purple-900/40 flex justify-between items-center text-sm text-gray-300 font-medium">
+                <span>Looking for the video import and concept clipper tool?</span>
+                <a href="/app" class="text-purple-300 hover:text-white font-bold flex items-center space-x-2 underline decoration-purple-500/50">
+                    <span>Open Video Studio</span>
+                    <i class="fa-solid fa-scissors text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

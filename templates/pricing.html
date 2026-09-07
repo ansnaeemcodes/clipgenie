@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans — ClipGenie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0b031d;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #c084fc 0%, #f472b6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(19, 7, 46, 0.7);
+            border: 1px solid rgba(147, 51, 234, 0.25);
+            backdrop-filter: blur(16px);
+        }
+        .popular-card {
+            background: linear-gradient(180deg, rgba(46, 16, 101, 0.8) 0%, rgba(19, 7, 46, 0.9) 100%);
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 50px -10px rgba(168, 85, 247, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow py-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400 mb-2 block">Simple & Honest Pricing</span>
+                <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 leading-tight">
+                    Invest in <span class="gradient-text">Real Mastery</span>, Not More Unwatched Tabs
+                </h1>
+                <p class="text-purple-200/90 text-lg leading-relaxed">
+                    Stop re-watching videos at 2x speed hoping you’ll remember. Start practicing with an AI coach that guarantees the material sticks.
+                </p>
+            </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20 items-stretch">
+                <!-- Free Plan -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between transition duration-300">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-white">Free Explorer</h3>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-purple-900/60 text-purple-300">Free Tier</span>
+                        </div>
+                        <p class="text-sm text-gray-100 font-medium mb-6">
+                            Perfect for trying out the anti-spoiler Socratic practice loop on your first lecture.
+                        </p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-black text-white">$0</span>
+                            <span class="text-sm text-purple-200">/ forever</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-gray-100 font-medium mb-8 border-t border-purple-900/40 pt-6">
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>5 Socratic Practice Loops / month</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>YouTube & Web Video link imports</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>Strict No-Answer Gap Feedback</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>Delta-scored retry engine</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>Pre-loaded demo lecture suite</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/practice" class="w-full py-3.5 rounded-xl text-center font-bold text-sm text-purple-200 bg-purple-950 hover:bg-purple-900 border border-purple-700/50 hover:text-white transition">
+                        Start Practicing Free
+                    </a>
+                </div>
+
+                <!-- Pro Plan (Most Popular) -->
+                <div class="popular-card rounded-3xl p-8 flex flex-col justify-between relative transform lg:-translate-y-2">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-xs font-extrabold uppercase tracking-wider shadow">
+                        Most Popular for Students
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl sm:text-2xl font-black text-white">Mastery Pro</h3>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Unlimited</span>
+                        </div>
+                        <p class="text-sm text-purple-100 font-medium mb-6">
+                            For ambitious students and engineers who want to ace exams and master technical courses.
+                        </p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-black text-white">$12</span>
+                            <span class="text-sm text-purple-200">/ month</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-white font-medium mb-8 border-t border-purple-700/50 pt-6">
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                                <span><strong>Unlimited</strong> Lecture Imports (YouTube & Facebook)</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                                <span><strong>Upload your own MP4, WebM</strong> files</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                                <span><strong>Key Moments Navigation</strong> across long talks</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                                <span><strong>Real-World Application Tests</strong> (Exam-readiness challenges)</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                                <span>Personal Mastery Analytics & "Solved on First Try" stats</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/register" class="w-full py-4 rounded-xl text-center font-black text-sm text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/30 transition">
+                        Get Mastery Pro Now →
+                    </a>
+                </div>
+
+                <!-- Lifelong Scholar / Researcher Plan -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between transition duration-300">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl sm:text-2xl font-black text-white">Lifelong Scholar</h3>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-900/50 text-indigo-300">Power Learner</span>
+                        </div>
+                        <p class="text-sm text-gray-100 font-medium mb-6">
+                            For graduate researchers, medical students, and technical candidates mastering dense semester-length syllabi.
+                        </p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-black text-white">$29</span>
+                            <span class="text-sm text-purple-200">/ month</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-gray-100 font-medium mb-8 border-t border-purple-900/40 pt-6">
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-indigo-400"></i>
+                                <span>Everything in Mastery Pro included</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-indigo-400"></i>
+                                <span><strong>Unlimited Multi-Hour Course Imports</strong></span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-indigo-400"></i>
+                                <span>Priority Groq Whisper transcription queue</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-indigo-400"></i>
+                                <span>Persistent Conceptual Knowledge Vault</span>
+                            </li>
+                            <li class="flex items-center space-x-2.5">
+                                <i class="fa-solid fa-check text-indigo-400"></i>
+                                <span>Exportable Anki & Markdown Retrieval Flashcards</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/register" class="w-full py-3.5 rounded-xl text-center font-bold text-sm text-indigo-200 bg-indigo-950 hover:bg-indigo-900 border border-indigo-700/50 hover:text-white transition">
+                        Get Scholar Plan →
+                    </a>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="max-w-4xl mx-auto pt-10 border-t border-purple-900/40">
+                <h3 class="text-2xl sm:text-3xl font-black text-white text-center mb-8">Frequently Asked Questions</h3>
+                <div class="space-y-4">
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-2">Why won't ClipGenie just give me the answer like ChatGPT?</h4>
+                        <p class="text-sm sm:text-base text-gray-100 font-normal leading-relaxed">
+                            Because ChatGPT does the thinking for you. Studies in cognitive neuroscience show that when a student is handed an answer, retention drops by over 80% within 48 hours. ClipGenie forces you to retrieve the concept yourself, locking it permanently into long-term memory.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-2">Can I import my own university lecture recordings?</h4>
+                        <p class="text-sm sm:text-base text-gray-100 font-normal leading-relaxed">
+                            Yes! You can paste any public video link (YouTube, Facebook, Vimeo) or upload your recording directly as an MP4, WebM, or MOV file. ClipGenie automatically extracts the concepts and builds your practice studio in seconds.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-2">What if a concept is discussed in multiple parts of the video?</h4>
+                        <p class="text-sm sm:text-base text-gray-100 font-normal leading-relaxed">
+                            ClipGenie’s curriculum intelligence detects when a concept is revisited later in the talk with new examples or synthesis, linking all related video scenes under that single concept card.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

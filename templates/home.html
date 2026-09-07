@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClipGenie — Contextual Video Clipper & Socratic Learning Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #080214;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-image: 
+                radial-gradient(rgba(168, 85, 247, 0.12) 1px, transparent 1px),
+                radial-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #c084fc 0%, #f472b6 45%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(19, 7, 46, 0.75);
+            border: 1px solid rgba(147, 51, 234, 0.28);
+            backdrop-filter: blur(16px);
+        }
+        .glow-hero {
+            box-shadow: 0 0 80px -20px rgba(168, 85, 247, 0.35);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow overflow-x-hidden">
+        <!-- Hero Section: Expansive 2-Column Edge-to-Edge Layout -->
+        <section class="relative pt-12 pb-20 lg:pt-16 lg:pb-28">
+            <!-- Left Ambient Orb -->
+            <div class="absolute top-10 -left-32 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+            <!-- Right Ambient Orb -->
+            <div class="absolute top-20 -right-32 w-[550px] h-[550px] bg-blue-600/15 rounded-full blur-[130px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                    
+                    <!-- Left Column: Copywriting, Pain Points & CTAs (7 cols) -->
+                    <div class="lg:col-span-7 space-y-6 text-left">
+                        <!-- Prominent ClipGenie Brand Logo on Native Transparent Background -->
+                        <div class="flex items-center mb-2">
+                            <img src="/static/images/logo_navbar.png" alt="ClipGenie Logo" 
+                                 class="h-20 sm:h-24 md:h-28 w-auto object-contain drop-shadow-[0_0_35px_rgba(168,85,247,0.55)] transition duration-300 hover:scale-105">
+                        </div>
+
+                        <!-- Dual Engine Badge: Socratic Retrieval & NLP -->
+                        <div class="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-purple-950/90 border border-purple-500/40 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-xs font-bold text-purple-200 uppercase tracking-wider">AI Socratic Learning Studio • Active Recall & Zero Spoilers</span>
+                        </div>
+
+                        <!-- Main Punchy Hook -->
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.08]">
+                            Stop Passively Rewatching. <span class="gradient-text">Master Every Concept.</span>
+                        </h1>
+
+                        <!-- Subheading: Active Learning Alignment -->
+                        <p class="text-base sm:text-lg lg:text-xl text-purple-200/90 leading-relaxed font-normal max-w-2xl">
+                            <strong>ClipGenie</strong> is an AI-powered platform that converts long lectures, talks, and webinars into interactive conceptual milestones. Using speech recognition and NLP, it detects key principles, sets chapter timestamps, and coaches you through active retrieval challenges — ensuring you genuinely understand what you watch.
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                            <a href="/practice" class="px-8 py-4 rounded-2xl text-base font-black text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-graduation-cap text-base"></i>
+                                <span>Launch Practice Studio →</span>
+                            </a>
+                            <a href="/app" class="px-6 py-4 rounded-2xl text-sm font-bold text-white bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 hover:scale-[1.02] transition flex items-center justify-center space-x-2 shadow-lg">
+                                <i class="fa-solid fa-file-video text-xs text-purple-400"></i>
+                                <span>Import Lecture Video</span>
+                            </a>
+                        </div>
+
+                        <!-- Hackathon Portal 4 Capabilities Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 max-w-2xl">
+                            <div class="p-3.5 rounded-2xl bg-purple-950/60 border border-purple-800/60">
+                                <div class="flex items-center space-x-1.5 text-purple-300 text-sm font-bold mb-1.5">
+                                    <i class="fa-solid fa-microphone-lines"></i>
+                                    <span>Speech & NLP</span>
+                                </div>
+                                <div class="text-xs sm:text-sm text-purple-100 font-medium leading-snug">Whisper ASR speech recognition with semantic parsing</div>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-purple-950/60 border border-purple-800/60">
+                                <div class="flex items-center space-x-1.5 text-emerald-400 text-sm font-bold mb-1.5">
+                                    <i class="fa-solid fa-brain"></i>
+                                    <span>Key Concepts</span>
+                                </div>
+                                <div class="text-xs sm:text-sm text-purple-100 font-medium leading-snug">Automatic detection of core lecture concepts</div>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-purple-950/60 border border-purple-800/60">
+                                <div class="flex items-center space-x-1.5 text-indigo-300 text-sm font-bold mb-1.5">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    <span>Chapters & Timestamps</span>
+                                </div>
+                                <div class="text-xs sm:text-sm text-purple-100 font-medium leading-snug">Precision chapter boundaries and timestamps</div>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-purple-950/60 border border-purple-800/60">
+                                <div class="flex items-center space-x-1.5 text-teal-300 text-sm font-bold mb-1.5">
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                    <span>Review & Share</span>
+                                </div>
+                                <div class="text-xs sm:text-sm text-purple-100 font-medium leading-snug">Lossless MP4 export and interactive practice</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive Studio Visual Showcase (5 cols) -->
+                    <div class="lg:col-span-5 relative">
+                        <!-- Glow behind card -->
+                        <div class="absolute -inset-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+
+                        <div class="relative glass-card rounded-3xl p-5 border border-purple-500/40 shadow-2xl space-y-4">
+                            <!-- Mock Studio Header -->
+                            <div class="flex items-center justify-between pb-3 border-b border-purple-800/50">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                    <span class="text-xs sm:text-sm font-mono font-bold text-purple-200 ml-2">Live Studio Preview</span>
+                                </div>
+                                <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-purple-900 text-purple-200 border border-purple-700">0:26 - 1:16 (50s)</span>
+                            </div>
+
+                            <!-- Video Segment Card -->
+                            <div class="rounded-xl overflow-hidden bg-black/80 border border-purple-800/60 relative aspect-video flex items-center justify-center group">
+                                <div class="w-14 h-14 rounded-2xl bg-purple-600/60 backdrop-blur-md flex items-center justify-center text-white text-xl shadow-xl group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-2.5 left-3 right-3 flex justify-between items-center text-xs sm:text-sm">
+                                    <span class="font-bold text-white flex items-center space-x-1.5 truncate pr-2">
+                                        <i class="fa-solid fa-scissors text-emerald-400 text-xs"></i>
+                                        <span class="truncate">Top Moment: AI Inflection Point & Metaphors</span>
+                                    </span>
+                                    <span class="text-xs text-emerald-300 font-mono font-bold bg-emerald-950/80 px-2 py-0.5 rounded shrink-0">98 Score</span>
+                                </div>
+                            </div>
+
+                            <!-- Challenge Question Example -->
+                            <div class="p-3.5 rounded-xl bg-purple-950/60 border border-purple-800/50 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Practice Challenge:</span>
+                                    <span class="text-xs text-purple-300 font-mono font-bold">No Spoilers</span>
+                                </div>
+                                <p class="text-sm sm:text-base text-white font-medium italic leading-relaxed">
+                                    "Why does Suleyman argue that viewing AI as passive software is fundamentally dishonest?"
+                                </p>
+                            </div>
+
+                            <!-- Action Bar -->
+                            <div class="grid grid-cols-2 gap-2 pt-1">
+                                <a href="/app" class="p-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 text-xs sm:text-sm font-bold text-center border border-purple-700/50 transition">
+                                    <i class="fa-solid fa-scissors mr-1 text-purple-400"></i> Video Studio
+                                </a>
+                                <a href="/practice" class="p-2.5 rounded-xl bg-emerald-950/70 hover:bg-emerald-900 text-emerald-300 text-xs sm:text-sm font-bold text-center border border-emerald-500/40 transition">
+                                    <i class="fa-solid fa-brain mr-1 text-emerald-400"></i> Practice Studio
+                                </a>
+                            </div>
+
+                            <!-- AI Context Guard Stamp -->
+                            <div class="p-3 rounded-xl bg-black/60 border border-emerald-500/40 flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-shield-halved text-emerald-400 text-sm"></i>
+                                    <div class="text-xs sm:text-sm text-white font-bold">AI Context Guard</div>
+                                </div>
+                                <span class="text-xs font-mono font-black text-emerald-400 bg-emerald-900/60 px-2.5 py-1 rounded-full border border-emerald-500/30">
+                                    100% Grounded ✓
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- The Two Flagship Features Showcase (Opus Clip + Socratic Studio) -->
+        <section class="py-16 border-y border-purple-950/80 bg-[#0c031c]/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-purple-400 mb-2 block">Two Flagship Engines</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">
+                        Built for Fast Creation & Deep Retention
+                    </h2>
+                    <p class="text-purple-200 text-base sm:text-lg mt-3 font-normal">
+                        Whether you need short clips for your audience or deep mastery for your own brain, ClipGenie delivers both with 1 click.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Feature 1: Contextual Video Clipper -->
+                    <div class="glass-card p-8 rounded-3xl border border-purple-600/40 hover:border-purple-400 transition flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-purple-900/60 text-purple-300 flex items-center justify-center text-xl font-bold shadow-lg">
+                                    <i class="fa-solid fa-scissors"></i>
+                                </div>
+                                <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-purple-950 border border-purple-700/60 text-purple-300">
+                                    Feature 1 • Video Studio
+                                </span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-purple-300 transition">
+                                 Key Concept Moments & Clips
+                            </h3>
+                            <p class="text-base text-gray-100 font-normal leading-relaxed">
+                                Never scrub through an hour-long recording to find 5 minutes again. ClipGenie scans speech cadence and topic transitions to isolate exact, context-rich concept clips for rapid review.
+                            </p>
+                            <div class="space-y-3 pt-2 text-sm text-purple-100 font-medium">
+                                <div class="flex items-center space-x-2.5">
+                                    <i class="fa-solid fa-bolt text-amber-400"></i>
+                                    <span><strong>Exact Concept Extraction:</strong> Pinpoints the precise scenes where core principles and theorems are taught.</span>
+                                </div>
+                                <div class="flex items-center space-x-2.5">
+                                    <i class="fa-solid fa-magnifying-glass text-indigo-400"></i>
+                                    <span><strong>Topic-Targeted Search:</strong> Filter by concept or keyword to slice out the exact, complete thought block.</span>
+                                </div>
+                                <div class="flex items-center space-x-2.5">
+                                    <i class="fa-solid fa-film text-emerald-400"></i>
+                                    <span><strong>Precision Chapter Timestamps:</strong> Instant 1-click video jumps for rapid exam revision.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-purple-900/50">
+                            <a href="/app" class="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-900/40 transition flex items-center justify-center space-x-2">
+                                <span>Open Video Studio</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Interactive Practice & Study Studio -->
+                    <div class="glass-card p-8 rounded-3xl border border-emerald-500/40 hover:border-emerald-400 transition flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-950/80 text-emerald-400 flex items-center justify-center text-xl font-bold shadow-lg border border-emerald-500/40">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <span class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/50 text-emerald-300">
+                                    Feature 2 • Study Studio
+                                </span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-emerald-300 transition">
+                                Interactive Practice & Study Studio
+                            </h3>
+                            <p class="text-base text-gray-100 font-normal leading-relaxed">
+                                Watching video creates the illusion of learning. ClipGenie turns any video clip into an interactive challenge that tests your memory, refuses to spoon-feed answers, and ensures knowledge permanently sticks.
+                            </p>
+                            <div class="space-y-3 pt-2 text-sm text-emerald-100 font-medium">
+                                <div class="flex items-center space-x-2.5">
+                                    <i class="fa-solid fa-lock text-rose-400"></i>
+                                    <span><strong>Zero Spoon-Fed Answers:</strong> Never gives away solutions — guides you with intelligent hints.</span>
+                                </div>
+                                <div class="flex items-center space-x-2.5">
+                                    <i class="fa-solid fa-forward-step text-emerald-400"></i>
+                                    <span><strong>Adaptive Fast-Track:</strong> Score 80%+ skips retry and advances straight to real-world challenges.</span>
+                                </div>
+                                <div class="flex items-center space-x-2.5">
+                                    <i class="fa-solid fa-shield-halved text-indigo-400"></i>
+                                    <span><strong>AI Context Guard:</strong> Secondary AI critic audits feedback for 100% transcript accuracy.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-purple-900/50">
+                            <a href="/practice" class="w-full py-3.5 rounded-xl font-bold text-sm text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/30 transition flex items-center justify-center space-x-2">
+                                <span>Start Interactive Practice</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Call to Action -->
+        <section class="py-20 relative text-center">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="glass-card p-10 sm:p-14 rounded-3xl border border-purple-500/40 glow-hero relative overflow-hidden">
+                    <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
+                        Clip It for Content. Master It for Life.
+                    </h2>
+                    <p class="text-purple-200/90 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+                        Try our interactive demo lecture right now, or paste any video link from YouTube or Facebook.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <a href="/app" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-lg shadow-purple-900/50 transition">
+                            Open Video Studio →
+                        </a>
+                        <a href="/practice" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/30 transition">
+                            Start Interactive Practice →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

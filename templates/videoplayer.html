@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player - ClipGenie Highlights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.plyr.io/3.7.2/plyr.polyfilled.js"></script>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.2/plyr.css" />
+    <style>
+        body {
+            background-color: #13072e;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        :root {
+            --plyr-color-main: #8B5CF6;
+            --plyr-range-fill-background: #8B5CF6;
+            --plyr-video-control-color: #A78BFA;
+            --plyr-video-control-color-hover: #C4B5FD;
+        }
+        .custom-controls {
+            background: rgba(17, 17, 58, 0.85);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            backdrop-filter: blur(14px);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    {% include 'navbar.html' %}
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <!-- Player Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div>
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold mb-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>AI Video Generation Complete</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Your Summarized Short Video</h1>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="/practice?video_id={{ video_id }}" class="px-5 py-2.5 rounded-xl font-black text-sm text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-lg shadow-emerald-500/25 transition duration-200 flex items-center space-x-2 hover:scale-[1.02]">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Practice & Master This Video →</span>
+                </a>
+                <a href="/app" class="px-4 py-2.5 rounded-xl font-bold text-sm text-white bg-purple-600 hover:bg-purple-500 shadow-md transition duration-200">
+                    + Process Another
+                </a>
+                <a href="{{ output_video_path }}" download class="px-4 py-2.5 rounded-xl font-semibold text-sm text-purple-200 bg-white/10 hover:bg-white/20 transition duration-200 border border-purple-400/30 flex items-center space-x-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Download MP4</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Video Player Box -->
+        <div class="rounded-2xl overflow-hidden shadow-2xl border border-purple-800/40 mb-6 bg-black">
+            <video id="player" playsinline controls class="w-full">
+                <source src="{{ output_video_path }}" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Direct Bridge: Turn Video Clips into Active Practice -->
+        <div class="mb-6 p-6 rounded-2xl bg-gradient-to-r from-purple-950 via-indigo-950 to-purple-950 border border-emerald-500/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="space-y-1 text-center md:text-left">
+                <div class="text-base font-extrabold text-white flex items-center justify-center md:justify-start space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Ready to make this knowledge stick?</span>
+                </div>
+                <p class="text-xs text-purple-200/80 max-w-xl">
+                    Don't stop at passive review. Test yourself on each key moment with ClipGenie's anti-spoiler Socratic tutor and real-world transfer checks.
+                </p>
+            </div>
+            <a href="/practice?video_id={{ video_id }}" class="px-6 py-3 rounded-xl font-black text-sm text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-lg shadow-emerald-500/30 flex items-center space-x-2 shrink-0 hover:scale-[1.02] transition">
+                <i class="fa-solid fa-graduation-cap text-base"></i>
+                <span>Start Interactive Practice Now →</span>
+            </a>
+        </div>
+
+        <!-- Metadata & Timestamps Box -->
+        <div class="custom-controls p-6 rounded-2xl space-y-4">
+            <div class="flex flex-wrap justify-between items-center gap-3">
+                <div class="px-4 py-2 rounded-xl bg-purple-900/60 border border-purple-700/40 text-sm text-purple-200">
+                    Prompt Focus: <span class="font-bold text-white font-mono">"{{ keyword }}"</span>
+                </div>
+                <div class="px-4 py-2 rounded-xl bg-purple-900/60 border border-purple-700/40 text-sm text-purple-200 flex items-center space-x-2">
+                    <svg class="w-4 h-4 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Total Highlight Duration: <strong class="text-white">{{ video_duration }}</strong></span>
+                </div>
+            </div>
+
+            <!-- Timestamps Details -->
+            <div class="p-5 bg-purple-950/70 border border-purple-900/40 rounded-xl">
+                <h3 class="text-sm font-bold text-purple-200 mb-2 flex items-center space-x-2">
+                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    <span>Extracted Segment Timestamps:</span>
+                </h3>
+                <div class="text-xs sm:text-sm text-purple-100 font-mono leading-relaxed bg-black/40 p-3 rounded-lg border border-purple-900/30">
+                    {{ short_video_timestamps }}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        const player = new Plyr('#player', {
+            controls: [
+                'play-large',
+                'play',
+                'progress',
+                'current-time',
+                'duration',
+                'mute',
+                'volume',
+                'settings',
+                'fullscreen'
+            ]
+        });
+    </script>
+</body>
+</html>
