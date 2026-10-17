@@ -67,19 +67,25 @@ def process_video(video_path, user_input, upload_folder, summarized_folder, user
         logger.info(f"Transcription path: {transcription_file_path}")
         logger.info(f"Output path: {output_video_path}")
 
-        # Step 1: Extract audio
+        # Step 1: Extract audio (32k mono for fast upload & Groq 25MB compliance)
         logger.info("Extracting audio from video...")
         with VideoFileClip(video_path) as video_clip:
-            video_clip.audio.write_audiofile(audio_path)
+            video_clip.audio.write_audiofile(audio_path, bitrate="32k", ffmpeg_params=["-ac", "1"], logger=None)
         logger.info("Audio extraction completed")
 
-        # Step 2: Load Whisper model and transcribe
-        model = get_whisper_model()
-        
+        # Step 2: Transcribe via Groq Whisper API first, fallback to local Whisper
         start = time.time()
         logger.info(f"Starting transcription of file: {audio_path}")
-        result = model.transcribe(audio_path, fp16=False)
-        logger.info("Transcription completed successfully")
+        try:
+            import groq_transcription
+            groq_segments = groq_transcription.transcribe_with_groq(audio_path)
+            result = {'segments': groq_segments}
+            logger.info("Groq Whisper transcription completed successfully")
+        except Exception as groq_err:
+            logger.warning(f"Groq Whisper failed ({groq_err}), falling back to local Whisper...")
+            model = get_whisper_model()
+            result = model.transcribe(audio_path, fp16=False)
+            logger.info("Local Whisper transcription completed successfully")
         end = time.time()
         logger.info(f"Transcription completed in {end - start:.2f} seconds")
 

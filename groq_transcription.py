@@ -116,7 +116,7 @@ def get_or_create_transcript(video_path, force_live=False):
 
     # 3. Live extraction & transcription
     audio_path = os.path.join(config.UPLOADS_DIR, f"{base_name}_audio.mp3")
-    if not os.path.exists(audio_path):
+    if not os.path.exists(audio_path) or os.path.getsize(audio_path) > 24 * 1024 * 1024:
         audio_path = extract_audio_from_video(video_path, audio_path)
         
     try:

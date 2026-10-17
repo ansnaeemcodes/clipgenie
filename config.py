@@ -6,11 +6,11 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 from dotenv import load_dotenv
 
-# Load environment variables from .env if present
-load_dotenv()
+# Load environment variables from .env if present (utf-8-sig strips any Windows BOM)
+load_dotenv(encoding="utf-8-sig", override=True)
 
-GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
-SECRET_KEY = os.environ.get('SECRET_KEY', 'clipgenie-hackathon-2026-secret-key')
+GROQ_API_KEY = (os.environ.get('GROQ_API_KEY') or os.environ.get('\ufeffGROQ_API_KEY') or '').strip()
+SECRET_KEY = os.environ.get('SECRET_KEY', 'clipgenie-hackathon-2026-secret-key').strip()
 
 # LLM Models on Groq
 GROQ_MODEL = os.environ.get('GROQ_MODEL', 'openai/gpt-oss-120b')
