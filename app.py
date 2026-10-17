@@ -151,12 +151,21 @@ def app_page():
             # Move the output video to the static folder for web playback
             output_video_filename = os.path.basename(result['local_path'])
             static_video_path = os.path.join(app.config['STATIC_FOLDER'], output_video_filename)
-            if os.path.exists(static_video_path):
+            if os.path.exists(static_video_path) and os.path.abspath(result['local_path']) != os.path.abspath(static_video_path):
                 try:
                     os.remove(static_video_path)
                 except Exception as e:
                     logger.warning(f"Could not remove existing video at {static_video_path}: {e}")
-            shutil.move(result['local_path'], static_video_path)
+            if os.path.exists(result['local_path']) and os.path.abspath(result['local_path']) != os.path.abspath(static_video_path):
+                shutil.copy2(result['local_path'], static_video_path)
+
+            # Also ensure original video is accessible in /static/ for Practice Studio playback
+            orig_static_path = os.path.join(app.config['STATIC_FOLDER'], os.path.basename(filename))
+            if os.path.exists(filename) and not os.path.exists(orig_static_path):
+                try:
+                    shutil.copy2(filename, orig_static_path)
+                except Exception as copy_err:
+                    logger.warning(f"Could not copy source video to static folder: {copy_err}")
 
             video_id = os.path.splitext(os.path.basename(filename))[0]
 
@@ -165,7 +174,7 @@ def app_page():
                 "id": video_id,
                 "title": orig_filename or "Processed Video",
                 "filename": os.path.basename(filename),
-                "video_url": f"/static/{os.path.basename(filename)}" if os.path.exists(os.path.join(app.config['STATIC_FOLDER'], os.path.basename(filename))) else f"/uploads/{os.path.basename(filename)}",
+                "video_url": f"/static/{os.path.basename(filename)}" if os.path.exists(orig_static_path) else f"/uploads/{os.path.basename(filename)}",
                 "duration_str": result.get('duration', '0:00'),
                 "source": "studio_upload",
                 "concepts_count": 0
@@ -217,6 +226,9 @@ def videoplayer():
                                video_duration='00:03:45',
                                short_video_timestamps='00:00:26 - 00:01:16, 00:05:20 - 00:06:05',
                                video_id='tedtalk')
+
+    with open(metadata_path, 'r', encoding='utf-8') as f:
+        metadata = json.load(f)
 
     return render_template('videoplayer.html', 
                           output_video_path=metadata['output_video_path'],

@@ -47,7 +47,11 @@ class StorageManager:
             raise
 
     def upload_to_firebase(self, file_path, user_id):
-        """Upload file to Firebase Storage under user's folder"""
+        """Upload file to Firebase Storage under user's folder (skips gracefully in local mode)"""
+        if self.bucket is None:
+            logger.info("Firebase Storage bucket not configured; using local storage for processed clip.")
+            return None
+
         try:
             # Generate Firebase Storage path
             filename = os.path.basename(file_path)
@@ -67,8 +71,8 @@ class StorageManager:
             return url
 
         except Exception as e:
-            logger.error(f"Error uploading to Firebase Storage: {str(e)}")
-            raise
+            logger.warning(f"Skipping Firebase Storage upload (using local storage): {str(e)}")
+            return None
 
     def process_video_storage(self, video_path, user_id):
         """Complete process of moving and uploading video"""
@@ -76,7 +80,7 @@ class StorageManager:
             # Move to summarized folder
             summarized_path = self.move_to_summarized(video_path, user_id)
             
-            # Upload to Firebase
+            # Upload to Firebase if configured
             firebase_url = self.upload_to_firebase(summarized_path, user_id)
             
             return {
@@ -86,4 +90,7 @@ class StorageManager:
 
         except Exception as e:
             logger.error(f"Error in video storage processing: {str(e)}")
-            raise
+            return {
+                'local_path': video_path,
+                'firebase_url': None
+            }

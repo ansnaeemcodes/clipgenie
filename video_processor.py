@@ -67,34 +67,56 @@ def process_video(video_path, user_input, upload_folder, summarized_folder, user
         logger.info(f"Transcription path: {transcription_file_path}")
         logger.info(f"Output path: {output_video_path}")
 
-        # Step 1: Extract audio (32k mono for fast upload & Groq 25MB compliance)
-        logger.info("Extracting audio from video...")
-        with VideoFileClip(video_path) as video_clip:
-            video_clip.audio.write_audiofile(audio_path, bitrate="32k", ffmpeg_params=["-ac", "1"], logger=None)
-        logger.info("Audio extraction completed")
+        # Step 1 & 2: Reuse existing transcript if already transcribed, otherwise extract audio & transcribe
+        cached_segments = []
+        if os.path.exists(transcription_file_path) and os.path.getsize(transcription_file_path) > 20:
+            try:
+                import re
+                with open(transcription_file_path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        m = re.match(r'^([\d\.]+)s\s+([\d\.]+)s\s+(.+)$', line.strip())
+                        if m:
+                            cached_segments.append({
+                                'start': float(m.group(1)),
+                                'end': float(m.group(2)),
+                                'text': m.group(3).strip()
+                            })
+            except Exception as cache_err:
+                logger.warning(f"Could not read cached transcription file: {cache_err}")
+                cached_segments = []
 
-        # Step 2: Transcribe via Groq Whisper API first, fallback to local Whisper
-        start = time.time()
-        logger.info(f"Starting transcription of file: {audio_path}")
-        try:
-            import groq_transcription
-            groq_segments = groq_transcription.transcribe_with_groq(audio_path)
-            result = {'segments': groq_segments}
-            logger.info("Groq Whisper transcription completed successfully")
-        except Exception as groq_err:
-            logger.warning(f"Groq Whisper failed ({groq_err}), falling back to local Whisper...")
-            model = get_whisper_model()
-            result = model.transcribe(audio_path, fp16=False)
-            logger.info("Local Whisper transcription completed successfully")
-        end = time.time()
-        logger.info(f"Transcription completed in {end - start:.2f} seconds")
+        if len(cached_segments) >= 3:
+            logger.info(f"Reusing existing transcription ({len(cached_segments)} segments) from {transcription_file_path}")
+            result = {'segments': cached_segments}
+        else:
+            # Step 1: Extract audio (32k mono for fast upload & Groq 25MB compliance)
+            logger.info("Extracting audio from video...")
+            with VideoFileClip(video_path) as video_clip:
+                video_clip.audio.write_audiofile(audio_path, bitrate="32k", ffmpeg_params=["-ac", "1"], logger=None)
+            logger.info("Audio extraction completed")
 
-        # Write full transcription to file
-        logger.info("Writing full transcription to file...")
-        with open(transcription_file_path, 'w', encoding='utf-8') as file:
-            for segment in result['segments']:
-                file.write(f"{segment['start']:.2f}s {segment['end']:.2f}s {segment['text']}\n")
-        logger.info(f"Full transcription saved at {transcription_file_path}")
+            # Step 2: Transcribe via Groq Whisper API first, fallback to local Whisper
+            start = time.time()
+            logger.info(f"Starting transcription of file: {audio_path}")
+            try:
+                import groq_transcription
+                groq_segments = groq_transcription.transcribe_with_groq(audio_path)
+                result = {'segments': groq_segments}
+                logger.info("Groq Whisper transcription completed successfully")
+            except Exception as groq_err:
+                logger.warning(f"Groq Whisper failed ({groq_err}), falling back to local Whisper...")
+                model = get_whisper_model()
+                result = model.transcribe(audio_path, fp16=False)
+                logger.info("Local Whisper transcription completed successfully")
+            end = time.time()
+            logger.info(f"Transcription completed in {end - start:.2f} seconds")
+
+            # Write full transcription to file
+            logger.info("Writing full transcription to file...")
+            with open(transcription_file_path, 'w', encoding='utf-8') as file:
+                for segment in result['segments']:
+                    file.write(f"{segment['start']:.2f}s {segment['end']:.2f}s {segment['text']}\n")
+            logger.info(f"Full transcription saved at {transcription_file_path}")
 
         # Process segments
         segments = process_segments(result['segments'], user_input, video_path)
@@ -114,7 +136,7 @@ def process_video(video_path, user_input, upload_folder, summarized_folder, user
         if user_id:
             storage_result = storage_mgr.process_video_storage(output_video_path, user_id)
             return {
-                'local_path': output_video_path,
+                'local_path': storage_result.get('local_path') or output_video_path,
                 'firebase_url': storage_result.get('firebase_url'),
                 'duration': formatted_duration,
                 'timestamps': formatted_timestamps
