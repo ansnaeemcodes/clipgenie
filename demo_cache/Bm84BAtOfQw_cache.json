@@ -1,0 +1,3200 @@
+{
+  "video_file": "Bm84BAtOfQw.mp4",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.52,
+      "text": "I just read a study that by 2030, AI is going to create 170 million new jobs,"
+    },
+    {
+      "start": 5.52,
+      "end": 8.4,
+      "text": "but they won't be jobs where you just sit there and chat with AI."
+    },
+    {
+      "start": 8.4,
+      "end": 11.04,
+      "text": "There'll be jobs where you build AI agents."
+    },
+    {
+      "start": 11.04,
+      "end": 13.92,
+      "text": "And I get it, the AI space is moving crazy fast."
+    },
+    {
+      "start": 13.92,
+      "end": 16.24,
+      "text": "I mean, what even is an AI agent?"
+    },
+    {
+      "start": 16.24,
+      "end": 18.32,
+      "text": "Not too long ago, I was right there with you."
+    },
+    {
+      "start": 18.32,
+      "end": 21.76,
+      "text": "But after going deep myself and building dozens of agents,"
+    },
+    {
+      "start": 21.76,
+      "end": 26.0,
+      "text": "I found out it's actually way easier to build and manage these agents than it looks."
+    },
+    {
+      "start": 26.0,
+      "end": 32.0,
+      "text": "So much so that my whole team and I have hundreds of AI agents doing 92% of all the work across my"
+    },
+    {
+      "start": 32.0,
+      "end": 36.72,
+      "text": "companies. So today, we're going to go through every step on how you can build your first AI agent,"
+    },
+    {
+      "start": 36.72,
+      "end": 42.96,
+      "text": "starting with AI chatbot versus AI agent. A chat is like a meeting."
+    },
+    {
+      "start": 42.96,
+      "end": 44.8,
+      "text": "An agent is like an employee."
+    },
+    {
+      "start": 44.8,
+      "end": 47.12,
+      "text": "Chat is you ask it a question and then you get an answer."
+    },
+    {
+      "start": 47.12,
+      "end": 49.44,
+      "text": "And a lot of people, there's copy and paste things and do something with it."
+    },
+    {
+      "start": 49.44,
+      "end": 54.32,
+      "text": "With an agent, you actually tell it what you want to do and it runs the full workflow."
+    },
+    {
+      "start": 54.32,
+      "end": 57.52,
+      "text": "Think of it like these are the body parts. I call it datum."
+    },
+    {
+      "start": 57.52,
+      "end": 60.32,
+      "text": "So one is D, it can diagnose."
+    },
+    {
+      "start": 60.32,
+      "end": 64.16,
+      "text": "It can actually figure out what the problem is and solve it on your behalf,"
+    },
+    {
+      "start": 64.16,
+      "end": 65.52,
+      "text": "kind of like hiring a consultant."
+    },
+    {
+      "start": 65.52,
+      "end": 67.84,
+      "text": "Next is A, it can assemble."
+    },
+    {
+      "start": 67.84,
+      "end": 70.72,
+      "text": "It can build a plan, it can design tools."
+    },
+    {
+      "start": 70.72,
+      "end": 72.96,
+      "text": "And that way, I think of it like an architect."
+    },
+    {
+      "start": 72.96,
+      "end": 76.72,
+      "text": "It knows all the different pieces that it can pull together to get something done."
+    },
+    {
+      "start": 76.72,
+      "end": 79.44,
+      "text": "Next, we have T, it can take action."
+    },
+    {
+      "start": 79.44,
+      "end": 82.56,
+      "text": "And that way, I think about it like somebody that executes tasks."
+    },
+    {
+      "start": 82.64,
+      "end": 85.52,
+      "text": "And finally, A, it can assess."
+    },
+    {
+      "start": 85.52,
+      "end": 88.8,
+      "text": "It can check its own works, see where the opportunities are,"
+    },
+    {
+      "start": 88.8,
+      "end": 90.96,
+      "text": "and then make sure that it landed on the right answer."
+    },
+    {
+      "start": 90.96,
+      "end": 93.6,
+      "text": "And if not, it can review itself and make itself better."
+    },
+    {
+      "start": 93.6,
+      "end": 95.6,
+      "text": "This whole thing is called a loop."
+    },
+    {
+      "start": 95.6,
+      "end": 98.96,
+      "text": "And without a loop, an agent would just do the job and then stop."
+    },
+    {
+      "start": 98.96,
+      "end": 100.16,
+      "text": "That's called an automation."
+    },
+    {
+      "start": 100.16,
+      "end": 102.0,
+      "text": "But with an agent, it keeps learning."
+    },
+    {
+      "start": 102.0,
+      "end": 103.28,
+      "text": "It keeps getting better."
+    },
+    {
+      "start": 103.28,
+      "end": 104.64,
+      "text": "It kind of acts like a person."
+    },
+    {
+      "start": 104.64,
+      "end": 106.48,
+      "text": "With chat, it pulls on us."
+    },
+    {
+      "start": 106.48,
+      "end": 108.0,
+      "text": "It's ask us, what do you want me to do?"
+    },
+    {
+      "start": 108.0,
+      "end": 109.44,
+      "text": "We prompt it and then we wait."
+    },
+    {
+      "start": 109.44,
+      "end": 111.2,
+      "text": "With an agent, it pushes on us."
+    },
+    {
+      "start": 111.28,
+      "end": 113.52,
+      "text": "It's doing things and changing things all the time"
+    },
+    {
+      "start": 113.52,
+      "end": 115.92,
+      "text": "and it's checking in to make sure that it did it the right way."
+    },
+    {
+      "start": 115.92,
+      "end": 118.24,
+      "text": "So you might be able to buy back your time with chat,"
+    },
+    {
+      "start": 118.24,
+      "end": 121.44,
+      "text": "but you'll actually learn to let go of whole areas with an agent."
+    },
+    {
+      "start": 121.44,
+      "end": 124.56,
+      "text": "But how do we even know if it's worth giving something to an agent"
+    },
+    {
+      "start": 124.56,
+      "end": 125.76,
+      "text": "instead of just doing ourselves?"
+    },
+    {
+      "start": 125.76,
+      "end": 127.36,
+      "text": "For that, I use the rule of R."
+    },
+    {
+      "start": 128.32,
+      "end": 129.68,
+      "text": "The first one is repetitive."
+    },
+    {
+      "start": 129.68,
+      "end": 131.6,
+      "text": "Is this a task that I'm going to do every week?"
+    },
+    {
+      "start": 131.6,
+      "end": 132.96,
+      "text": "Two is rules based."
+    },
+    {
+      "start": 132.96,
+      "end": 136.4,
+      "text": "Does it take the same input and generate the same output every time?"
+    },
+    {
+      "start": 136.4,
+      "end": 138.96,
+      "text": "The third is does it generate a return on my time?"
+    },
+    {
+      "start": 138.96,
+      "end": 140.96,
+      "text": "For the amount of time it takes me to build this thing,"
+    },
+    {
+      "start": 140.96,
+      "end": 143.52,
+      "text": "I'll show you how, will I actually get my time back?"
+    },
+    {
+      "start": 143.52,
+      "end": 145.04,
+      "text": "If the task takes two minutes,"
+    },
+    {
+      "start": 145.04,
+      "end": 146.96,
+      "text": "but it would take me two weeks to build this agent,"
+    },
+    {
+      "start": 146.96,
+      "end": 148.8,
+      "text": "how about I just keep doing the two minute task?"
+    },
+    {
+      "start": 148.8,
+      "end": 152.16,
+      "text": "But if you think about it and the task is only done once in a while,"
+    },
+    {
+      "start": 152.16,
+      "end": 155.36,
+      "text": "doesn't follow a clear process or get to a specific outcome"
+    },
+    {
+      "start": 155.36,
+      "end": 158.8,
+      "text": "and doesn't save you more time to automate it than just doing it manually,"
+    },
+    {
+      "start": 158.8,
+      "end": 160.16,
+      "text": "then stick with what you got."
+    },
+    {
+      "start": 160.16,
+      "end": 160.96,
+      "text": "Use the chat."
+    },
+    {
+      "start": 160.96,
+      "end": 164.16,
+      "text": "So now that we know the difference between chat and agents,"
+    },
+    {
+      "start": 164.16,
+      "end": 165.2,
+      "text": "how do we build one?"
+    },
+    {
+      "start": 165.2,
+      "end": 167.12,
+      "text": "To make an agent, it's super easy."
+    },
+    {
+      "start": 167.12,
+      "end": 170.64,
+      "text": "And I even turned it into an acronym called agent."
+    },
+    {
+      "start": 170.64,
+      "end": 174.32,
+      "text": "And the first step is A, which means aim for a specific outcome."
+    },
+    {
+      "start": 175.12,
+      "end": 176.56,
+      "text": "When I'm sitting down and I'm like,"
+    },
+    {
+      "start": 176.56,
+      "end": 177.84,
+      "text": "I want to build an agent for this,"
+    },
+    {
+      "start": 177.84,
+      "end": 179.52,
+      "text": "I have to first ask myself,"
+    },
+    {
+      "start": 179.52,
+      "end": 181.68,
+      "text": "what is the specific goal?"
+    },
+    {
+      "start": 181.68,
+      "end": 184.32,
+      "text": "Start with the outcome, the agent is going to give you."
+    },
+    {
+      "start": 184.32,
+      "end": 185.92,
+      "text": "It's like if I'm climbing a mountain,"
+    },
+    {
+      "start": 185.92,
+      "end": 187.52,
+      "text": "taking a step is the task,"
+    },
+    {
+      "start": 187.52,
+      "end": 189.36,
+      "text": "getting to the top is the outcome."
+    },
+    {
+      "start": 189.36,
+      "end": 192.64,
+      "text": "I want to define the outcome and be really crystal clear"
+    },
+    {
+      "start": 192.64,
+      "end": 196.8,
+      "text": "because the cool part with AI and agents is that the AI can actually figure its way there."
+    },
+    {
+      "start": 196.8,
+      "end": 200.16,
+      "text": "This is why creating AI agents is hard for people"
+    },
+    {
+      "start": 200.16,
+      "end": 201.92,
+      "text": "because they want to control every step,"
+    },
+    {
+      "start": 201.92,
+      "end": 204.72,
+      "text": "but the truth is it may know how to get there way better than you can figure it out."
+    },
+    {
+      "start": 204.72,
+      "end": 206.32,
+      "text": "Think about it like when you hire a person."
+    },
+    {
+      "start": 206.32,
+      "end": 207.6,
+      "text": "You say here's your job."
+    },
+    {
+      "start": 207.6,
+      "end": 209.04,
+      "text": "When they applied for the job,"
+    },
+    {
+      "start": 209.04,
+      "end": 211.92,
+      "text": "they have the specific outcomes that they would need to accomplish."
+    },
+    {
+      "start": 211.92,
+      "end": 216.16,
+      "text": "Like grow the business or get more customers or sell and get people to buy from you."
+    },
+    {
+      "start": 216.16,
+      "end": 217.12,
+      "text": "Those are the outcomes."
+    },
+    {
+      "start": 217.12,
+      "end": 219.28,
+      "text": "You don't start by telling them how to do the job."
+    },
+    {
+      "start": 219.28,
+      "end": 220.96,
+      "text": "You tell them what you're going to need from them."
+    },
+    {
+      "start": 220.96,
+      "end": 221.92,
+      "text": "That's the outcome."
+    },
+    {
+      "start": 221.92,
+      "end": 225.36,
+      "text": "Aim the agent at the outcome you're looking for."
+    },
+    {
+      "start": 225.44,
+      "end": 228.0,
+      "text": "So like how do we make sure we're being clear to the agent"
+    },
+    {
+      "start": 228.0,
+      "end": 229.52,
+      "text": "about what kind of outcome we want to achieve?"
+    },
+    {
+      "start": 229.52,
+      "end": 232.48,
+      "text": "The first is we got to give it the why before the how."
+    },
+    {
+      "start": 232.48,
+      "end": 235.04,
+      "text": "Tell it why you're trying to achieve the goal"
+    },
+    {
+      "start": 235.04,
+      "end": 237.28,
+      "text": "so that it can make some smart decision on its own."
+    },
+    {
+      "start": 237.28,
+      "end": 239.44,
+      "text": "To make this really easy for you,"
+    },
+    {
+      "start": 239.44,
+      "end": 240.96,
+      "text": "I'm going to use an example."
+    },
+    {
+      "start": 240.96,
+      "end": 244.48,
+      "text": "We're going to build together an agent to manage your inbox."
+    },
+    {
+      "start": 244.48,
+      "end": 246.32,
+      "text": "As an outcome, I would prompt it and say,"
+    },
+    {
+      "start": 246.32,
+      "end": 249.04,
+      "text": "I need to spend less time managing my email inbox."
+    },
+    {
+      "start": 249.04,
+      "end": 250.88,
+      "text": "See how I'm not telling how to do it yet?"
+    },
+    {
+      "start": 250.88,
+      "end": 252.8,
+      "text": "I'm just saying this is the outcome."
+    },
+    {
+      "start": 252.88,
+      "end": 257.28,
+      "text": "The second is we have to write what's called a DOD or a definition of done."
+    },
+    {
+      "start": 257.28,
+      "end": 259.84,
+      "text": "It's giving them the instructions to know if they achieved the thing."
+    },
+    {
+      "start": 259.84,
+      "end": 260.96,
+      "text": "We want to be specific."
+    },
+    {
+      "start": 260.96,
+      "end": 262.16,
+      "text": "We want it measurable."
+    },
+    {
+      "start": 262.16,
+      "end": 263.92,
+      "text": "Ideally, you have it in one sentence."
+    },
+    {
+      "start": 263.92,
+      "end": 266.24,
+      "text": "So for example, building our agent for our inbox,"
+    },
+    {
+      "start": 266.24,
+      "end": 268.56,
+      "text": "we would not say, handle my emails."
+    },
+    {
+      "start": 268.56,
+      "end": 269.6,
+      "text": "Instead, we would say,"
+    },
+    {
+      "start": 269.6,
+      "end": 271.6,
+      "text": "done means every morning at 9 a.m."
+    },
+    {
+      "start": 271.6,
+      "end": 272.64,
+      "text": "the inbox is empty."
+    },
+    {
+      "start": 272.64,
+      "end": 274.64,
+      "text": "Replyzer drafted in my voice."
+    },
+    {
+      "start": 274.64,
+      "end": 276.8,
+      "text": "And anything that needs me is flagged to the top"
+    },
+    {
+      "start": 276.8,
+      "end": 278.4,
+      "text": "and nothing important slips."
+    },
+    {
+      "start": 278.4,
+      "end": 280.24,
+      "text": "If you can't picture it done,"
+    },
+    {
+      "start": 280.24,
+      "end": 281.6,
+      "text": "the agent can't hit it."
+    },
+    {
+      "start": 281.6,
+      "end": 283.2,
+      "text": "It's like a target they can't see."
+    },
+    {
+      "start": 283.2,
+      "end": 284.96,
+      "text": "And finally, we got to start with the end"
+    },
+    {
+      "start": 284.96,
+      "end": 286.64,
+      "text": "and it's called reverse prompting."
+    },
+    {
+      "start": 286.64,
+      "end": 289.04,
+      "text": "But we want to tell it the results that you want."
+    },
+    {
+      "start": 289.04,
+      "end": 291.52,
+      "text": "Then we tell it to ask you the question"
+    },
+    {
+      "start": 291.52,
+      "end": 293.2,
+      "text": "it needs to get full clarity."
+    },
+    {
+      "start": 293.2,
+      "end": 294.16,
+      "text": "This is the advancement."
+    },
+    {
+      "start": 294.16,
+      "end": 296.08,
+      "text": "This is about nobody out there is teaching you."
+    },
+    {
+      "start": 296.08,
+      "end": 298.72,
+      "text": "Then we let the AI do its thing"
+    },
+    {
+      "start": 298.72,
+      "end": 300.32,
+      "text": "because it's better than us and a lot of stuff"
+    },
+    {
+      "start": 300.32,
+      "end": 302.16,
+      "text": "and it builds the plan itself."
+    },
+    {
+      "start": 302.16,
+      "end": 305.12,
+      "text": "And the truth is, if we can't state the outcome in one sentence,"
+    },
+    {
+      "start": 305.12,
+      "end": 306.72,
+      "text": "we're not ready to build."
+    },
+    {
+      "start": 306.72,
+      "end": 309.36,
+      "text": "If you can talk the task like explain to somebody else,"
+    },
+    {
+      "start": 309.36,
+      "end": 311.04,
+      "text": "then the AI can do the task."
+    },
+    {
+      "start": 311.12,
+      "end": 313.12,
+      "text": "And the cool part is, you knowing this"
+    },
+    {
+      "start": 313.12,
+      "end": 316.08,
+      "text": "already puts you ahead of most people using AI today."
+    },
+    {
+      "start": 316.08,
+      "end": 318.08,
+      "text": "Even folks here like, all this person so smart,"
+    },
+    {
+      "start": 318.08,
+      "end": 319.2,
+      "text": "they don't know this stuff."
+    },
+    {
+      "start": 319.2,
+      "end": 320.48,
+      "text": "And we're just getting started."
+    },
+    {
+      "start": 320.48,
+      "end": 322.0,
+      "text": "So we've got the agent."
+    },
+    {
+      "start": 322.0,
+      "end": 323.2,
+      "text": "It has its reason."
+    },
+    {
+      "start": 323.2,
+      "end": 326.0,
+      "text": "We have a clear target and now it has clarity."
+    },
+    {
+      "start": 326.0,
+      "end": 327.76,
+      "text": "And now the next step is G."
+    },
+    {
+      "start": 327.76,
+      "end": 329.2,
+      "text": "Give it an identity."
+    },
+    {
+      "start": 330.0,
+      "end": 331.28,
+      "text": "Truthfully, out of the box,"
+    },
+    {
+      "start": 331.28,
+      "end": 334.08,
+      "text": "AI knows a little bit about everything."
+    },
+    {
+      "start": 334.08,
+      "end": 336.72,
+      "text": "But it doesn't know anything specifically well."
+    },
+    {
+      "start": 336.72,
+      "end": 339.68,
+      "text": "So an identity allows us to focus its power"
+    },
+    {
+      "start": 339.84,
+      "end": 340.88,
+      "text": "and the right expertise."
+    },
+    {
+      "start": 340.88,
+      "end": 342.56,
+      "text": "So when we build the identity,"
+    },
+    {
+      "start": 342.56,
+      "end": 344.48,
+      "text": "instead of it knowing a little bit about everything,"
+    },
+    {
+      "start": 344.48,
+      "end": 346.32,
+      "text": "it gets really sharp about that one thing"
+    },
+    {
+      "start": 346.32,
+      "end": 348.56,
+      "text": "that you've hired slash built it to do."
+    },
+    {
+      "start": 348.56,
+      "end": 351.6,
+      "text": "And the best part is that the tighter we define who it is,"
+    },
+    {
+      "start": 351.6,
+      "end": 353.92,
+      "text": "the better it works, the better the outcome is,"
+    },
+    {
+      "start": 353.92,
+      "end": 355.68,
+      "text": "the better the agent is an agent."
+    },
+    {
+      "start": 355.68,
+      "end": 358.88,
+      "text": "I remember reading a report where they built a bunch of AI agents"
+    },
+    {
+      "start": 358.88,
+      "end": 360.56,
+      "text": "to do customer support for an airline."
+    },
+    {
+      "start": 360.56,
+      "end": 362.96,
+      "text": "And then they removed all the rulebooks."
+    },
+    {
+      "start": 362.96,
+      "end": 365.2,
+      "text": "It's identity from the agent."
+    },
+    {
+      "start": 365.2,
+      "end": 368.8,
+      "text": "And it dropped from 33% success rate down to 11%."
+    },
+    {
+      "start": 368.88,
+      "end": 372.0,
+      "text": "So we're talking same model, same task, same request."
+    },
+    {
+      "start": 372.0,
+      "end": 373.76,
+      "text": "And it got three times stupider"
+    },
+    {
+      "start": 373.76,
+      "end": 375.36,
+      "text": "because it forgot who it was."
+    },
+    {
+      "start": 375.36,
+      "end": 378.72,
+      "text": "Think of your agent as a genius and he's sitting out a desk"
+    },
+    {
+      "start": 378.72,
+      "end": 380.88,
+      "text": "and he's wearing a blue shirt and he's got great hair."
+    },
+    {
+      "start": 380.88,
+      "end": 383.6,
+      "text": "This genius has infinite potential."
+    },
+    {
+      "start": 383.6,
+      "end": 385.12,
+      "text": "But until you tell them the job,"
+    },
+    {
+      "start": 385.12,
+      "end": 386.88,
+      "text": "they just sit there doing nothing"
+    },
+    {
+      "start": 386.88,
+      "end": 388.24,
+      "text": "because they don't know what they're supposed to do."
+    },
+    {
+      "start": 388.24,
+      "end": 391.12,
+      "text": "So what we need to do is tell it what his job description is"
+    },
+    {
+      "start": 391.12,
+      "end": 392.8,
+      "text": "and set some rules for how to do the work."
+    },
+    {
+      "start": 392.8,
+      "end": 395.12,
+      "text": "So this is how we create the agent's job description"
+    },
+    {
+      "start": 395.12,
+      "end": 397.76,
+      "text": "using three plain English files."
+    },
+    {
+      "start": 397.76,
+      "end": 400.16,
+      "text": "The first one is the soul file."
+    },
+    {
+      "start": 400.16,
+      "end": 402.24,
+      "text": "Right? It's the agent's personality."
+    },
+    {
+      "start": 402.24,
+      "end": 404.16,
+      "text": "I have a lot of fun when I create my agents."
+    },
+    {
+      "start": 404.16,
+      "end": 405.84,
+      "text": "I tell it what kind of quirks I want."
+    },
+    {
+      "start": 405.84,
+      "end": 407.44,
+      "text": "What kind of values does it have?"
+    },
+    {
+      "start": 407.44,
+      "end": 408.48,
+      "text": "How does it talk?"
+    },
+    {
+      "start": 408.48,
+      "end": 410.56,
+      "text": "It's essentially defining how it behaves."
+    },
+    {
+      "start": 410.56,
+      "end": 412.72,
+      "text": "The second file is the identity file."
+    },
+    {
+      "start": 412.72,
+      "end": 414.08,
+      "text": "That's its DNA."
+    },
+    {
+      "start": 414.08,
+      "end": 415.28,
+      "text": "That's its name."
+    },
+    {
+      "start": 415.28,
+      "end": 417.68,
+      "text": "That's a description of its role."
+    },
+    {
+      "start": 417.68,
+      "end": 420.8,
+      "text": "For example, one of my primary agents, his name is Kai."
+    },
+    {
+      "start": 420.8,
+      "end": 422.64,
+      "text": "I just worked with him for two weeks"
+    },
+    {
+      "start": 422.64,
+      "end": 423.76,
+      "text": "and we built a bunch of stuff."
+    },
+    {
+      "start": 423.76,
+      "end": 426.48,
+      "text": "And I said, hey man, it's time for you to give yourself a name"
+    },
+    {
+      "start": 426.48,
+      "end": 428.8,
+      "text": "because I feel weird not knowing who you are."
+    },
+    {
+      "start": 428.8,
+      "end": 430.88,
+      "text": "And he's like, oh, how about this?"
+    },
+    {
+      "start": 430.88,
+      "end": 431.6,
+      "text": "And here's why."
+    },
+    {
+      "start": 431.6,
+      "end": 432.48,
+      "text": "And he gave me all the reasons."
+    },
+    {
+      "start": 432.48,
+      "end": 434.96,
+      "text": "And I said, cool, update your identity file."
+    },
+    {
+      "start": 434.96,
+      "end": 437.6,
+      "text": "So now he knows who he is to the world."
+    },
+    {
+      "start": 437.6,
+      "end": 439.12,
+      "text": "The third is the user file."
+    },
+    {
+      "start": 439.12,
+      "end": 442.16,
+      "text": "And this is the context your agent needs to know with you."
+    },
+    {
+      "start": 442.16,
+      "end": 443.92,
+      "text": "It knows who it's going to be interacting with"
+    },
+    {
+      "start": 443.92,
+      "end": 446.48,
+      "text": "so it can adjust its loops to get better for you."
+    },
+    {
+      "start": 446.48,
+      "end": 447.6,
+      "text": "So for example, in this file,"
+    },
+    {
+      "start": 447.6,
+      "end": 449.6,
+      "text": "you might have your goals, your role,"
+    },
+    {
+      "start": 449.6,
+      "end": 450.64,
+      "text": "how you like things done."
+    },
+    {
+      "start": 450.64,
+      "end": 452.72,
+      "text": "But essentially, it defines who we are."
+    },
+    {
+      "start": 452.72,
+      "end": 454.64,
+      "text": "The soul file is how it behaves."
+    },
+    {
+      "start": 454.72,
+      "end": 456.64,
+      "text": "The identity file is who it is."
+    },
+    {
+      "start": 456.64,
+      "end": 458.8,
+      "text": "And then the user file is who we are."
+    },
+    {
+      "start": 458.8,
+      "end": 459.84,
+      "text": "Now here's a pro tip."
+    },
+    {
+      "start": 459.84,
+      "end": 461.36,
+      "text": "Don't write these files yourself."
+    },
+    {
+      "start": 461.36,
+      "end": 462.24,
+      "text": "No, no, no."
+    },
+    {
+      "start": 462.24,
+      "end": 464.08,
+      "text": "Let's tell AI to write it."
+    },
+    {
+      "start": 464.08,
+      "end": 465.76,
+      "text": "As we build the inbox agent,"
+    },
+    {
+      "start": 465.76,
+      "end": 467.92,
+      "text": "here's the prompt that you use to generate them."
+    },
+    {
+      "start": 467.92,
+      "end": 470.72,
+      "text": "I want to build an AI agent that runs my inbox,"
+    },
+    {
+      "start": 470.72,
+      "end": 472.16,
+      "text": "your aim from the previous step."
+    },
+    {
+      "start": 472.16,
+      "end": 473.2,
+      "text": "We insert that there."
+    },
+    {
+      "start": 473.2,
+      "end": 474.96,
+      "text": "Create its three identity files,"
+    },
+    {
+      "start": 474.96,
+      "end": 476.64,
+      "text": "a soul file, an identity file,"
+    },
+    {
+      "start": 476.64,
+      "end": 477.52,
+      "text": "any user file,"
+    },
+    {
+      "start": 477.52,
+      "end": 479.84,
+      "text": "and ask me any question you need to fill these in"
+    },
+    {
+      "start": 479.84,
+      "end": 481.52,
+      "text": "accurately, then write all three."
+    },
+    {
+      "start": 481.52,
+      "end": 483.12,
+      "text": "Notice we did the reverse prompting"
+    },
+    {
+      "start": 483.2,
+      "end": 485.28,
+      "text": "where we asked you to ask this question."
+    },
+    {
+      "start": 485.28,
+      "end": 487.68,
+      "text": "So now it'll go do the research,"
+    },
+    {
+      "start": 487.68,
+      "end": 489.76,
+      "text": "and then it'll hand back a template"
+    },
+    {
+      "start": 489.76,
+      "end": 492.48,
+      "text": "that is 99% awesome and complete."
+    },
+    {
+      "start": 492.48,
+      "end": 495.12,
+      "text": "For example, here's what our inbox agent identity files"
+    },
+    {
+      "start": 495.12,
+      "end": 497.68,
+      "text": "might look like after the AI interviews you."
+    },
+    {
+      "start": 497.68,
+      "end": 499.44,
+      "text": "Soul file, how it behaves,"
+    },
+    {
+      "start": 499.44,
+      "end": 502.4,
+      "text": "writes in my voice, concise, direct,"
+    },
+    {
+      "start": 502.4,
+      "end": 503.88,
+      "text": "zero corporate fluff,"
+    },
+    {
+      "start": 503.88,
+      "end": 507.16,
+      "text": "calm and reassuring, never pushy or salesy,"
+    },
+    {
+      "start": 507.16,
+      "end": 508.48,
+      "text": "and avoids phrases like,"
+    },
+    {
+      "start": 508.48,
+      "end": 510.36,
+      "text": "I hope this email finds you well."
+    },
+    {
+      "start": 510.36,
+      "end": 511.4,
+      "text": "Of course it found you well."
+    },
+    {
+      "start": 511.4,
+      "end": 514.36,
+      "text": "When it's unsure, it flags instead of guessing."
+    },
+    {
+      "start": 514.36,
+      "end": 517.28,
+      "text": "Identity file, who it is, it has its name."
+    },
+    {
+      "start": 517.28,
+      "end": 519.76,
+      "text": "Amelia, emailing, yeah."
+    },
+    {
+      "start": 519.76,
+      "end": 520.6,
+      "text": "See what it did there?"
+    },
+    {
+      "start": 520.6,
+      "end": 521.44,
+      "text": "Isn't it cool?"
+    },
+    {
+      "start": 521.44,
+      "end": 522.2,
+      "text": "It's got personality."
+    },
+    {
+      "start": 522.2,
+      "end": 526.32,
+      "text": "The role, personal inbox manager, the job you read,"
+    },
+    {
+      "start": 526.32,
+      "end": 528.88,
+      "text": "you sort, you draft replies to every new email."
+    },
+    {
+      "start": 528.88,
+      "end": 530.68,
+      "text": "Lane, this is the parameters."
+    },
+    {
+      "start": 530.68,
+      "end": 533.0,
+      "text": "Inbox only, never touch my calendar."
+    },
+    {
+      "start": 533.0,
+      "end": 535.88,
+      "text": "Don't touch my money or anything outside my email."
+    },
+    {
+      "start": 535.88,
+      "end": 538.08,
+      "text": "Now we got to user file, who it works for."
+    },
+    {
+      "start": 538.08,
+      "end": 540.6,
+      "text": "I'm a founder who gets around 100 emails a day."
+    },
+    {
+      "start": 540.6,
+      "end": 542.08,
+      "text": "We prioritize people."
+    },
+    {
+      "start": 542.08,
+      "end": 544.72,
+      "text": "My team, my current clients, my VIP list."
+    },
+    {
+      "start": 544.72,
+      "end": 546.36,
+      "text": "I have multiple AI companies."
+    },
+    {
+      "start": 546.36,
+      "end": 548.08,
+      "text": "A media company, it might list them all."
+    },
+    {
+      "start": 548.08,
+      "end": 550.16,
+      "text": "With these three files, our inbox agent"
+    },
+    {
+      "start": 550.16,
+      "end": 553.24,
+      "text": "knows how to behave, who it is, and who it's working for."
+    },
+    {
+      "start": 553.24,
+      "end": 555.52,
+      "text": "And look, building one agent changes how we work."
+    },
+    {
+      "start": 555.52,
+      "end": 557.04,
+      "text": "But if you're a CEO or founder,"
+    },
+    {
+      "start": 557.04,
+      "end": 559.52,
+      "text": "the real unlock is a whole team of them."
+    },
+    {
+      "start": 559.52,
+      "end": 562.4,
+      "text": "That's why I put together my full AI company, OS Playbook,"
+    },
+    {
+      "start": 562.4,
+      "end": 563.92,
+      "text": "is the best way to plug AI agents"
+    },
+    {
+      "start": 563.92,
+      "end": 566.24,
+      "text": "into every single department in your business."
+    },
+    {
+      "start": 566.24,
+      "end": 568.56,
+      "text": "If you want it, just DM me the word AI business"
+    },
+    {
+      "start": 568.56,
+      "end": 570.04,
+      "text": "on Instagram and I'll send it right over."
+    },
+    {
+      "start": 570.04,
+      "end": 572.2,
+      "text": "So now our agent knows the job it needs to do,"
+    },
+    {
+      "start": 572.2,
+      "end": 574.2,
+      "text": "but we haven't given it the necessary tools"
+    },
+    {
+      "start": 574.2,
+      "end": 575.36,
+      "text": "to do the job with."
+    },
+    {
+      "start": 575.36,
+      "end": 578.6,
+      "text": "This is where we gotta go to E, which is equipped."
+    },
+    {
+      "start": 578.6,
+      "end": 582.44,
+      "text": "Like any human team, an agent is gonna need some context."
+    },
+    {
+      "start": 582.44,
+      "end": 583.6,
+      "text": "It's gonna need some tools,"
+    },
+    {
+      "start": 583.6,
+      "end": 585.52,
+      "text": "because we need some logins to systems"
+    },
+    {
+      "start": 585.52,
+      "end": 586.52,
+      "text": "so it can actually do its work."
+    },
+    {
+      "start": 586.52,
+      "end": 588.92,
+      "text": "When we give our agent the context, the history,"
+    },
+    {
+      "start": 588.92,
+      "end": 590.84,
+      "text": "the date of the tools, that's actually"
+    },
+    {
+      "start": 590.84,
+      "end": 592.32,
+      "text": "what it gets to do the real work."
+    },
+    {
+      "start": 592.32,
+      "end": 596.08,
+      "text": "And in all agent design, the context is the moat,"
+    },
+    {
+      "start": 596.08,
+      "end": 599.2,
+      "text": "because garbage context in, garbage context out."
+    },
+    {
+      "start": 599.2,
+      "end": 602.64,
+      "text": "Think of this whole desk, as what's called the context window."
+    },
+    {
+      "start": 602.64,
+      "end": 605.64,
+      "text": "I am the AI, the LLM, and I'm the genius,"
+    },
+    {
+      "start": 605.64,
+      "end": 606.72,
+      "text": "and I'm sitting at the desk."
+    },
+    {
+      "start": 606.72,
+      "end": 609.08,
+      "text": "Over here, I've got my playbooks."
+    },
+    {
+      "start": 609.08,
+      "end": 610.76,
+      "text": "These are the processes and procedures"
+    },
+    {
+      "start": 610.76,
+      "end": 611.84,
+      "text": "on how to do my work."
+    },
+    {
+      "start": 611.84,
+      "end": 614.2,
+      "text": "On top of it, I've placed my identity files,"
+    },
+    {
+      "start": 614.2,
+      "end": 616.24,
+      "text": "the things we just created so that I understand"
+    },
+    {
+      "start": 616.24,
+      "end": 618.76,
+      "text": "how I'm supposed to behave and who I'm working for."
+    },
+    {
+      "start": 618.76,
+      "end": 620.6,
+      "text": "This is like my constitution."
+    },
+    {
+      "start": 620.6,
+      "end": 623.28,
+      "text": "And then over here, I've got the tools."
+    },
+    {
+      "start": 623.28,
+      "end": 625.92,
+      "text": "These are the laptops, the monitor, the mouse,"
+    },
+    {
+      "start": 625.92,
+      "end": 628.12,
+      "text": "anything I need to use to connect to other systems."
+    },
+    {
+      "start": 628.12,
+      "end": 630.08,
+      "text": "And above that, I've got my loops."
+    },
+    {
+      "start": 630.08,
+      "end": 631.96,
+      "text": "These are the schedules, the heartbeat"
+    },
+    {
+      "start": 631.96,
+      "end": 633.64,
+      "text": "that I talked about earlier, so that I know"
+    },
+    {
+      "start": 633.64,
+      "end": 635.36,
+      "text": "when I'm supposed to get things done by."
+    },
+    {
+      "start": 635.36,
+      "end": 637.56,
+      "text": "It's like the calendar, it's my schedule."
+    },
+    {
+      "start": 637.56,
+      "end": 640.8,
+      "text": "And then under the desk is where I have my filing cabinets."
+    },
+    {
+      "start": 640.8,
+      "end": 641.72,
+      "text": "This is my memory."
+    },
+    {
+      "start": 641.72,
+      "end": 644.96,
+      "text": "This is where things that can't fit on my desk sit"
+    },
+    {
+      "start": 644.96,
+      "end": 648.6,
+      "text": "so that it's available, but I'm not creating clutter on my desk."
+    },
+    {
+      "start": 648.6,
+      "end": 650.16,
+      "text": "If you've ever heard a context rot,"
+    },
+    {
+      "start": 650.16,
+      "end": 653.44,
+      "text": "that's when you just load the desk with a bunch of files"
+    },
+    {
+      "start": 653.44,
+      "end": 654.56,
+      "text": "and it becomes complicated."
+    },
+    {
+      "start": 654.56,
+      "end": 656.04,
+      "text": "And I can't find things quickly and all of a sudden,"
+    },
+    {
+      "start": 656.04,
+      "end": 657.96,
+      "text": "I'm answering questions, but I'm not clear about it"
+    },
+    {
+      "start": 657.96,
+      "end": 659.0,
+      "text": "because I'm not certain about it."
+    },
+    {
+      "start": 659.0,
+      "end": 662.2,
+      "text": "Whereas a clear context window is when everything"
+    },
+    {
+      "start": 662.2,
+      "end": 665.88,
+      "text": "on the desk is neatly put away so that I can refer to it."
+    },
+    {
+      "start": 665.88,
+      "end": 668.64,
+      "text": "So that's why we have to equip our agent"
+    },
+    {
+      "start": 668.64,
+      "end": 670.08,
+      "text": "with the right context."
+    },
+    {
+      "start": 670.08,
+      "end": 671.88,
+      "text": "So now that we're here, how do we equip"
+    },
+    {
+      "start": 671.88,
+      "end": 675.08,
+      "text": "the genius agent with all the right context and the tools?"
+    },
+    {
+      "start": 675.08,
+      "end": 677.32,
+      "text": "First off, we have to capture our processes"
+    },
+    {
+      "start": 677.32,
+      "end": 679.56,
+      "text": "so we can let it know how to do the work."
+    },
+    {
+      "start": 679.56,
+      "end": 680.8,
+      "text": "For this, I've got two ways."
+    },
+    {
+      "start": 680.8,
+      "end": 682.76,
+      "text": "The first way, which I've been teaching forever,"
+    },
+    {
+      "start": 682.76,
+      "end": 684.76,
+      "text": "not the best way, is the camcorder method."
+    },
+    {
+      "start": 684.76,
+      "end": 687.6,
+      "text": "You do the work, you record yourself using Zoom video"
+    },
+    {
+      "start": 687.72,
+      "end": 689.04,
+      "text": "for any kind of recording software,"
+    },
+    {
+      "start": 689.04,
+      "end": 692.64,
+      "text": "and then you can give that to an AI to turn it into a playbook"
+    },
+    {
+      "start": 692.64,
+      "end": 695.2,
+      "text": "and then you feed that to the agent as like a procedure."
+    },
+    {
+      "start": 695.2,
+      "end": 696.2,
+      "text": "Think about our inbox."
+    },
+    {
+      "start": 696.2,
+      "end": 698.36,
+      "text": "It's like, do you have a documented process"
+    },
+    {
+      "start": 698.36,
+      "end": 700.76,
+      "text": "for how to label your emails and triage your emails"
+    },
+    {
+      "start": 700.76,
+      "end": 702.28,
+      "text": "and write replies on your behalf?"
+    },
+    {
+      "start": 702.28,
+      "end": 704.0,
+      "text": "Just make sure that when you're recording yourself,"
+    },
+    {
+      "start": 704.0,
+      "end": 706.6,
+      "text": "you're talking through the task so that when the AI takes"
+    },
+    {
+      "start": 706.6,
+      "end": 708.68,
+      "text": "that to create the playbook, it has all the details."
+    },
+    {
+      "start": 708.68,
+      "end": 711.16,
+      "text": "The better way, and this is my recommendation,"
+    },
+    {
+      "start": 711.16,
+      "end": 713.4,
+      "text": "is to reverse engineer it from the source."
+    },
+    {
+      "start": 713.4,
+      "end": 715.92,
+      "text": "If I'm building an agent to manage my inbox,"
+    },
+    {
+      "start": 715.92,
+      "end": 718.48,
+      "text": "I can actually connect using the connector tool"
+    },
+    {
+      "start": 718.48,
+      "end": 720.6,
+      "text": "to my email, in my case, Gmail,"
+    },
+    {
+      "start": 720.6,
+      "end": 724.52,
+      "text": "and ask the AI to reverse engineer and create a playbook"
+    },
+    {
+      "start": 724.52,
+      "end": 726.72,
+      "text": "based on historical emails."
+    },
+    {
+      "start": 726.72,
+      "end": 728.76,
+      "text": "So you've already been in your inbox for applying"
+    },
+    {
+      "start": 728.76,
+      "end": 731.72,
+      "text": "and doing stuff, the AI can actually use that to train itself."
+    },
+    {
+      "start": 731.72,
+      "end": 734.56,
+      "text": "And that is actually the way I build most of my agents"
+    },
+    {
+      "start": 734.56,
+      "end": 735.96,
+      "text": "if I have the source information."
+    },
+    {
+      "start": 735.96,
+      "end": 738.28,
+      "text": "I just ask it to learn how I've done it in the past"
+    },
+    {
+      "start": 738.28,
+      "end": 739.4,
+      "text": "and then create a procedure."
+    },
+    {
+      "start": 739.4,
+      "end": 741.6,
+      "text": "Go find the pattern, go find the best practices,"
+    },
+    {
+      "start": 741.6,
+      "end": 744.08,
+      "text": "go find the little intricacies based on how I've done it,"
+    },
+    {
+      "start": 744.08,
+      "end": 745.48,
+      "text": "and all the people and the relationships,"
+    },
+    {
+      "start": 745.56,
+      "end": 746.72,
+      "text": "and you write that file."
+    },
+    {
+      "start": 746.72,
+      "end": 748.8,
+      "text": "So for example, if you want the prompt to do this,"
+    },
+    {
+      "start": 748.8,
+      "end": 749.64,
+      "text": "here's what you write."
+    },
+    {
+      "start": 749.64,
+      "end": 752.92,
+      "text": "Connect to my email, read the last 50 messages that I've sent,"
+    },
+    {
+      "start": 752.92,
+      "end": 756.12,
+      "text": "study how I actually write my tone, my greetings,"
+    },
+    {
+      "start": 756.12,
+      "end": 758.36,
+      "text": "how I do sign-offs, how on my sentences are,"
+    },
+    {
+      "start": 758.36,
+      "end": 760.8,
+      "text": "the phrases I use most often, then write a style guide"
+    },
+    {
+      "start": 760.8,
+      "end": 763.2,
+      "text": "that captures my voice and tone, and to test it,"
+    },
+    {
+      "start": 763.2,
+      "end": 765.52,
+      "text": "ask it to draft a reply on your newest emails"
+    },
+    {
+      "start": 765.52,
+      "end": 768.04,
+      "text": "that are unread as you, based on what it learned,"
+    },
+    {
+      "start": 768.04,
+      "end": 770.56,
+      "text": "then you can rewrite those so that it can use that"
+    },
+    {
+      "start": 770.56,
+      "end": 771.72,
+      "text": "to learn and tighten it up."
+    },
+    {
+      "start": 771.72,
+      "end": 773.6,
+      "text": "Like it already knew who it was"
+    },
+    {
+      "start": 773.6,
+      "end": 775.36,
+      "text": "and the best practice based on its research."
+    },
+    {
+      "start": 775.4,
+      "end": 778.2,
+      "text": "That's in the sole file, but now it has clear templates,"
+    },
+    {
+      "start": 778.2,
+      "end": 781.0,
+      "text": "the step-by-step instructions and even examples"
+    },
+    {
+      "start": 781.0,
+      "end": 782.6,
+      "text": "that it can use to do this on your behalf."
+    },
+    {
+      "start": 782.6,
+      "end": 784.64,
+      "text": "So now that it's captured all the information,"
+    },
+    {
+      "start": 784.64,
+      "end": 786.44,
+      "text": "it still hasn't kind of solidified it"
+    },
+    {
+      "start": 786.44,
+      "end": 789.36,
+      "text": "into an actual playbook, and that's what we call a system prompt."
+    },
+    {
+      "start": 789.36,
+      "end": 791.8,
+      "text": "So then what you do is for each subprocess"
+    },
+    {
+      "start": 791.8,
+      "end": 794.52,
+      "text": "in the agent's activities, like drafting emails,"
+    },
+    {
+      "start": 794.52,
+      "end": 795.96,
+      "text": "but maybe it needs to sort emails,"
+    },
+    {
+      "start": 795.96,
+      "end": 798.12,
+      "text": "you can have it do the same activity,"
+    },
+    {
+      "start": 798.12,
+      "end": 800.52,
+      "text": "either you tell how to do it or it researches,"
+    },
+    {
+      "start": 800.52,
+      "end": 802.56,
+      "text": "and then it creates all these system prompts"
+    },
+    {
+      "start": 802.56,
+      "end": 804.04,
+      "text": "based on the work you need it to do."
+    },
+    {
+      "start": 804.04,
+      "end": 808.2,
+      "text": "Like I have it for my inbox, sort, reply, forward,"
+    },
+    {
+      "start": 808.2,
+      "end": 810.24,
+      "text": "that's a big one, and even escalate,"
+    },
+    {
+      "start": 810.24,
+      "end": 811.44,
+      "text": "things that it needs to show me"
+    },
+    {
+      "start": 811.44,
+      "end": 813.08,
+      "text": "and the reporting I want every day."
+    },
+    {
+      "start": 813.08,
+      "end": 816.8,
+      "text": "So then at this point, you actually have an AI agent running."
+    },
+    {
+      "start": 816.8,
+      "end": 818.0,
+      "text": "This is exciting stuff."
+    },
+    {
+      "start": 818.0,
+      "end": 819.48,
+      "text": "You might feel right now, you're like,"
+    },
+    {
+      "start": 819.48,
+      "end": 821.32,
+      "text": "oh man, I'm gonna give everything I got at it."
+    },
+    {
+      "start": 821.32,
+      "end": 822.32,
+      "text": "Don't do that."
+    },
+    {
+      "start": 822.32,
+      "end": 825.88,
+      "text": "The end in the agent framework is to narrow the scope."
+    },
+    {
+      "start": 825.88,
+      "end": 829.12,
+      "text": "The agent needs to have a narrow scope of what it does"
+    },
+    {
+      "start": 829.12,
+      "end": 830.36,
+      "text": "so it doesn't confuse itself."
+    },
+    {
+      "start": 830.36,
+      "end": 832.64,
+      "text": "If you start asking it to do 17 other things,"
+    },
+    {
+      "start": 832.64,
+      "end": 835.32,
+      "text": "then all of a sudden this desk can get really busy,"
+    },
+    {
+      "start": 835.32,
+      "end": 837.32,
+      "text": "which means it's not gonna be a great agent anymore."
+    },
+    {
+      "start": 837.32,
+      "end": 840.36,
+      "text": "Just like you wouldn't give your administrative assistant,"
+    },
+    {
+      "start": 840.36,
+      "end": 843.28,
+      "text": "the responsibility to do marketing and take sales calls,"
+    },
+    {
+      "start": 843.28,
+      "end": 845.92,
+      "text": "you wanna make sure the scope is narrow for each agent."
+    },
+    {
+      "start": 845.92,
+      "end": 848.16,
+      "text": "As an example, I have an agent that writes code,"
+    },
+    {
+      "start": 848.16,
+      "end": 849.84,
+      "text": "and then I have an agent that reviews code,"
+    },
+    {
+      "start": 849.84,
+      "end": 852.08,
+      "text": "and those are separate agents and they work together."
+    },
+    {
+      "start": 852.08,
+      "end": 853.72,
+      "text": "See how narrow the scope is?"
+    },
+    {
+      "start": 853.72,
+      "end": 857.72,
+      "text": "We need to focus the agent down to one specialist per job."
+    },
+    {
+      "start": 857.72,
+      "end": 859.64,
+      "text": "Each agent great at one thing."
+    },
+    {
+      "start": 859.64,
+      "end": 862.24,
+      "text": "Instead of having one agent do everything,"
+    },
+    {
+      "start": 862.24,
+      "end": 864.72,
+      "text": "which is what people usually do, that's a mistake."
+    },
+    {
+      "start": 864.72,
+      "end": 867.44,
+      "text": "We'll have sub agents that do specialized tasks under it."
+    },
+    {
+      "start": 867.44,
+      "end": 871.08,
+      "text": "That way it keeps all the context for the agent super clean."
+    },
+    {
+      "start": 871.08,
+      "end": 872.08,
+      "text": "It doesn't get confused."
+    },
+    {
+      "start": 872.08,
+      "end": 873.32,
+      "text": "We don't have context for it."
+    },
+    {
+      "start": 873.32,
+      "end": 875.36,
+      "text": "We don't wanna have a mega agent."
+    },
+    {
+      "start": 875.36,
+      "end": 878.48,
+      "text": "Instead, we need to spread out the task to other sub agents"
+    },
+    {
+      "start": 878.48,
+      "end": 880.76,
+      "text": "so that it can handle other agents below it."
+    },
+    {
+      "start": 880.76,
+      "end": 884.08,
+      "text": "So for example, Kai, who's like my orchestration agent,"
+    },
+    {
+      "start": 884.08,
+      "end": 886.56,
+      "text": "he's the one that not only creates other agents,"
+    },
+    {
+      "start": 886.56,
+      "end": 889.08,
+      "text": "he also coordinates the tasks to the different agents"
+    },
+    {
+      "start": 889.08,
+      "end": 891.6,
+      "text": "like my research agent and my relationship agent"
+    },
+    {
+      "start": 891.64,
+      "end": 893.88,
+      "text": "and my coding agent and my reporting agent,"
+    },
+    {
+      "start": 893.88,
+      "end": 896.56,
+      "text": "he then he pulls it all together and gives me answers."
+    },
+    {
+      "start": 896.56,
+      "end": 899.0,
+      "text": "So instead of giving every task to one agent,"
+    },
+    {
+      "start": 899.0,
+      "end": 900.24,
+      "text": "this is what we should do instead."
+    },
+    {
+      "start": 900.24,
+      "end": 901.72,
+      "text": "We build a manager agent."
+    },
+    {
+      "start": 901.72,
+      "end": 904.5,
+      "text": "Its only job is literally to manage"
+    },
+    {
+      "start": 904.5,
+      "end": 906.88,
+      "text": "and specialize in the management of the sub agents."
+    },
+    {
+      "start": 906.88,
+      "end": 908.48,
+      "text": "Think of it like a real manager agent."
+    },
+    {
+      "start": 908.48,
+      "end": 909.84,
+      "text": "You are my manager agent."
+    },
+    {
+      "start": 909.84,
+      "end": 911.56,
+      "text": "I need you to manage my sub agents,"
+    },
+    {
+      "start": 911.56,
+      "end": 914.16,
+      "text": "and I need you to make sure that you monitor the jobs"
+    },
+    {
+      "start": 914.16,
+      "end": 915.52,
+      "text": "and make sure they're moving along."
+    },
+    {
+      "start": 915.52,
+      "end": 917.16,
+      "text": "And if they're not working, you fix them,"
+    },
+    {
+      "start": 917.16,
+      "end": 919.28,
+      "text": "and you decide what agents need to exist."
+    },
+    {
+      "start": 919.28,
+      "end": 921.36,
+      "text": "So for example, we built our inbox agent,"
+    },
+    {
+      "start": 921.44,
+      "end": 923.72,
+      "text": "so we don't want to have to manage the inbox agent."
+    },
+    {
+      "start": 923.72,
+      "end": 926.72,
+      "text": "We create a manager agent that talks to the inbox agent,"
+    },
+    {
+      "start": 926.72,
+      "end": 929.0,
+      "text": "that might be responsible for a lot of different things"
+    },
+    {
+      "start": 929.0,
+      "end": 931.16,
+      "text": "like our inbox, but also sending stuff"
+    },
+    {
+      "start": 931.16,
+      "end": 932.2,
+      "text": "to other people on our team."
+    },
+    {
+      "start": 932.2,
+      "end": 934.48,
+      "text": "But we want to make sure each sub agent reports"
+    },
+    {
+      "start": 934.48,
+      "end": 936.72,
+      "text": "to that manager agent so that it takes care of it."
+    },
+    {
+      "start": 936.72,
+      "end": 938.44,
+      "text": "So you might want to give it a prompt like this."
+    },
+    {
+      "start": 938.44,
+      "end": 939.76,
+      "text": "You are my manager agent."
+    },
+    {
+      "start": 939.76,
+      "end": 941.36,
+      "text": "You never do any task yourself."
+    },
+    {
+      "start": 941.36,
+      "end": 944.32,
+      "text": "When it comes in, you only move it to other sub agents"
+    },
+    {
+      "start": 944.32,
+      "end": 947.0,
+      "text": "that are dedicated for that one specific job."
+    },
+    {
+      "start": 947.0,
+      "end": 949.36,
+      "text": "You hand it the task and then you let it run."
+    },
+    {
+      "start": 949.36,
+      "end": 951.32,
+      "text": "So it's like one agent, one lane."
+    },
+    {
+      "start": 951.32,
+      "end": 953.08,
+      "text": "And if a job touches multiple areas,"
+    },
+    {
+      "start": 953.08,
+      "end": 956.36,
+      "text": "split it into the separate sub agents, one per area,"
+    },
+    {
+      "start": 956.36,
+      "end": 958.68,
+      "text": "you're the one that coordinates and reports back to me."
+    },
+    {
+      "start": 958.68,
+      "end": 960.8,
+      "text": "Like I said, mine's called Kai."
+    },
+    {
+      "start": 960.8,
+      "end": 962.0,
+      "text": "He's awesome."
+    },
+    {
+      "start": 962.0,
+      "end": 963.0,
+      "text": "I talk to Kai."
+    },
+    {
+      "start": 963.0,
+      "end": 964.4,
+      "text": "Kai talks to all the sub agents."
+    },
+    {
+      "start": 964.4,
+      "end": 965.92,
+      "text": "I have one agent I gotta talk to."
+    },
+    {
+      "start": 965.92,
+      "end": 968.08,
+      "text": "If you want a pro tip and I don't want to overwhelm you,"
+    },
+    {
+      "start": 968.08,
+      "end": 970.04,
+      "text": "but there's different AI models."
+    },
+    {
+      "start": 970.04,
+      "end": 973.44,
+      "text": "So for example, within in Thropic, you have Hikou."
+    },
+    {
+      "start": 973.44,
+      "end": 975.56,
+      "text": "This is like for simple and high volume stuff."
+    },
+    {
+      "start": 975.56,
+      "end": 977.16,
+      "text": "If you want to sort things, you want to label things,"
+    },
+    {
+      "start": 977.16,
+      "end": 978.88,
+      "text": "quick draft, and it's the cheapest."
+    },
+    {
+      "start": 978.88,
+      "end": 980.0,
+      "text": "Then you might go to Sonnet."
+    },
+    {
+      "start": 980.0,
+      "end": 981.72,
+      "text": "Sonnet's great for like day to day work."
+    },
+    {
+      "start": 981.72,
+      "end": 983.24,
+      "text": "Research, writing most code."
+    },
+    {
+      "start": 983.24,
+      "end": 984.8,
+      "text": "At a higher level, you've got Opus."
+    },
+    {
+      "start": 984.8,
+      "end": 986.32,
+      "text": "This is a powerful model."
+    },
+    {
+      "start": 986.32,
+      "end": 988.28,
+      "text": "Good at reasoning, complex builds,"
+    },
+    {
+      "start": 988.28,
+      "end": 989.6,
+      "text": "being a manager of agents."
+    },
+    {
+      "start": 989.6,
+      "end": 990.84,
+      "text": "But now you have Fable."
+    },
+    {
+      "start": 990.84,
+      "end": 992.28,
+      "text": "And I just dropped a few weeks ago."
+    },
+    {
+      "start": 992.28,
+      "end": 995.36,
+      "text": "That's more like an orchestrator, a consultant."
+    },
+    {
+      "start": 995.36,
+      "end": 997.64,
+      "text": "It has full capabilities of Opus,"
+    },
+    {
+      "start": 997.64,
+      "end": 999.24,
+      "text": "but it's even more state of the art."
+    },
+    {
+      "start": 999.24,
+      "end": 1001.72,
+      "text": "It's extremely good at long running tasks"
+    },
+    {
+      "start": 1001.72,
+      "end": 1004.12,
+      "text": "in real complex things when you don't have a lot"
+    },
+    {
+      "start": 1004.12,
+      "end": 1005.24,
+      "text": "of information to give it."
+    },
+    {
+      "start": 1005.24,
+      "end": 1006.92,
+      "text": "But it's the most expensive."
+    },
+    {
+      "start": 1006.92,
+      "end": 1008.48,
+      "text": "So depending on your task,"
+    },
+    {
+      "start": 1008.48,
+      "end": 1010.08,
+      "text": "you might want to give it different models"
+    },
+    {
+      "start": 1010.08,
+      "end": 1011.04,
+      "text": "because it'll cost less."
+    },
+    {
+      "start": 1011.04,
+      "end": 1012.84,
+      "text": "And it may not need that level of horsepower"
+    },
+    {
+      "start": 1012.84,
+      "end": 1013.68,
+      "text": "to get the work done."
+    },
+    {
+      "start": 1013.68,
+      "end": 1015.2,
+      "text": "So for example, my inbox agent,"
+    },
+    {
+      "start": 1015.2,
+      "end": 1017.0,
+      "text": "since it's always running every 15 minutes,"
+    },
+    {
+      "start": 1017.0,
+      "end": 1020.12,
+      "text": "I just use Sonnet because I don't need an Opus-level genius"
+    },
+    {
+      "start": 1020.12,
+      "end": 1022.08,
+      "text": "to run a process that we've already defined."
+    },
+    {
+      "start": 1022.08,
+      "end": 1024.4,
+      "text": "To build the agent, I might use Opus."
+    },
+    {
+      "start": 1024.4,
+      "end": 1025.72,
+      "text": "That way it helps me create it."
+    },
+    {
+      "start": 1025.72,
+      "end": 1026.84,
+      "text": "I might even use Fable."
+    },
+    {
+      "start": 1026.84,
+      "end": 1029.2,
+      "text": "But then to run it, I'm going to run it on Sonnet."
+    },
+    {
+      "start": 1029.2,
+      "end": 1031.56,
+      "text": "One time I had to do this whole refactor on my code base."
+    },
+    {
+      "start": 1031.56,
+      "end": 1033.16,
+      "text": "And I could have used a powerful model."
+    },
+    {
+      "start": 1033.16,
+      "end": 1035.76,
+      "text": "Like Opus, it probably would have cost me 150 bucks."
+    },
+    {
+      "start": 1035.76,
+      "end": 1038.96,
+      "text": "Instead, I use Hikou and it only costs me $1.50."
+    },
+    {
+      "start": 1038.96,
+      "end": 1042.36,
+      "text": "As of today, here's a chart with GPT and other AI equivalents"
+    },
+    {
+      "start": 1042.36,
+      "end": 1043.2,
+      "text": "that it's on screen."
+    },
+    {
+      "start": 1043.2,
+      "end": 1045.08,
+      "text": "So you can just take a screenshot of it to help guide you."
+    },
+    {
+      "start": 1045.08,
+      "end": 1047.04,
+      "text": "But this is now changing every couple weeks."
+    },
+    {
+      "start": 1047.04,
+      "end": 1048.6,
+      "text": "If you've made it this far"
+    },
+    {
+      "start": 1048.6,
+      "end": 1051.2,
+      "text": "and you're still interested, congratulations."
+    },
+    {
+      "start": 1051.2,
+      "end": 1052.32,
+      "text": "But I need you to know something."
+    },
+    {
+      "start": 1052.32,
+      "end": 1056.2,
+      "text": "You're literally head of 99.99% of the people out there"
+    },
+    {
+      "start": 1056.2,
+      "end": 1057.32,
+      "text": "and you're crushing it."
+    },
+    {
+      "start": 1057.32,
+      "end": 1059.76,
+      "text": "We've learned to aim the agent out of now come."
+    },
+    {
+      "start": 1059.76,
+      "end": 1061.64,
+      "text": "Give it an identity so it knows its job."
+    },
+    {
+      "start": 1061.64,
+      "end": 1063.56,
+      "text": "Equip it with the right context and tool"
+    },
+    {
+      "start": 1063.56,
+      "end": 1064.68,
+      "text": "so we can do the job."
+    },
+    {
+      "start": 1064.68,
+      "end": 1067.4,
+      "text": "And narrow the scope so it doesn't get overwhelmed"
+    },
+    {
+      "start": 1067.4,
+      "end": 1070.6,
+      "text": "and instead use sub-agents to accomplish specific tasks."
+    },
+    {
+      "start": 1070.6,
+      "end": 1073.0,
+      "text": "Now, this last step is where our agent"
+    },
+    {
+      "start": 1073.0,
+      "end": 1074.44,
+      "text": "truly becomes autonomous."
+    },
+    {
+      "start": 1074.44,
+      "end": 1076.16,
+      "text": "T, and it stands for trust"
+    },
+    {
+      "start": 1076.16,
+      "end": 1078.6,
+      "text": "because we gotta do it in stages."
+    },
+    {
+      "start": 1078.6,
+      "end": 1080.8,
+      "text": "Building an agent is actually the easy part."
+    },
+    {
+      "start": 1080.8,
+      "end": 1082.72,
+      "text": "Once you understand how to do it and you prompt it,"
+    },
+    {
+      "start": 1082.72,
+      "end": 1083.6,
+      "text": "it just gets done."
+    },
+    {
+      "start": 1083.6,
+      "end": 1086.48,
+      "text": "The scary part is letting it act without us."
+    },
+    {
+      "start": 1086.48,
+      "end": 1088.8,
+      "text": "And I understand, especially as we talk about our inbox,"
+    },
+    {
+      "start": 1088.8,
+      "end": 1092.04,
+      "text": "having somebody else write emails as you calm down."
+    },
+    {
+      "start": 1092.04,
+      "end": 1092.88,
+      "text": "I'm not doing that."
+    },
+    {
+      "start": 1092.88,
+      "end": 1094.84,
+      "text": "I'd rather it give me some ideas for copy."
+    },
+    {
+      "start": 1094.84,
+      "end": 1096.96,
+      "text": "The truth is, we don't give the agent the keys"
+    },
+    {
+      "start": 1096.96,
+      "end": 1098.28,
+      "text": "to the car on day one."
+    },
+    {
+      "start": 1098.28,
+      "end": 1100.48,
+      "text": "And what we do is we give it stuff, see what it does,"
+    },
+    {
+      "start": 1100.48,
+      "end": 1102.88,
+      "text": "and then we see if its response is what we expected."
+    },
+    {
+      "start": 1102.88,
+      "end": 1105.28,
+      "text": "If we do this right, you sleep well at night."
+    },
+    {
+      "start": 1105.28,
+      "end": 1107.6,
+      "text": "If you don't, you will not sleep."
+    },
+    {
+      "start": 1107.6,
+      "end": 1109.2,
+      "text": "The whole point of creating an agent"
+    },
+    {
+      "start": 1109.2,
+      "end": 1111.0,
+      "text": "is so that you can go do other stuff."
+    },
+    {
+      "start": 1111.0,
+      "end": 1112.2,
+      "text": "If you're sitting there babysitting"
+    },
+    {
+      "start": 1112.2,
+      "end": 1114.12,
+      "text": "or worrying about all the time, doesn't help you."
+    },
+    {
+      "start": 1114.12,
+      "end": 1117.64,
+      "text": "So up until now, we've let the agent help us"
+    },
+    {
+      "start": 1117.64,
+      "end": 1118.88,
+      "text": "manage some emails."
+    },
+    {
+      "start": 1118.88,
+      "end": 1119.72,
+      "text": "Think about it."
+    },
+    {
+      "start": 1119.72,
+      "end": 1121.0,
+      "text": "First, you might sure as doing a job properly,"
+    },
+    {
+      "start": 1121.0,
+      "end": 1123.88,
+      "text": "when we tested it to write those drafts to unread emails,"
+    },
+    {
+      "start": 1123.88,
+      "end": 1125.0,
+      "text": "and we looked at how it did it."
+    },
+    {
+      "start": 1125.0,
+      "end": 1127.52,
+      "text": "At first, we're micromanaging him a lot,"
+    },
+    {
+      "start": 1127.52,
+      "end": 1130.0,
+      "text": "but then we got to learn to trust in stages."
+    },
+    {
+      "start": 1130.0,
+      "end": 1131.6,
+      "text": "So maybe the first stage is just like,"
+    },
+    {
+      "start": 1131.6,
+      "end": 1133.04,
+      "text": "hey, can you sort the email?"
+    },
+    {
+      "start": 1133.04,
+      "end": 1133.88,
+      "text": "And then we see what it does,"
+    },
+    {
+      "start": 1133.88,
+      "end": 1134.88,
+      "text": "and we're like, okay, that's good."
+    },
+    {
+      "start": 1134.88,
+      "end": 1136.72,
+      "text": "Then we like ask him to do more drafts."
+    },
+    {
+      "start": 1136.72,
+      "end": 1139.08,
+      "text": "We already tested it, but now let's let it really do it."
+    },
+    {
+      "start": 1139.08,
+      "end": 1140.6,
+      "text": "So now it's running drafts, and we're like,"
+    },
+    {
+      "start": 1140.6,
+      "end": 1142.88,
+      "text": "okay, I like those drafts, change this, do this."
+    },
+    {
+      "start": 1142.88,
+      "end": 1144.2,
+      "text": "Okay, now it's doing its thing."
+    },
+    {
+      "start": 1144.2,
+      "end": 1146.64,
+      "text": "Then we might let it start sending emails on our behalf,"
+    },
+    {
+      "start": 1146.64,
+      "end": 1147.6,
+      "text": "but not all of them."
+    },
+    {
+      "start": 1147.6,
+      "end": 1150.72,
+      "text": "Maybe just even forwarding emails to finance to our team,"
+    },
+    {
+      "start": 1150.72,
+      "end": 1151.8,
+      "text": "because it has the logic,"
+    },
+    {
+      "start": 1151.8,
+      "end": 1153.76,
+      "text": "it saw how we handled those emails in the past."
+    },
+    {
+      "start": 1153.76,
+      "end": 1155.4,
+      "text": "Maybe it categorized certain emails"
+    },
+    {
+      "start": 1155.4,
+      "end": 1157.44,
+      "text": "like Slack notifications into a specific label."
+    },
+    {
+      "start": 1157.44,
+      "end": 1160.04,
+      "text": "But eventually, we want this genius"
+    },
+    {
+      "start": 1160.04,
+      "end": 1163.52,
+      "text": "to manage our whole inbox without us even opening it."
+    },
+    {
+      "start": 1163.52,
+      "end": 1165.92,
+      "text": "That's the equivalent of us leaving the room,"
+    },
+    {
+      "start": 1165.92,
+      "end": 1169.04,
+      "text": "and having the agent at the desk do all the work for us."
+    },
+    {
+      "start": 1169.04,
+      "end": 1171.84,
+      "text": "Because at this step, we learn to let go."
+    },
+    {
+      "start": 1171.84,
+      "end": 1173.56,
+      "text": "We've trusted it fully."
+    },
+    {
+      "start": 1173.56,
+      "end": 1174.72,
+      "text": "Because if you don't do this,"
+    },
+    {
+      "start": 1174.72,
+      "end": 1176.6,
+      "text": "it's like hiring a driver to drive your car,"
+    },
+    {
+      "start": 1176.6,
+      "end": 1177.96,
+      "text": "and you got your hand on the wheel."
+    },
+    {
+      "start": 1177.96,
+      "end": 1180.16,
+      "text": "Now we gotta take our hand off the wheel,"
+    },
+    {
+      "start": 1180.16,
+      "end": 1181.56,
+      "text": "and let the driver drive."
+    },
+    {
+      "start": 1181.56,
+      "end": 1183.2,
+      "text": "Here's how you can do it in a really safe way."
+    },
+    {
+      "start": 1183.2,
+      "end": 1184.68,
+      "text": "You set the guard rules first."
+    },
+    {
+      "start": 1184.68,
+      "end": 1186.8,
+      "text": "You can actually set that up in its identity files."
+    },
+    {
+      "start": 1186.8,
+      "end": 1188.48,
+      "text": "What is it capable to do on our behalf?"
+    },
+    {
+      "start": 1188.48,
+      "end": 1190.2,
+      "text": "Maybe it has the ability to spend money."
+    },
+    {
+      "start": 1190.2,
+      "end": 1191.64,
+      "text": "Maybe it has the ability to make decisions."
+    },
+    {
+      "start": 1191.64,
+      "end": 1194.36,
+      "text": "Maybe it has the ability to write drafts only, not send yet."
+    },
+    {
+      "start": 1194.36,
+      "end": 1196.52,
+      "text": "It's always your call, and you can define those."
+    },
+    {
+      "start": 1196.52,
+      "end": 1198.8,
+      "text": "Two, approve everything at first."
+    },
+    {
+      "start": 1198.8,
+      "end": 1200.44,
+      "text": "I've never created an agent under his like,"
+    },
+    {
+      "start": 1200.44,
+      "end": 1201.92,
+      "text": "yo, low, go nuts."
+    },
+    {
+      "start": 1201.92,
+      "end": 1203.72,
+      "text": "No, show me what you would do."
+    },
+    {
+      "start": 1203.72,
+      "end": 1204.76,
+      "text": "I like what you did."
+    },
+    {
+      "start": 1204.76,
+      "end": 1206.2,
+      "text": "Do it again, tweak it."
+    },
+    {
+      "start": 1206.2,
+      "end": 1208.08,
+      "text": "Just like I just talked about for our inbox agent."
+    },
+    {
+      "start": 1208.08,
+      "end": 1210.72,
+      "text": "Third, we loosened the leash, right?"
+    },
+    {
+      "start": 1210.72,
+      "end": 1212.36,
+      "text": "It's like a dog you're walking within, you're like,"
+    },
+    {
+      "start": 1212.36,
+      "end": 1213.88,
+      "text": "yeah, I trust you more, I trust you more,"
+    },
+    {
+      "start": 1213.88,
+      "end": 1215.2,
+      "text": "and all of a sudden the leash goes limp,"
+    },
+    {
+      "start": 1215.2,
+      "end": 1216.96,
+      "text": "but he still holds the heel."
+    },
+    {
+      "start": 1216.96,
+      "end": 1219.32,
+      "text": "And then four would be give it a heartbeat"
+    },
+    {
+      "start": 1219.32,
+      "end": 1220.64,
+      "text": "that it can run on its own."
+    },
+    {
+      "start": 1220.64,
+      "end": 1223.84,
+      "text": "Set up that schedule, that reoccurring task."
+    },
+    {
+      "start": 1223.84,
+      "end": 1225.48,
+      "text": "So maybe before it did it once,"
+    },
+    {
+      "start": 1225.48,
+      "end": 1226.44,
+      "text": "and you reviewed everything,"
+    },
+    {
+      "start": 1226.44,
+      "end": 1228.2,
+      "text": "now I might do it every 15 minutes."
+    },
+    {
+      "start": 1228.2,
+      "end": 1229.6,
+      "text": "You know, every morning at 9 a.m.,"
+    },
+    {
+      "start": 1229.6,
+      "end": 1230.44,
+      "text": "it did it once."
+    },
+    {
+      "start": 1230.44,
+      "end": 1231.56,
+      "text": "Now why are we waiting?"
+    },
+    {
+      "start": 1231.56,
+      "end": 1232.56,
+      "text": "Why are we waiting until the next day?"
+    },
+    {
+      "start": 1232.56,
+      "end": 1234.04,
+      "text": "Why don't we have it run all the time?"
+    },
+    {
+      "start": 1234.04,
+      "end": 1237.0,
+      "text": "This process is scary, but the whole point I've learned"
+    },
+    {
+      "start": 1237.0,
+      "end": 1238.92,
+      "text": "to let go is to buy back her time"
+    },
+    {
+      "start": 1238.92,
+      "end": 1240.96,
+      "text": "to have the agent do the work for us."
+    },
+    {
+      "start": 1240.96,
+      "end": 1245.36,
+      "text": "And learning to let go is part of the process if you trust."
+    },
+    {
+      "start": 1245.36,
+      "end": 1247.44,
+      "text": "So for example, when I showed this agent"
+    },
+    {
+      "start": 1247.44,
+      "end": 1248.6,
+      "text": "to my executive assistant,"
+    },
+    {
+      "start": 1248.6,
+      "end": 1249.96,
+      "text": "she thought she was out of a job."
+    },
+    {
+      "start": 1249.96,
+      "end": 1251.72,
+      "text": "Instead, it actually freed her up"
+    },
+    {
+      "start": 1251.72,
+      "end": 1253.2,
+      "text": "to do things that actually mattered."
+    },
+    {
+      "start": 1253.2,
+      "end": 1255.36,
+      "text": "Not sorting emails and writing drafts"
+    },
+    {
+      "start": 1255.36,
+      "end": 1256.6,
+      "text": "or telling me what's in there."
+    },
+    {
+      "start": 1256.6,
+      "end": 1257.84,
+      "text": "The AI can do that."
+    },
+    {
+      "start": 1257.84,
+      "end": 1260.68,
+      "text": "I'd rather pay her to do higher quality work,"
+    },
+    {
+      "start": 1260.68,
+      "end": 1262.32,
+      "text": "manage higher level projects."
+    },
+    {
+      "start": 1262.32,
+      "end": 1264.52,
+      "text": "Then we rolled out the same system to the whole team."
+    },
+    {
+      "start": 1264.52,
+      "end": 1265.92,
+      "text": "I taught everybody how to do this."
+    },
+    {
+      "start": 1265.92,
+      "end": 1267.84,
+      "text": "And I wanna say congratulations."
+    },
+    {
+      "start": 1267.84,
+      "end": 1270.2,
+      "text": "We just tackled a topic that most people"
+    },
+    {
+      "start": 1270.2,
+      "end": 1271.24,
+      "text": "don't even wanna learn."
+    },
+    {
+      "start": 1271.24,
+      "end": 1272.52,
+      "text": "They're like, that's not for me."
+    },
+    {
+      "start": 1272.52,
+      "end": 1274.04,
+      "text": "I hear about agents, I don't get it."
+    },
+    {
+      "start": 1274.04,
+      "end": 1275.8,
+      "text": "I'm confused, but no, you didn't."
+    },
+    {
+      "start": 1275.8,
+      "end": 1277.36,
+      "text": "You went all the way till the end."
+    },
+    {
+      "start": 1277.36,
+      "end": 1278.2,
+      "text": "And I want you to understand"
+    },
+    {
+      "start": 1278.2,
+      "end": 1280.72,
+      "text": "that you might feel a little behind in this AI world,"
+    },
+    {
+      "start": 1280.72,
+      "end": 1282.16,
+      "text": "but here's where I've gotten to."
+    },
+    {
+      "start": 1282.16,
+      "end": 1284.44,
+      "text": "I've accepted that I will always feel behind"
+    },
+    {
+      "start": 1284.44,
+      "end": 1286.44,
+      "text": "and I could never be on top of all of it."
+    },
+    {
+      "start": 1286.44,
+      "end": 1289.12,
+      "text": "But you just learned a strategy, a shift,"
+    },
+    {
+      "start": 1289.12,
+      "end": 1290.48,
+      "text": "a different way of doing work."
+    },
+    {
+      "start": 1290.48,
+      "end": 1293.04,
+      "text": "That if you can learn how to direct the AI,"
+    },
+    {
+      "start": 1293.04,
+      "end": 1294.48,
+      "text": "you will co-create with it."
+    },
+    {
+      "start": 1294.48,
+      "end": 1296.2,
+      "text": "If you don't, don't be surprised."
+    },
+    {
+      "start": 1296.2,
+      "end": 1298.2,
+      "text": "If one day you might be working for it."
+    },
+    {
+      "start": 1298.2,
+      "end": 1300.52,
+      "text": "Remember the rules of our, repetitive, rules based,"
+    },
+    {
+      "start": 1300.52,
+      "end": 1301.72,
+      "text": "and return on time?"
+    },
+    {
+      "start": 1301.72,
+      "end": 1303.52,
+      "text": "That's where we wanna start looking for opportunities"
+    },
+    {
+      "start": 1303.52,
+      "end": 1305.84,
+      "text": "to put an agent in there instead of you keep doing it."
+    },
+    {
+      "start": 1305.84,
+      "end": 1307.96,
+      "text": "And I'm gonna give you the pro tip of all pro tips."
+    },
+    {
+      "start": 1307.96,
+      "end": 1310.04,
+      "text": "You grab the link to this video,"
+    },
+    {
+      "start": 1310.04,
+      "end": 1313.08,
+      "text": "you give it to your AI and you tell it to use everything"
+    },
+    {
+      "start": 1313.08,
+      "end": 1315.32,
+      "text": "I've shared to create the AI for you"
+    },
+    {
+      "start": 1315.32,
+      "end": 1318.16,
+      "text": "and watch it cook, because it can do it."
+    },
+    {
+      "start": 1318.16,
+      "end": 1319.68,
+      "text": "Now, here's what I wanna know from you."
+    },
+    {
+      "start": 1319.68,
+      "end": 1320.52,
+      "text": "We have some fun."
+    },
+    {
+      "start": 1320.52,
+      "end": 1322.6,
+      "text": "Below in the comments, answer this question."
+    },
+    {
+      "start": 1322.6,
+      "end": 1325.04,
+      "text": "If an AI agent could manage your inbox"
+    },
+    {
+      "start": 1325.04,
+      "end": 1326.28,
+      "text": "and buy you back all this time,"
+    },
+    {
+      "start": 1326.28,
+      "end": 1328.16,
+      "text": "scheduling things on your behalf,"
+    },
+    {
+      "start": 1328.16,
+      "end": 1329.36,
+      "text": "what would you have more time for?"
+    },
+    {
+      "start": 1329.36,
+      "end": 1331.36,
+      "text": "I'm curious, post it comment below and let me know."
+    },
+    {
+      "start": 1331.36,
+      "end": 1332.72,
+      "text": "And if you want my whole system,"
+    },
+    {
+      "start": 1332.72,
+      "end": 1334.84,
+      "text": "the playbook that I use to manage AI"
+    },
+    {
+      "start": 1334.84,
+      "end": 1336.16,
+      "text": "and all my different businesses,"
+    },
+    {
+      "start": 1336.16,
+      "end": 1338.2,
+      "text": "just DM me the word AI business on Instagram"
+    },
+    {
+      "start": 1338.2,
+      "end": 1339.2,
+      "text": "and I'll send it right over."
+    },
+    {
+      "start": 1339.2,
+      "end": 1341.28,
+      "text": "And if you wanna know what AI businesses"
+    },
+    {
+      "start": 1341.28,
+      "end": 1343.2,
+      "text": "are worth starting in 2026, click here"
+    },
+    {
+      "start": 1343.2,
+      "end": 1345.08,
+      "text": "and I'll see you on the other side."
+    }
+  ]
+}

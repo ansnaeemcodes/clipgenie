@@ -148,13 +148,20 @@ def generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode="
     mode: 'auto' | 'online' | 'offline'
     """
     is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
+    is_tedtalk = ("digital companion" in transcript_text.lower() or "homo-technologicus" in transcript_text.lower() or "8 trillion" in transcript_text.lower() or "digital species" in transcript_text.lower() or "mustafa" in transcript_text.lower() or not transcript_text.strip())
     if is_offline and mode != "online":
-        if concept_id in OFFLINE_DEMO_KNOWLEDGE:
+        if is_tedtalk and concept_id in OFFLINE_DEMO_KNOWLEDGE:
             demo_data = OFFLINE_DEMO_KNOWLEDGE[concept_id]
             return {
                 "question": demo_data["question"],
                 "grounded_concept": concept_title,
                 "mode": "offline_cached"
+            }
+        else:
+            return {
+                "question": f"Based on this clip ('{concept_title}'), explain the speaker's core argument, framework, or practical takeaway in your own words.",
+                "grounded_concept": concept_title,
+                "mode": "offline_transcript_grounded"
             }
             
     system_prompt = """You are the ClipGenie AI Socratic Engine.
@@ -217,9 +224,14 @@ def evaluate_gap_feedback(concept_id, question, student_answer, transcript_text,
 
     # 2. Check if offline requested
     is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
+    is_tedtalk = ("digital companion" in transcript_text.lower() or "homo-technologicus" in transcript_text.lower() or "8 trillion" in transcript_text.lower() or "digital species" in transcript_text.lower() or "mustafa" in transcript_text.lower() or not transcript_text.strip())
     if is_offline and mode != "online":
-        demo = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
-        key_points = demo["key_points"]
+        if is_tedtalk:
+            demo = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
+            key_points = demo["key_points"]
+        else:
+            raw_sents = [s.strip() for s in re.split(r'[.!?]+', transcript_text) if len(s.strip()) > 25]
+            key_points = raw_sents[:4] if raw_sents else ["Core argument and mechanism explained in the lecture segment"]
         
         # Semantic embedding check with key points
         student_clean = student_answer.strip().lower()

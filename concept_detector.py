@@ -1,4 +1,4 @@
-﻿import os
+import os
 import json
 import logging
 import config
@@ -177,9 +177,11 @@ def extract_concepts_via_llm(raw_segments, video_name_or_path):
     base = os.path.splitext(os.path.basename(video_name_or_path))[0]
     cache_path = os.path.join(config.CACHE_DIR, f"{base}_llm_concepts.json")
 
-    # Format concise transcript with timestamps
+    # Format concise transcript with timestamps (cap at 28,000 chars to stay safely within Groq token limits on long videos)
     lines = [f"{s['start']:.1f}s - {s['end']:.1f}s: {s['text']}" for s in raw_segments]
     transcript_text = "\n".join(lines)
+    if len(transcript_text) > 28000:
+        transcript_text = transcript_text[:28000] + "\n...[Transcript truncated for length]..."
 
     system_prompt = """You are an elite AI-in-Education curriculum architect.
 Your job is to CRITIQUE and ANALYZE this full lecture transcript, and extract the 4-5 major core conceptual pillars taught.
@@ -236,6 +238,92 @@ Return valid JSON with key 'concepts' containing the list of concepts."""
         return concepts
     return VERIFIED_TEDTALK_CONCEPTS
 
+def extract_concepts_locally_from_transcript(raw_segments, num_concepts=5):
+    """
+    Deterministic Local Transcript Concept Extractor:
+    When Groq API is unreachable or rate-limited on a newly imported video,
+    slices the actual Whisper transcript into 5 coherent conceptual chapters
+    grounded 100% in the speaker's actual words and timestamps.
+    """
+    if not raw_segments:
+        return VERIFIED_TEDTALK_CONCEPTS
+
+    sentences = reconstruct_complete_sentences(raw_segments)
+    if not sentences:
+        sentences = raw_segments
+
+    total_sentences = len(sentences)
+    chunk_size = max(1, total_sentences // num_concepts)
+
+    stop_words = {
+        "the", "and", "that", "this", "with", "from", "your", "have", "what", "when",
+        "where", "which", "their", "there", "about", "would", "could", "should", "they",
+        "them", "then", "than", "into", "just", "like", "some", "more", "very", "actually",
+        "going", "think", "know", "want", "make", "really", "because", "people", "things"
+    }
+
+    extracted = []
+    for i in range(num_concepts):
+        start_idx = i * chunk_size
+        end_idx = (i + 1) * chunk_size if i < num_concepts - 1 else total_sentences
+        chunk = sentences[start_idx:end_idx]
+        if not chunk:
+            continue
+
+        c_start = round(float(chunk[0]['start']), 2)
+        # Keep each playable concept clip focused (45s - 90s window) while covering the section
+        raw_end = float(chunk[-1]['end'])
+        c_end = round(min(raw_end, c_start + 75.0), 2)
+        if c_end <= c_start:
+            c_end = round(c_start + 45.0, 2)
+
+        dur_str = f"{int(c_start // 60)}:{int(c_start % 60):02d} - {int(c_end // 60)}:{int(c_end % 60):02d}"
+        full_text = " ".join(s['text'].strip() for s in chunk)
+
+        # Extract top distinctive keywords for title & key_terms
+        words = [
+            w.strip(".,!?;:\"'()[]{}").lower()
+            for w in full_text.split()
+        ]
+        freq = {}
+        for w in words:
+            if len(w) >= 5 and w.isalpha() and w not in stop_words:
+                freq[w] = freq.get(w, 0) + 1
+        top_terms = [w for w, _ in sorted(freq.items(), key=lambda x: x[1], reverse=True)[:4]]
+        if not top_terms:
+            top_terms = ["core concept", "workflow", "framework", "application"]
+
+        # Create a clean title from the first strong sentence or top terms
+        lead_sentence = chunk[0]['text'].strip()
+        short_lead = " ".join(lead_sentence.split()[:7]).rstrip(".,;:")
+        title_keywords = " & ".join(t.title() for t in top_terms[:2])
+        title = f"{title_keywords}: {short_lead}..." if len(short_lead) > 10 else f"Concept {i+1}: {title_keywords}"
+
+        summary = " ".join(s['text'].strip() for s in chunk[:2])
+        if len(summary) > 200:
+            summary = summary[:197].rsplit(" ", 1)[0] + "..."
+
+        extracted.append({
+            "id": f"concept_{i+1}",
+            "title": title,
+            "summary": summary,
+            "start": c_start,
+            "end": c_end,
+            "duration_str": dur_str,
+            "key_terms": top_terms,
+            "core_principle": summary,
+            "occurrences": [
+                {
+                    "start": c_start,
+                    "end": c_end,
+                    "label": f"Part 1: {title_keywords}",
+                    "duration_str": dur_str
+                }
+            ]
+        })
+
+    return extracted if extracted else VERIFIED_TEDTALK_CONCEPTS
+
 def get_lecture_concepts(video_name_or_path, raw_segments, force_auto=False):
     """
     Returns concept map for the lecture with instant caching and multi-occurrence support.
@@ -243,15 +331,8 @@ def get_lecture_concepts(video_name_or_path, raw_segments, force_auto=False):
     base = os.path.splitext(os.path.basename(video_name_or_path))[0]
     cache_path = os.path.join(config.CACHE_DIR, f"{base}_llm_concepts.json")
 
-    # If force_auto is requested and API key is present, run live LLM extraction
-    if force_auto and config.GROQ_API_KEY:
-        try:
-            return extract_concepts_via_llm(raw_segments, video_name_or_path)
-        except Exception as e:
-            logger.warning(f"Live LLM concept extraction failed ({e}). Falling back to cached/presets.")
-
-    # Check cache first
-    if os.path.exists(cache_path):
+    # Check cache first if not forcing auto
+    if not force_auto and os.path.exists(cache_path):
         try:
             with open(cache_path, "r", encoding="utf-8") as f:
                 cached = json.load(f)
@@ -261,7 +342,37 @@ def get_lecture_concepts(video_name_or_path, raw_segments, force_auto=False):
         except Exception as e:
             logger.warning(f"Error reading concept cache: {e}")
 
-    # Fallback to verified multi-occurrence presets for tedtalk
+    # If force_auto is requested (or no cache exists yet) and API key is present, run live LLM extraction
+    if (force_auto or not os.path.exists(cache_path)) and config.GROQ_API_KEY and base != "tedtalk":
+        try:
+            return extract_concepts_via_llm(raw_segments, video_name_or_path)
+        except Exception as e:
+            logger.warning(f"Live LLM concept extraction failed ({e}). Using local transcript concept extractor.")
+
+    if force_auto and config.GROQ_API_KEY and base == "tedtalk":
+        try:
+            return extract_concepts_via_llm(raw_segments, video_name_or_path)
+        except Exception as e:
+            logger.warning(f"Live LLM concept extraction failed ({e}). Falling back to tedtalk presets.")
+
+    # Check cache again
+    if os.path.exists(cache_path):
+        try:
+            with open(cache_path, "r", encoding="utf-8") as f:
+                cached = json.load(f)
+                if cached:
+                    return cached
+        except Exception:
+            pass
+
+    # For non-tedtalk videos, build concepts directly from their actual Whisper transcript!
+    if base != "tedtalk" and raw_segments:
+        local_concepts = extract_concepts_locally_from_transcript(raw_segments)
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(local_concepts, f, indent=2)
+        return local_concepts
+
+    # Default fallback for tedtalk
     with open(cache_path, "w", encoding="utf-8") as f:
         json.dump(VERIFIED_TEDTALK_CONCEPTS, f, indent=2)
 

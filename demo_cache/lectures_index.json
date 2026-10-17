@@ -7,5 +7,23 @@
     "duration_str": "6:50",
     "source": "demo_preset",
     "concepts_count": 5
+  },
+  {
+    "id": "Bm84BAtOfQw",
+    "title": "How to Build Your First AI Agent (Full Guide - Dan Martell)",
+    "filename": "Bm84BAtOfQw.mp4",
+    "video_url": "/static/Bm84BAtOfQw.mp4",
+    "duration_str": "22:25",
+    "source": "url_import",
+    "concepts_count": 5
+  },
+  {
+    "id": "10-34_to_14-00",
+    "title": "10-34 To 14-00",
+    "filename": "10-34_to_14-00.mp4",
+    "video_url": "/static/10-34_to_14-00.mp4",
+    "duration_str": "3:27",
+    "source": "local_upload",
+    "concepts_count": 5
   }
 ]
