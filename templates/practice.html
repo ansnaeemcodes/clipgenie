@@ -55,7 +55,7 @@
                 <span class="hidden md:inline-flex items-center px-2.5 py-1 rounded-md bg-purple-950 border border-purple-700/50 text-[11px] font-bold uppercase tracking-wider text-purple-300">
                     <i class="fa-solid fa-graduation-cap mr-1.5 text-purple-400"></i> Active Lecture
                 </span>
-                <h1 id="currentLectureTitle" class="text-sm sm:text-base font-extrabold text-white truncate max-w-[540px]">The Coming Wave: AI as a Digital Species (Mustafa Suleyman)</h1>
+                <h1 id="currentLectureTitle" class="text-sm sm:text-base font-extrabold text-white truncate max-w-[540px]">What Is an AI Anyway? — Full TED Talk (Mustafa Suleyman)</h1>
                 <button onclick="openImportModal()" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold text-purple-100 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 transition flex items-center gap-1.5">
                     <i class="fa-solid fa-cloud-arrow-up text-purple-300"></i>
                     <span>Import / Switch Video</span>
@@ -91,7 +91,7 @@
                     <div class="flex items-center space-x-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span id="activeSegmentLabel" class="text-xs font-mono font-bold text-purple-200 bg-purple-950/90 px-2 py-0.5 rounded border border-purple-700/70">
-                            0:26 - 1:16 (50s)
+                            0:00 - 2:01 (121s)
                         </span>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                 <!-- 16:9 Video Player -->
                 <div class="relative rounded-xl overflow-hidden bg-black aspect-video border border-purple-900/60 mb-3 shadow-xl">
                     <video id="lectureVideo" controls class="w-full h-full object-contain">
-                        <source src="/static/tedtalk.mp4" type="video/mp4">
+                        <source src="/static/videoplayback.mp4" type="video/mp4">
                         Your browser does not support video playback.
                     </video>
                 </div>
@@ -603,6 +603,6 @@
 
     {% include 'footer.html' %}
 
-    <script src="/static/js/learning_loop.js?v=2.7"></script>
+    <script src="/static/js/learning_loop.js?v=2.9"></script>
 </body>
 </html>

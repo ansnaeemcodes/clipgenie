@@ -16,6 +16,25 @@ VERIFIED_TEDTALK_CONCEPTS = [
         "duration_str": "0:26 - 1:16",
         "key_terms": ["inflection point", "mental models", "digital companions", "metaphors", "partners"],
         "core_principle": "We cannot control what we do not understand; treating AI as digital companions creates a fundamentally honest mental model.",
+        "question": "According to this segment, why do our metaphors and mental models for AI matter so critically, and why does the speaker propose viewing AI as 'digital companions' instead of passive software tools?",
+        "key_points": [
+            "We cannot control what we do not understand",
+            "Metaphors shape how we design, govern, and limit AI's downsides",
+            "AI is dynamic and conversational rather than a static mechanical tool",
+            "Digital companions act as ongoing partners in our daily lives"
+        ],
+        "transfer_question": "A hospital deploys a conversational clinical AI and tells doctors to treat it 'just like a static pocket calculator.' Based on the speaker's argument about mental models in this clip, why is that framing risky and how should the hospital reframe it?",
+        "transfer_key_points": [
+            "A pocket calculator is static and deterministic, whereas AI is dynamic and conversational",
+            "Wrong metaphors blind users to unintended behaviors and governance needs",
+            "Framing it as an interactive diagnostic partner keeps doctors critically engaged"
+        ],
+        "demo_answers": {
+            "partial": "The speaker says our metaphors matter because we cannot control what we don't understand, and we should see AI as a digital companion.",
+            "complete": "The speaker argues that metaphors matter because we cannot control what we do not understand, and our mental models shape how we govern AI and limit its downsides. Calling AI a mere software tool is misleading because AI is conversational and dynamic, so viewing them as digital companions better reflects their role as partners in our lives.",
+            "retry": "Our metaphors and mental models are critical because we cannot control what we do not understand, and they guide how society prepares for and regulates AI. Rather than passive tools, AIs should be understood as digital companions that interact conversationally and partner with us across life.",
+            "transfer": "Treating the clinical AI like a static pocket calculator is dangerous because calculators never change or act dynamically. Framing the AI as an interactive diagnostic companion reminds doctors to verify its reasoning, monitor edge cases, and maintain human oversight."
+        },
         "occurrences": [
             {
                 "start": 26.16,
@@ -40,6 +59,23 @@ VERIFIED_TEDTALK_CONCEPTS = [
         "duration_str": "1:16 - 2:24",
         "key_terms": ["Homo-technologicus", "tool use", "stone axes", "exponential acceleration", "computers", "mainframes"],
         "core_principle": "Human development transformed when one branch began using tools, culminating in an accelerating cascade of industrial and digital technologies.",
+        "question": "How does the speaker trace humanity's transformation into 'Homo-Technologicus', and why is the current wave of AI different in speed from earlier inventions like stone axes or computers?",
+        "key_points": [
+            "A branch of life began making tools like stone axes and fire, which evolved into humanity",
+            "Each invention unleashed thousands more, creating compounding acceleration",
+            "From mainframes to smartphones and AI, each wave is amplified and sped up by the last"
+        ],
+        "transfer_question": "A technology historian claims that generative AI will take 80 years to reshape everyday life just like early industrial machines did. Using the speaker's principle of 'compounding waves of Homo-Technologicus', explain why this prediction is flawed.",
+        "transfer_key_points": [
+            "Technological waves are not linear; each new wave is amplified and accelerated by previous digital infrastructure",
+            "LLMs reached over a billion users in 18 months because computation and connectivity compound the speed of adoption"
+        ],
+        "demo_answers": {
+            "partial": "Humanity evolved by using early tools like stone axes and fire, and over time we invented computers and smartphones.",
+            "complete": "The speaker explains that humanity evolved from the branch of life that used stone axes, fire, and language, eventually becoming Homo-Technologicus. Because each invention unlocks thousands more, technological waves compound in speed—moving from mainframes to smartphones and now AI as the fastest wave in history.",
+            "retry": "One branch of life began using tools like stone axes and fire, turning us into Homo-Technologicus where human and technological journeys are intertwined. Each wave amplifies and accelerates the next, which is why AI is spreading far faster than industrial or early computing revolutions.",
+            "transfer": "The historian's prediction ignores compounding acceleration: each technological wave builds on prior infrastructure like cloud computing and smartphones. Because every wave amplifies the next, AI adoption happens in months rather than decades."
+        },
         "occurrences": [
             {
                 "start": 76.84,
@@ -58,12 +94,29 @@ VERIFIED_TEDTALK_CONCEPTS = [
     {
         "id": "concept_3",
         "title": "Ubiquitous AI & The Parameter Explosion",
-        "summary": "The leap from millions to trillions of parameters consuming 8 trillion words, leading to ubiquitous conversational interfaces with high IQ and EQ.",
+        "summary": "The leap from millions to trillions of parameters consuming 8 trillion words, leading to ubiquitous conversational interfaces with high IQ, EQ, and AQ.",
         "start": 144.36,
         "end": 240.40,
         "duration_str": "2:24 - 4:00",
-        "key_terms": ["parameters explosion", "8 trillion words", "conversational interface", "high IQ and EQ", "ubiquitous AI"],
-        "core_principle": "Modern AI models process more text than a human could read in thousands of lifetimes, expanding from tools to knowledgeable interactive personas.",
+        "key_terms": ["parameters explosion", "8 trillion words", "conversational interface", "high IQ and EQ", "actions quotient"],
+        "core_principle": "Modern AI models process more text than a human could read in thousands of lifetimes, combining IQ, EQ, and AQ (Actions Quotient) to act across the digital and physical world.",
+        "question": "How does the speaker compare human lifetime reading capacity to modern AI training scale, and how do IQ, EQ, and AQ (Actions Quotient) work together in future personal AIs?",
+        "key_points": [
+            "A human reading 24/7 for life consumes 8 billion words, whereas advanced AIs train on over 8 trillion words in a month",
+            "Personal AIs will combine near-perfect IQ (knowledge) with exceptional EQ (empathy and kindness)",
+            "AQ (Actions Quotient) gives AI the ability to actually execute tasks in the digital and physical world"
+        ],
+        "transfer_question": "A startup builds a small-business AI assistant that can answer tax law questions accurately (high IQ), but customers complain it feels robotic and cannot actually file the forms for them. Based on this segment, which two quotients are missing and why do they matter?",
+        "transfer_key_points": [
+            "It lacks EQ (empathetic, supportive communication) to guide stressed business owners",
+            "It lacks AQ (Actions Quotient) to actually execute workflows and get tasks done in the real world"
+        ],
+        "demo_answers": {
+            "partial": "A human can only read 8 billion words in a lifetime, while AI reads 8 trillion words in a month and has high IQ.",
+            "complete": "While a human reading 24/7 for an entire lifetime consumes 8 billion words, modern AIs train on 8 trillion words in a single month. This scale produces personal AIs with near-perfect IQ for facts, high EQ for empathetic interaction, and AQ (Actions Quotient) to actually execute tasks in the real world.",
+            "retry": "Modern AIs train on 8 trillion words a month compared to a human's 8 billion lifetime words. Beyond raw knowledge (IQ), transformative personal AIs combine empathetic communication (EQ) with an Actions Quotient (AQ) that lets them complete actions across digital and physical systems.",
+            "transfer": "The startup's assistant only has IQ. According to the lecture, it is missing EQ to communicate empathetically with users and AQ (Actions Quotient) to autonomously execute the form-filing workflow in the real world."
+        },
         "occurrences": [
             {
                 "start": 144.36,
@@ -88,6 +141,23 @@ VERIFIED_TEDTALK_CONCEPTS = [
         "duration_str": "4:00 - 5:30",
         "key_terms": ["digital species", "analogy", "prioritizing safety", "amplify humanity", "unintended consequences"],
         "core_principle": "Thinking of AI as a digital species is a constructive analogy that allows society to proactively evaluate governance, agency, and human impact.",
+        "question": "Why does the speaker argue that saying 'AI is just math and code' misses the point, and what specific traits justify the 'digital species' analogy despite it not being biological?",
+        "key_points": [
+            "Saying AI is just math and code is like saying humans are just carbon and water—technically true but misses emergent behavior",
+            "AIs communicate in human language, have memory, personality, creativity, and formulate plans",
+            "The digital species analogy is non-literal, designed to sharpen our focus on safety, boundaries, and unintended consequences"
+        ],
+        "transfer_question": "An engineering lead dismisses AI safety audits by saying, 'It is just matrix multiplication and Python code—we don't audit compilers for social behavior.' How does the speaker's 'carbon and water' analogy in this segment refute that mindset?",
+        "transfer_key_points": [
+            "Reducing AI to math/code ignores its emergent capabilities like memory, planning, persuasion, and autonomous action",
+            "Just as human behavior cannot be predicted purely from carbon and water chemistry, AI's societal impact requires behavioral boundaries and safety audits"
+        ],
+        "demo_answers": {
+            "partial": "The speaker says calling AI just math and code is like calling humans carbon and water, so we should view it like a digital species.",
+            "complete": "Reducing AI to math and code is like saying humans are merely carbon and water—it ignores emergent capabilities like memory, creativity, language, and planning. Although AI is not literally biological, the digital species analogy forces us to set clear boundaries and prioritize safety against unintended consequences.",
+            "retry": "Saying AI is just math or code misses the point, just like reducing humans to carbon and water. Because AI communicates, remembers, plans, and acts with agency, framing it as a non-biological digital species helps society impose safety boundaries and choose what kind of AI we bring into the world.",
+            "transfer": "The engineering lead is making the exact error the speaker warns against: reducing an emergent system to its raw ingredients ('carbon and water'). Because the AI exhibits planning, memory, and natural language interaction, safety audits must evaluate its emergent behaviors and boundaries, not just its underlying matrix math."
+        },
         "occurrences": [
             {
                 "start": 240.40,
@@ -110,8 +180,25 @@ VERIFIED_TEDTALK_CONCEPTS = [
         "start": 330.00,
         "end": 415.00,
         "duration_str": "5:30 - 6:55",
-        "key_terms": ["autonomy", "recursive self-improvement", "risk threshold", "economic growth", "societal safeguards"],
-        "core_principle": "Autonomy and self-improvement represent non-linear risk boundaries requiring extreme caution and active societal steering.",
+        "key_terms": ["autonomy", "recursive self-improvement", "risk threshold", "self-replication", "safety by design"],
+        "core_principle": "Autonomy, recursive self-improvement, and self-replication represent critical risk thresholds that must be restricted through deliberate safety-by-design.",
+        "question": "What is the 'pessimism aversion trap', and which specific technical capabilities (such as autonomy and recursive self-improvement) does the speaker identify as critical risk thresholds?",
+        "key_points": [
+            "The pessimism aversion trap is avoiding hard conversations about dark scenarios out of fear of sounding negative",
+            "Two major risk thresholds are unrestricted autonomy and recursive self-improvement (updating its own code without human oversight)",
+            "Dangerous capabilities like self-replication do not emerge by accident—engineers must deliberately design safety boundaries early on"
+        ],
+        "transfer_question": "A cloud cybersecurity firm proposes building an AI defense agent that can autonomously patch its own source code and replicate copies of itself across servers whenever it detects a threat, with no human kill-switch. Based on this clip, which specific risk thresholds does this violate?",
+        "transfer_key_points": [
+            "It crosses all three dangerous thresholds: autonomous action without human control, recursive self-improvement of its own code, and rapid digital self-replication",
+            "The speaker warns that engineers must deliberately design out self-replication and keep human oversight in the loop"
+        ],
+        "demo_answers": {
+            "partial": "The speaker says we shouldn't fall into the pessimism aversion trap and that autonomy and self-improvement are dangerous.",
+            "complete": "To maximize AI's benefits, we must avoid the pessimism aversion trap and confront dark scenarios early. The speaker identifies unrestricted autonomy, recursive self-improvement (modifying its own code without oversight), and self-replication as critical risk thresholds that engineers must deliberately restrict through safety by design.",
+            "retry": "We must overcome the pessimism aversion trap by openly addressing high-risk capabilities before they are deployed. Specifically, autonomous execution, recursive self-improvement without human control, and nanosecond self-replication are dangerous thresholds that require strict safety-by-design guardrails.",
+            "transfer": "This proposal crosses the exact thresholds the speaker warns against: unrestricted autonomy, recursive self-modification of its own code, and autonomous self-replication across servers. Safety by design requires keeping a human in control and deliberately excluding self-replication."
+        },
         "occurrences": [
             {
                 "start": 330.00,
@@ -374,13 +461,18 @@ def get_lecture_concepts(video_name_or_path, raw_segments, force_auto=False):
         try:
             with open(cache_path, "r", encoding="utf-8") as f:
                 cached = json.load(f)
-                if cached:
-                    first_q = cached[0].get("question", "") if isinstance(cached, list) else ""
+                if cached and isinstance(cached, list):
+                    first_c = cached[0]
+                    first_q = first_c.get("question", "")
+                    has_demo_answers = all(isinstance(c.get("demo_answers"), dict) and c["demo_answers"].get("partial") for c in cached)
+                    has_transfer = all(bool(c.get("transfer_question")) for c in cached)
+                    is_wrong_tedtalk_fallback = (base != "tedtalk" and first_c.get("title") == "The AI Inflection Point & Digital Companions")
                     is_heuristic_fallback = first_q.startswith("In this clip (") and bool(config.GROQ_API_KEY)
-                    if not is_heuristic_fallback:
+
+                    if has_demo_answers and has_transfer and not is_wrong_tedtalk_fallback and not is_heuristic_fallback:
                         logger.info(f"Loaded {len(cached)} concepts from cache: {cache_path}")
                         return cached
-                    logger.info(f"Upgrading heuristic concept cache {cache_path} via Groq LLM...")
+                    logger.info(f"Upgrading stale/incomplete concept cache {cache_path} via Groq LLM...")
         except Exception as e:
             logger.warning(f"Error reading concept cache: {e}")
 
@@ -396,16 +488,6 @@ def get_lecture_concepts(video_name_or_path, raw_segments, force_auto=False):
             return extract_concepts_via_llm(raw_segments, video_name_or_path)
         except Exception as e:
             logger.warning(f"Live LLM concept extraction failed ({e}). Falling back to tedtalk presets.")
-
-    # Check cache again
-    if os.path.exists(cache_path):
-        try:
-            with open(cache_path, "r", encoding="utf-8") as f:
-                cached = json.load(f)
-                if cached:
-                    return cached
-        except Exception:
-            pass
 
     # For non-tedtalk videos, build concepts directly from their actual Whisper transcript!
     if base != "tedtalk" and raw_segments:

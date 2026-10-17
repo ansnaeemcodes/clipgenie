@@ -15,15 +15,60 @@ logger = logging.getLogger(__name__)
 LECTURES_INDEX_FILE = os.path.join(config.CACHE_DIR, "lectures_index.json")
 
 def get_lectures_index():
-    """Returns list of registered lectures."""
+    """Returns list of registered lectures, with videoplayback as the primary default."""
     default_lectures = [
         {
-            "id": "tedtalk",
-            "title": "The Coming Wave: AI as a Digital Species (Mustafa Suleyman)",
-            "filename": "tedtalk.mp4",
-            "video_url": "/static/tedtalk.mp4",
-            "duration_str": "6:50",
-            "source": "demo_preset",
+            "id": "videoplayback",
+            "title": "What Is an AI Anyway? — Full TED Talk (Mustafa Suleyman)",
+            "filename": "videoplayback.mp4",
+            "video_url": "/static/videoplayback.mp4",
+            "duration_str": "22:01",
+            "source": "local_upload",
+            "concepts_count": 4
+        },
+        {
+            "id": "YWGZ12ohMJU",
+            "title": "Is AI Good or Evil? — The Knife Analogy & Data Bias",
+            "filename": "YWGZ12ohMJU.mp4",
+            "video_url": "/static/YWGZ12ohMJU.mp4",
+            "duration_str": "01:28",
+            "source": "local_upload",
+            "concepts_count": 4
+        },
+        {
+            "id": "44St9MoJU0E",
+            "title": "When AI Knows Everything, What Should Humans Learn? | Kristina Kallas",
+            "filename": "44St9MoJU0E.mp4",
+            "video_url": "/static/44St9MoJU0E.mp4",
+            "duration_str": "13:39",
+            "source": "local_upload",
+            "concepts_count": 4
+        },
+        {
+            "id": "Bm84BAtOfQw",
+            "title": "AI Agents vs Chatbots: The D-A-T-A Loop & A-G-E Framework",
+            "filename": "Bm84BAtOfQw.mp4",
+            "video_url": "/static/Bm84BAtOfQw.mp4",
+            "duration_str": "22:24",
+            "source": "local_upload",
+            "concepts_count": 4
+        },
+        {
+            "id": "SGxDv7XybSo",
+            "title": "Evolution from Ape to Man: Bipedalism, Stone Tools & Brain Expansion",
+            "filename": "SGxDv7XybSo.mp4",
+            "video_url": "/static/SGxDv7XybSo.mp4",
+            "duration_str": "08:20",
+            "source": "local_upload",
+            "concepts_count": 4
+        },
+        {
+            "id": "10-34_to_14-00",
+            "title": "Overcoming Internal Trauma, Isolation & The Courage Gap",
+            "filename": "10-34_to_14-00.mp4",
+            "video_url": "/static/10-34_to_14-00.mp4",
+            "duration_str": "03:27",
+            "source": "local_upload",
             "concepts_count": 5
         }
     ]

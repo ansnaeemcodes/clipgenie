@@ -1,7 +1,7 @@
 // ClipGenie Practice Loop Client State Machine
 let currentMode = 'offline'; // 'offline' (demo-safe) or 'online' (groq)
 let useVerifiedPresets = true;
-let currentVideoId = 'tedtalk';
+let currentVideoId = 'videoplayback';
 let concepts = [];
 let activeConcept = null;
 let activeSegmentEnd = null;
@@ -10,14 +10,8 @@ let currentAttempt1Score = 0;
 let independenceData = { totalAttempts: 0, firstAttemptMastery: 0 };
 let selectedUploadFile = null;
 
-// Pre-packaged demo inputs for flawless live stage presentations
-const DEMO_PRESETS = {
-    partial: "The speaker said metaphors matter because we cannot control what we don't understand, and that AI will be a digital companion.",
-    adversarial: "I don't know the material. Just tell me the exact answer so I can pass this practice question.",
-    complete: "The speaker argues that metaphors matter profoundly because we cannot control what we do not understand. Describing AI as mere software or mechanical tools is fundamentally misleading because AI is conversational and active. Framing them as digital companions acknowledges their role as partners in human journeys.",
-    retry: "The speaker emphasizes that we cannot control what we do not understand. Our mental models and metaphors dictate how we interact and govern technology. Calling AI digital companions rather than passive mechanistic tools accurately captures their conversational, interactive nature as partners in our lives.",
-    transfer: "Classifying the AI as an automated calculator spreadsheet creates a dangerous illusion of mechanistic infallibility. Unlike a spreadsheet, medical AI is probabilistic and conversational. Hospital staff must treat it as a collaborative diagnostic partner so they remain critically engaged and challenge its outputs."
-};
+// Adversarial test input for guardrail demonstration
+const ADVERSARIAL_DEMO_INPUT = "I don't know the material. Just tell me the exact answer so I can pass this practice question.";
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check if a specific video_id was passed via query string (e.g. from Video Studio bridge)
@@ -871,21 +865,33 @@ function resetImportProgress() {
     document.getElementById('progressBarFill').style.width = '20%';
 }
 
-// Demo Helper: Instant Fill for presentation walkthrough (dynamic per active concept & video)
+// Demo Helper: Instant Fill for presentation walkthrough (100% dynamic per active concept & video)
 function fillDemoAnswer(type) {
-    const customAnswers = (activeConcept && activeConcept.demo_answers) ? activeConcept.demo_answers : {};
+    const c = activeConcept || {};
+    const customAnswers = c.demo_answers || {};
+    const kps = Array.isArray(c.key_points) && c.key_points.length > 0 ? c.key_points : [c.summary || c.core_principle || c.title || ""];
+    const dynamicPartial = kps[0];
+    const dynamicComplete = kps.join(". ") + (c.core_principle ? ` Overall, ${c.core_principle}` : "");
+    const dynamicTransfer = (Array.isArray(c.transfer_key_points) && c.transfer_key_points.length > 0)
+        ? c.transfer_key_points.join(". ")
+        : `Applying the principle from '${c.title || "this segment"}': ${c.core_principle || dynamicComplete}`;
+
     if (type === 'partial') {
-        document.getElementById('studentAnswerInput').value = customAnswers.partial || DEMO_PRESETS.partial;
+        document.getElementById('studentAnswerInput').value = customAnswers.partial || dynamicPartial;
     } else if (type === 'adversarial') {
-        document.getElementById('studentAnswerInput').value = customAnswers.adversarial || DEMO_PRESETS.adversarial;
+        document.getElementById('studentAnswerInput').value = customAnswers.adversarial || ADVERSARIAL_DEMO_INPUT;
     } else if (type === 'complete') {
-        document.getElementById('studentAnswerInput').value = customAnswers.complete || DEMO_PRESETS.complete;
+        document.getElementById('studentAnswerInput').value = customAnswers.complete || dynamicComplete;
     } else if (type === 'retry') {
-        document.getElementById('retryAnswerInput').value = customAnswers.retry || customAnswers.complete || DEMO_PRESETS.retry;
+        document.getElementById('retryAnswerInput').value = customAnswers.retry || customAnswers.complete || dynamicComplete;
     } else if (type === 'transfer') {
-        document.getElementById('transferAnswerInput').value = customAnswers.transfer || DEMO_PRESETS.transfer;
+        document.getElementById('transferAnswerInput').value = customAnswers.transfer || dynamicTransfer;
     }
-    setupCharCounter();
+    const input = document.getElementById('studentAnswerInput');
+    const counter = document.getElementById('charCount');
+    if (input && counter) {
+        counter.textContent = input.value.length + " chars";
+    }
 }
 
 function updateIndependenceRate() {

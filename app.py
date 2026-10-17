@@ -370,18 +370,18 @@ def resolve_video_info(video_id=None):
         target_lecture = lectures[0]
         
     if target_lecture:
-        vid_filename = target_lecture.get('filename', 'tedtalk.mp4')
+        vid_filename = target_lecture.get('filename', 'videoplayback.mp4')
         vid_path = os.path.join(config.STATIC_DIR, vid_filename)
         if not os.path.exists(vid_path):
             vid_path = os.path.join(config.UPLOADS_DIR, vid_filename)
         return target_lecture, vid_path
         
     default_meta = {
-        'id': 'tedtalk',
-        'title': 'The Coming Wave: AI as a Digital Species (Mustafa Suleyman)',
-        'video_url': '/static/tedtalk.mp4'
+        'id': 'videoplayback',
+        'title': 'What Is an AI Anyway? — Full TED Talk (Mustafa Suleyman)',
+        'video_url': '/static/videoplayback.mp4'
     }
-    return default_meta, os.path.join(config.STATIC_DIR, 'tedtalk.mp4')
+    return default_meta, os.path.join(config.STATIC_DIR, 'videoplayback.mp4')
 
 @app.route('/practice')
 def practice():

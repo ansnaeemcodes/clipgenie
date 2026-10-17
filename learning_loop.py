@@ -136,10 +136,9 @@ def call_groq_llm(system_prompt, user_prompt):
     raise RuntimeError(f"All Groq LLM models failed: {last_err}")
 
 def _get_video_concept_data(video_id, concept_id):
-    """Loads cached concept data (question, key_points, transfer_question) for a specific video_id."""
-    if not video_id or video_id == "tedtalk":
-        return OFFLINE_DEMO_KNOWLEDGE.get(concept_id)
-    cache_path = os.path.join(config.CACHE_DIR, f"{video_id}_llm_concepts.json")
+    """Loads cached concept data (question, key_points, transfer_question, demo_answers) for a specific video_id."""
+    vid = video_id or "videoplayback"
+    cache_path = os.path.join(config.CACHE_DIR, f"{vid}_llm_concepts.json")
     if os.path.exists(cache_path):
         try:
             with open(cache_path, "r", encoding="utf-8") as f:
@@ -151,59 +150,55 @@ def _get_video_concept_data(video_id, concept_id):
                     return concepts[0]
         except Exception as e:
             logger.warning(f"Could not read concept data from {cache_path}: {e}")
+    if vid == "tedtalk":
+        return OFFLINE_DEMO_KNOWLEDGE.get(concept_id)
     return None
 
-def generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode="auto", video_id="tedtalk"):
+def generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode="auto", video_id="videoplayback"):
     """
     Feature 3: Retrieval Prompt Generation
     Generates open-ended retrieval question grounded strictly in the transcript segment.
-    mode: 'auto' | 'online' | 'offline'
     """
-    is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
     concept_meta = _get_video_concept_data(video_id, concept_id)
 
-    if is_offline and mode != "online":
-        if concept_meta and concept_meta.get("question"):
-            return {
-                "question": concept_meta["question"],
-                "grounded_concept": concept_title,
-                "mode": "offline_cached"
-            }
-        else:
-            return {
-                "question": f"Based on this clip ('{concept_title}'), explain the speaker's core argument, framework, or practical takeaway in your own words.",
-                "grounded_concept": concept_title,
-                "mode": "offline_transcript_grounded"
-            }
-            
-    system_prompt = """You are the ClipGenie AI Socratic Engine.
+    # Use concept-specific question from the video's LLM concept map if available (unless forced live regeneration)
+    if mode != "online" and concept_meta and concept_meta.get("question"):
+        return {
+            "question": concept_meta["question"],
+            "grounded_concept": concept_title,
+            "mode": "video_concept_grounded"
+        }
+
+    if config.GROQ_API_KEY:
+        system_prompt = """You are the ClipGenie AI Socratic Engine.
 Your role is to generate an open-ended conceptual retrieval question for a student based STRICTLY on the provided lecture transcript segment.
 STRICT CONSTRAINTS:
 1. Ground the question ONLY in what this segment explicitly says.
 2. The question must test deep conceptual understanding, not trivial recall.
 3. Return valid JSON only with keys: 'question', 'grounded_concept'."""
 
-    user_prompt = f"""Concept Title: {concept_title}
+        user_prompt = f"""Concept Title: {concept_title}
 Transcript Segment:
 \"\"\"{transcript_text}\"\"\"
 
 Generate the retrieval practice question in JSON:"""
 
-    try:
-        return call_groq_llm(system_prompt, user_prompt)
-    except Exception as e:
-        logger.warning(f"LLM question generation fallback to offline knowledge: {e}")
-        if concept_meta and concept_meta.get("question"):
-            return {
-                "question": concept_meta["question"],
-                "grounded_concept": concept_title,
-                "mode": "offline_fallback"
-            }
+        try:
+            return call_groq_llm(system_prompt, user_prompt)
+        except Exception as e:
+            logger.warning(f"LLM question generation fallback to concept metadata: {e}")
+
+    if concept_meta and concept_meta.get("question"):
         return {
-            "question": f"Based on this clip ('{concept_title}'), explain the speaker's core argument, framework, or practical takeaway in your own words.",
+            "question": concept_meta["question"],
             "grounded_concept": concept_title,
             "mode": "offline_fallback"
         }
+    return {
+        "question": f"Based on this clip ('{concept_title}'), explain the speaker's core argument, framework, or practical takeaway in your own words.",
+        "grounded_concept": concept_title,
+        "mode": "offline_fallback"
+    }
 
 def _local_semantic_gap_evaluation(student_answer, key_points, transcript_text):
     """
@@ -426,54 +421,59 @@ def evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answ
     eval_2["comparison_message"] = comparison_message
     return eval_2
 
-def generate_transfer_question(concept_id, concept_title, transcript_text, mode="auto", video_id="tedtalk"):
+def generate_transfer_question(concept_id, concept_title, transcript_text, mode="auto", video_id="videoplayback"):
     """
     Feature 6: Transfer Check Question
     Generates a genuinely different, cold, unscaffolded question applying the concept to a new scenario.
     """
-    is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
     concept_meta = _get_video_concept_data(video_id, concept_id)
-    if is_offline and mode != "online":
-        if concept_meta and concept_meta.get("transfer_question"):
-            return {
-                "transfer_question": concept_meta["transfer_question"],
-                "concept_id": concept_id,
-                "mode": "offline_cached"
-            }
+    cached_tq = concept_meta.get("transfer_question", "") if concept_meta else ""
+    is_generic_tq = cached_tq.startswith("Suppose a team is applying the speaker's principle") or cached_tq.startswith("How would you apply the core principle")
+
+    if mode != "online" and cached_tq and not is_generic_tq:
         return {
-            "transfer_question": f"How would you apply the core principle of '{concept_title}' from this lecture to solve a brand-new real-world workflow problem?",
+            "transfer_question": cached_tq,
             "concept_id": concept_id,
-            "mode": "offline_transcript_grounded"
+            "mode": "video_concept_grounded"
         }
 
-    system_prompt = """You are the ClipGenie Transfer Assessment Engine.
-Create a genuinely different, unscaffolded transfer question that tests whether the student truly understands the underlying principle by applying it to a brand new, novel practical scenario.
+    if config.GROQ_API_KEY:
+        system_prompt = """You are the ClipGenie Transfer Assessment Engine.
+Create a genuinely different, unscaffolded real-world transfer question that tests whether the student truly understands the underlying principle from this specific lecture segment by applying it to a brand-new, concrete real-world scenario.
 CONSTRAINTS:
-1. Do NOT repeat or lightly rephrase previous questions.
-2. Must test the exact same concept principle in an unfamiliar context.
-3. No hints, no scaffolding.
+1. Must be directly grounded in the exact topic and principle taught in the provided transcript segment.
+2. Describe a short, vivid real-world scenario (e.g., a workplace, school, engineering, or policy situation) and ask the student how the speaker's principle applies.
+3. No hints, no spoilers.
 4. Return valid JSON with key: 'transfer_question'."""
 
-    user_prompt = f"""Concept Title: {concept_title}
+        user_prompt = f"""Concept Title: {concept_title}
 Transcript Segment:
 \"\"\"{transcript_text}\"\"\"
 
-Generate transfer question in JSON:"""
+Generate the real-world transfer scenario question in JSON:"""
 
-    try:
-        return call_groq_llm(system_prompt, user_prompt)
-    except Exception as e:
-        if concept_meta and concept_meta.get("transfer_question"):
-            return {
-                "transfer_question": concept_meta["transfer_question"],
-                "concept_id": concept_id,
-                "mode": "offline_fallback"
-            }
+        try:
+            res = call_groq_llm(system_prompt, user_prompt)
+            if res and res.get("transfer_question"):
+                return {
+                    "transfer_question": res["transfer_question"],
+                    "concept_id": concept_id,
+                    "mode": "live_llm"
+                }
+        except Exception as e:
+            logger.warning(f"LLM transfer question generation fallback: {e}")
+
+    if cached_tq:
         return {
-            "transfer_question": f"How would you apply the core principle of '{concept_title}' from this lecture to solve a brand-new real-world workflow problem?",
+            "transfer_question": cached_tq,
             "concept_id": concept_id,
             "mode": "offline_fallback"
         }
+    return {
+        "transfer_question": f"How would you apply the core principle of '{concept_title}' from this lecture segment to solve a brand-new real-world scenario?",
+        "concept_id": concept_id,
+        "mode": "offline_fallback"
+    }
 
 def evaluate_transfer_answer(concept_id, transfer_question, student_answer, transcript_text, mode="auto", video_id="tedtalk"):
     """
