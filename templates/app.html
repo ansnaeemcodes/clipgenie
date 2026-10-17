@@ -240,7 +240,7 @@
                     </div>
 
                     <p class="text-xs text-purple-200/80 leading-relaxed" id="statusDesc">
-                        Extracting audio, running Whisper speech transcription, and calculating Sentence-Transformer vectors.
+                        Extracting audio track, running speech-to-text transcription, and scoring semantic relevance across sentences.
                     </p>
                 </div>
 
@@ -444,7 +444,7 @@
             progressBar.style.width = '25%';
 
             const step1 = setTimeout(() => {
-                statusTitle.textContent = '2/3 Whisper speech transcription & semantic scoring...';
+                statusTitle.textContent = '2/3 Running speech transcription & semantic scoring...';
                 progressBar.style.width = '60%';
             }, 8000);
 

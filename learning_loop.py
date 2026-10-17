@@ -396,7 +396,7 @@ def audit_feedback_with_critic(concept_id, question, student_answer, raw_feedbac
 
     raw_feedback["ai_verification"] = {
         "verified": True,
-        "critic_model": "ClipGenie Context Guard (Groq + Semantic Verifier)",
+        "critic_model": "ClipGenie Context Guard (Semantic Verifier)",
         "groundedness_score": groundedness,
         "anti_hallucination_check": "Passed — 100% verified against transcript",
         "spoiler_leak_risk": "0% Answer Leak (No Spoilers)",

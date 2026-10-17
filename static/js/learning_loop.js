@@ -667,7 +667,7 @@ function resetLearningLoop() {
     document.getElementById('badgeStep4').className = "px-2 py-0.5 rounded-full bg-purple-950 text-gray-400";
 }
 
-// 7. Toggle Online (Groq) vs Demo-Safe Mode
+// 7. Toggle Online vs Instant Mode
 function toggleEngineMode() {
     currentMode = (currentMode === 'offline') ? 'online' : 'offline';
     const btn = document.getElementById('modeToggleBtn');
@@ -675,11 +675,11 @@ function toggleEngineMode() {
     const icon = document.getElementById('modeIcon');
 
     if (currentMode === 'online') {
-        label.textContent = "AI: Live Groq";
+        label.textContent = "AI: Live Mode";
         icon.innerHTML = `<i class="fa-solid fa-cloud-bolt"></i>`;
         btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 text-white shadow-sm";
     } else {
-        label.textContent = "AI: Offline-safe";
+        label.textContent = "AI: Instant Mode";
         icon.innerHTML = `<i class="fa-solid fa-shield-halved"></i>`;
         btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm";
     }
@@ -777,11 +777,11 @@ async function submitUrlImport() {
 
     const btn = document.getElementById('btnSubmitUrl');
     btn.disabled = true;
-    showImportProgress("1/3: Connecting & Downloading Video Stream (yt-dlp)...", "25%");
+    showImportProgress("1/3: Connecting & Downloading Video Stream...", "25%");
 
     try {
-        setTimeout(() => showImportProgress("2/3: Transcribing Audio with Groq Whisper API...", "60%"), 2500);
-        setTimeout(() => showImportProgress("3/3: Groq LLM Extracting Concepts & Timestamps...", "85%"), 5000);
+        setTimeout(() => showImportProgress("2/3: Transcribing Spoken Audio Stream...", "60%"), 2500);
+        setTimeout(() => showImportProgress("3/3: AI Extracting Concept Chapters & Timestamps...", "85%"), 5000);
 
         const res = await fetch('/api/practice/import-url', {
             method: 'POST',
@@ -829,8 +829,8 @@ async function submitFileUpload() {
     formData.append('file', selectedUploadFile);
 
     try {
-        setTimeout(() => showImportProgress("2/3: Transcribing Audio with Groq Whisper...", "65%"), 2000);
-        setTimeout(() => showImportProgress("3/3: Groq LLM Extracting Concepts...", "85%"), 4500);
+        setTimeout(() => showImportProgress("2/3: Transcribing Spoken Audio Stream...", "65%"), 2000);
+        setTimeout(() => showImportProgress("3/3: AI Extracting Concept Chapters...", "85%"), 4500);
 
         const res = await fetch('/api/practice/upload-video', {
             method: 'POST',

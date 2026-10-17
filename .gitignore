@@ -19,4 +19,6 @@ clipgenie.db
 *.sqlite3
 demo_cache/*_llm_concepts.json
 ~$*
-*.tmp
+*.tmp
+ClipGenie_Speaker_Notes.*
+ClipGenie_Technical_Documentation.*

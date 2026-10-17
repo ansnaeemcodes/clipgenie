@@ -67,9 +67,9 @@
                     <span class="text-xs font-bold text-gray-300">Solved without hints:</span>
                     <span class="text-sm font-black text-emerald-400 font-mono" id="independenceRate">--</span>
                 </div>
-                <button id="modeToggleBtn" onclick="toggleEngineMode()" title="Offline mode uses verified pre-computed AI results so the stage demo is instant. Live mode calls Groq Llama-3.3-70B in real time." class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm">
+                <button id="modeToggleBtn" onclick="toggleEngineMode()" title="Switch between Instant Mode and Live AI Evaluation Mode." class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm">
                     <span id="modeIcon"><i class="fa-solid fa-shield-halved"></i></span>
-                    <span id="modeLabel">AI: Offline-safe</span>
+                    <span id="modeLabel">AI: Instant Mode</span>
                 </button>
             </div>
         </div>
@@ -543,7 +543,7 @@
                 <div class="space-y-1.5">
                     <label class="text-xs font-semibold text-gray-300 flex items-center justify-between">
                         <span>Paste Video URL (YouTube, Facebook, Vimeo, Web MP4):</span>
-                        <span class="text-[11px] text-purple-400 font-normal">Supports yt-dlp 1000+ sources</span>
+                        <span class="text-[11px] text-purple-400 font-normal">Supports 1000+ video sources</span>
                     </label>
                     <div class="relative">
                         <input type="url" id="importUrlInput" 
@@ -596,13 +596,13 @@
                 <div class="w-full bg-black/60 rounded-full h-2 overflow-hidden">
                     <div id="progressBarFill" class="bg-gradient-to-r from-purple-500 to-emerald-400 h-2 w-1/4 transition-all duration-500"></div>
                 </div>
-                <p class="text-[11px] text-gray-300" id="progressDetailLabel">Connecting to video source via yt-dlp...</p>
+                <p class="text-[11px] text-gray-300" id="progressDetailLabel">Connecting to video stream...</p>
             </div>
         </div>
     </div>
 
     {% include 'footer.html' %}
 
-    <script src="/static/js/learning_loop.js?v=2.6"></script>
+    <script src="/static/js/learning_loop.js?v=2.7"></script>
 </body>
 </html>
