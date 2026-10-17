@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClipGenie — Practice Loop (Know It, Don't Just Watch It)</title>
+    <title>ClipGenie — Active-Recall & Socratic Practice Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,19 +13,24 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         .glass-panel {
-            background: rgba(22, 12, 49, 0.75);
+            background: rgba(22, 12, 49, 0.78);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(139, 92, 246, 0.22);
+            border: 1px solid rgba(139, 92, 246, 0.24);
         }
         .concept-card.active {
             border-color: #c084fc;
-            background: rgba(168, 85, 247, 0.22);
-            box-shadow: 0 0 30px -5px rgba(168, 85, 247, 0.5);
+            background: rgba(168, 85, 247, 0.24);
+            box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.45);
             outline: 2px solid rgba(192, 132, 252, 0.4);
         }
         .glow-purple {
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.28);
         }
+        * { scrollbar-width: thin; scrollbar-color: #5b21b6 transparent; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6d28d9; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -34,216 +39,192 @@
  
     {% if not current_user %}
     <!-- Guest Mode Notification Banner -->
-    <div class="bg-amber-950/70 border-b border-amber-500/40 px-4 py-2.5 text-center text-xs text-amber-200 flex flex-wrap items-center justify-center gap-3">
-        <span><i class="fa-solid fa-circle-info text-amber-400 mr-1"></i> <strong>Guest Mode Active:</strong> You can practice concepts freely, but your mastery progress will not be permanently saved to an account.</span>
+    <div class="bg-amber-950/70 border-b border-amber-500/40 px-4 py-2 text-center text-xs text-amber-200 flex flex-wrap items-center justify-center gap-3">
+        <span><i class="fa-solid fa-circle-info text-amber-400 mr-1"></i> <strong>Guest Mode Active:</strong> Practice freely now, or sign in to save your concept mastery history.</span>
         <div class="flex items-center space-x-2">
-            <a href="/demo-login?next=/practice" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition shadow-sm">⚡ 1-Click Demo Login</a>
+            <a href="/demo-login?next=/practice" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition shadow-sm">⚡ 1-Click Judge Demo Login</a>
             <a href="/login?next=/practice" class="underline text-purple-300 hover:text-white font-semibold">Sign In</a>
         </div>
     </div>
     {% endif %}
  
-    <!-- Top Status & Mode Control Bar -->
-    <header class="border-b border-purple-900/40 bg-[#13072e]/80 px-4 sm:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center space-x-3">
-                <span class="px-3 py-1 rounded-lg bg-purple-600/40 border border-purple-500/50 text-purple-200 text-xs sm:text-sm font-bold uppercase tracking-wider">
-                    <i class="fa-solid fa-graduation-cap mr-1 text-purple-300"></i> AI Practice Studio
+    <!-- Top Lecture Bar -->
+    <header class="border-b border-purple-900/40 bg-[#120629] px-4 sm:px-6 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="hidden md:inline-flex items-center px-2.5 py-1 rounded-md bg-purple-950 border border-purple-700/50 text-[11px] font-bold uppercase tracking-wider text-purple-300">
+                    <i class="fa-solid fa-graduation-cap mr-1.5 text-purple-400"></i> Active Lecture
                 </span>
-                <h1 class="text-lg sm:text-xl font-extrabold text-white hidden sm:inline">
-                    Lecture: <span id="currentLectureTitle" class="text-purple-300 font-mono">The Coming Wave: AI as a Digital Species</span>
-                </h1>
-                <button onclick="openImportModal()" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 border border-purple-400/40 shadow-sm flex items-center space-x-1.5 transition">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Import Video / Link</span>
+                <h1 id="currentLectureTitle" class="text-sm sm:text-base font-extrabold text-white truncate max-w-[540px]">The Coming Wave: AI as a Digital Species (Mustafa Suleyman)</h1>
+                <button onclick="openImportModal()" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold text-purple-100 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-cloud-arrow-up text-purple-300"></i>
+                    <span>Import / Switch Video</span>
                 </button>
             </div>
 
-            <!-- Handled Without Help & Mastery Stats -->
-            <div class="flex items-center space-x-4">
-                <div class="text-right">
-                    <div class="text-xs font-bold text-purple-200 uppercase tracking-wider" title="Percentage of concepts mastered on attempt 1 without hints">Handled Without Help</div>
-                    <div class="text-xl font-black text-emerald-400 font-mono" id="independenceRate">--</div>
+            <div class="flex items-center gap-2.5">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/40 border border-purple-800/50" title="Share of concepts you mastered on the first try without needing hints">
+                    <span class="text-xs font-bold text-gray-300">Solved without hints:</span>
+                    <span class="text-sm font-black text-emerald-400 font-mono" id="independenceRate">--</span>
                 </div>
-
-                <!-- Online / Demo-Safe Mode Switch -->
-                <div class="flex items-center space-x-2 bg-black/50 px-3 py-1.5 rounded-xl border border-purple-800/60">
-                    <span class="text-xs sm:text-sm text-white font-bold">Mode:</span>
-                    <button id="modeToggleBtn" onclick="toggleEngineMode()" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm">
-                        <span id="modeIcon"><i class="fa-solid fa-shield-halved"></i></span>
-                        <span id="modeLabel">Demo Safe</span>
-                    </button>
-                </div>
-
-                <a href="/profile" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-purple-900/60 hover:bg-purple-800 border border-purple-600/50 transition flex items-center space-x-1.5 shadow-sm" title="View your full learning progress dashboard">
-                    <i class="fa-solid fa-chart-line text-purple-300"></i>
-                    <span>Learning Dashboard</span>
-                </a>
+                <button id="modeToggleBtn" onclick="toggleEngineMode()" title="Offline mode uses verified pre-computed AI results so the stage demo is instant. Live mode calls Groq Llama-3.3-70B in real time." class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm">
+                    <span id="modeIcon"><i class="fa-solid fa-shield-halved"></i></span>
+                    <span id="modeLabel">AI: Offline-safe</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Practice Layout -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Main Balanced Side-by-Side Workspace (Zero Dead Space) -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-        <!-- Left Column: Concept Map (Feature 1) -->
-        <aside class="lg:col-span-4 flex flex-col space-y-4">
-            <div class="glass-panel p-5 rounded-2xl flex flex-col h-full">
-                <div class="flex items-center justify-between mb-3">
-                    <div>
-                        <h2 class="text-base sm:text-lg font-bold text-white flex items-center space-x-2">
-                            <i class="fa-solid fa-list-ol text-purple-400"></i>
-                            <span>AI Concept Chapters & Timestamps</span>
-                        </h2>
-                        <p class="text-xs sm:text-sm text-purple-200 font-medium mt-0.5">Automatically identified chapters linked to timestamps</p>
+        <!-- LEFT COLUMN (5 Cols): Video Clip Player + Concept Chapters Map -->
+        <aside class="lg:col-span-5 flex flex-col gap-5">
+
+            <!-- 1. Compact Video Clip Player Card (Feature 2) -->
+            <div class="glass-panel p-4 rounded-2xl glow-purple">
+                <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-purple-900/40">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-purple-600 text-white uppercase tracking-wider">Step 1</span>
+                        <h2 class="text-sm font-bold text-white">Watch Concept Clip</h2>
                     </div>
-                    <!-- Toggle manual preset vs auto-detect -->
-                    <button onclick="toggleConceptSource()" id="conceptSourceBtn" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-purple-950 border border-purple-800 text-purple-200 hover:bg-purple-900 shadow-sm transition">
-                        <i class="fa-solid fa-sliders mr-1 text-purple-400"></i> <span id="sourceLabel">Verified Presets</span>
-                    </button>
-                </div>
-
-                <!-- Concept List Container -->
-                <div id="conceptList" class="space-y-2.5 overflow-y-auto max-h-[640px] pr-1">
-                    <!-- Concept cards injected via JS -->
-                    <div class="text-center py-8 text-purple-200 text-sm font-medium">
-                        <i class="fa-solid fa-spinner fa-spin text-purple-400 text-2xl mb-2"></i>
-                        <p>Loading lecture concepts...</p>
+                    <div class="flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span id="activeSegmentLabel" class="text-xs font-mono font-bold text-purple-200 bg-purple-950/90 px-2 py-0.5 rounded border border-purple-700/70">
+                            0:26 - 1:16 (50s)
+                        </span>
                     </div>
                 </div>
 
-                <!-- Footer tip -->
-                <div class="mt-4 pt-3 border-t border-purple-900/40 text-xs text-purple-200 font-medium flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-info text-purple-400 text-sm"></i>
-                    <span>Click any concept to jump video and begin practice loop.</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Right Column: Video Segment Jump & Active Practice Loop -->
-        <section class="lg:col-span-8 flex flex-col space-y-6">
-
-            <!-- Video Player & Segment Jump Controls (Feature 2) -->
-            <div class="glass-panel p-5 rounded-2xl glow-purple">
-                <!-- Orientation Callout: Step 1 of 4 -->
-                <div class="flex items-center justify-between pb-3 mb-3 border-b border-purple-900/40">
-                    <div class="flex items-center space-x-2.5">
-                        <span class="text-xs font-mono font-black px-3 py-1 rounded-full bg-purple-900 text-white border border-purple-500 shadow-sm uppercase tracking-wider">Step 1 of 4</span>
-                        <h3 class="text-sm sm:text-base font-bold text-white flex items-center space-x-1.5">
-                            <i class="fa-solid fa-play text-purple-400 text-xs"></i>
-                            <span>Watch Key Segment</span>
-                        </h3>
-                    </div>
-                    <span class="text-xs sm:text-sm text-purple-200 font-medium hidden sm:inline">
-                        <i class="fa-solid fa-circle-info mr-1 text-purple-400"></i>Play this clip, then test your recall below
-                    </span>
-                </div>
-
-                <div class="relative rounded-xl overflow-hidden bg-black aspect-video border border-purple-900/60 mb-3 shadow-2xl">
+                <!-- 16:9 Video Player -->
+                <div class="relative rounded-xl overflow-hidden bg-black aspect-video border border-purple-900/60 mb-3 shadow-xl">
                     <video id="lectureVideo" controls class="w-full h-full object-contain">
                         <source src="/static/tedtalk.mp4" type="video/mp4">
                         Your browser does not support video playback.
                     </video>
                 </div>
 
-                <!-- Segment Jump Status Bar -->
-                <div class="flex flex-wrap items-center justify-between gap-3 px-2">
-                    <div class="flex items-center space-x-2">
-                        <span class="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></span>
-                        <span class="text-sm font-bold text-white">Active Segment:</span>
-                        <span id="activeSegmentLabel" class="text-sm font-mono font-bold text-purple-200 bg-purple-950/90 px-2.5 py-1 rounded-lg border border-purple-700 shadow-sm">
-                            0:26 - 1:16 (50s)
-                        </span>
-                    </div>
-
-                    <div class="flex items-center space-x-2">
-                        <button onclick="playCurrentSegment()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-md shadow-purple-900/40 transition flex items-center space-x-1.5">
-                            <i class="fa-solid fa-play mr-1"></i> Play Segment
+                <!-- Playback Controls -->
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-[11px] text-purple-200/80 font-medium">
+                        <i class="fa-solid fa-scissors text-purple-400 mr-1"></i> Auto-pauses at end of concept
+                    </span>
+                    <div class="flex items-center space-x-1.5">
+                        <button onclick="playCurrentSegment()" class="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow transition flex items-center space-x-1">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Play Clip</span>
                         </button>
-                        <button onclick="replayCurrentSegment()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-purple-100 bg-white/10 hover:bg-white/20 border border-purple-600/50 transition flex items-center space-x-1.5">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Replay
+                        <button onclick="replayCurrentSegment()" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-purple-100 bg-white/10 hover:bg-white/20 border border-purple-600/40 transition flex items-center space-x-1">
+                            <i class="fa-solid fa-rotate-left text-[10px]"></i>
+                            <span>Replay</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Segment Completed Visual Cue Banner -->
-                <div id="segmentCompleteBanner" class="mt-3 p-4 rounded-xl bg-gradient-to-r from-purple-950 via-indigo-950 to-purple-950 border border-emerald-500/50 shadow-xl flex items-center justify-between transition-all duration-300 hidden">
-                    <div class="flex items-center space-x-3">
-                        <span class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-circle-check text-base"></i>
-                        </span>
-                        <div>
-                            <div class="text-sm font-bold text-white flex items-center space-x-2">
-                                <span>Segment Finished!</span>
-                                <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500 font-mono font-bold">100% Watched</span>
-                            </div>
-                            <div class="text-xs sm:text-sm text-purple-200 font-medium">You've completed this concept clip. Test your recall in the challenge below.</div>
+                <div id="segmentCompleteBanner" class="mt-3 p-3 rounded-xl bg-gradient-to-r from-emerald-950/90 to-purple-950/90 border border-emerald-500/50 flex items-center justify-between gap-2 hidden">
+                    <div class="flex items-center space-x-2.5">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                        <div class="text-xs">
+                            <span class="font-bold text-white block">Clip Finished (100% Watched)</span>
+                            <span class="text-purple-200">Now explain it in your own words on the right →</span>
                         </div>
                     </div>
-                    <button onclick="scrollToQuestion()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 transition shrink-0 shadow-lg shadow-purple-900/40 flex items-center space-x-1.5">
-                        <span>Answer Challenge ↓</span>
+                    <button onclick="scrollToQuestion()" class="px-3 py-1.5 rounded-lg text-xs font-bold text-black bg-emerald-400 hover:bg-emerald-300 transition shrink-0">
+                        Answer →
                     </button>
                 </div>
 
-                <!-- Key Video Moments Strip -->
-                <div id="occurrenceBox" class="mt-4 pt-4 border-t border-purple-900/40 hidden">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-film text-purple-400 text-sm"></i>
-                            <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-purple-200">
-                                Key Moments for this Topic
-                            </span>
-                        </div>
-                        <span id="occurrenceCountBadge" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-purple-900/80 text-purple-200 border border-purple-600/50 self-start sm:self-auto">
-                            2 moments in this video
+                <!-- Key Video Moments Strip (If concept appears multiple times) -->
+                <div id="occurrenceBox" class="mt-3 pt-3 border-t border-purple-900/40 hidden">
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-purple-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-film text-purple-400"></i>
+                            <span>Topic Revisited in Video</span>
+                        </span>
+                        <span id="occurrenceCountBadge" class="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-900/80 text-purple-200 border border-purple-600/50">
+                            2 moments
                         </span>
                     </div>
-
-                    <!-- Visual Segment Strip -->
-                    <div class="w-full h-2 bg-black/60 rounded-full overflow-hidden p-0.5 border border-purple-900/60 mb-3 flex">
+                    <div class="w-full h-1.5 bg-black/60 rounded-full overflow-hidden mb-2.5 flex">
                         <div id="timelineTrackFill" class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-300" style="width: 35%;"></div>
                     </div>
-
-                    <!-- Occurrence Cards Grid -->
-                    <div id="occurrencePillsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div id="occurrencePillsList" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <!-- Populated dynamically via JS -->
                     </div>
                 </div>
             </div>
 
-            <!-- The Core Learning Loop Container -->
-            <div class="glass-panel p-6 rounded-2xl flex flex-col space-y-5" id="practiceContainer">
+            <!-- 2. Lecture Concept Chapters List (Feature 1 - Full Height, No Ugly Scrollbar) -->
+            <div class="glass-panel p-4 rounded-2xl flex flex-col">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <div>
+                        <h2 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-purple-400"></i>
+                            <span>5 AI-Extracted Concept Chapters</span>
+                        </h2>
+                        <p class="text-xs text-gray-300">Click any chapter to jump the video & practice</p>
+                    </div>
+                    <button onclick="toggleConceptSource()" id="conceptSourceBtn" title="Switch between verified preset chapters and live AI-extracted chapters" class="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-purple-950 border border-purple-700/70 text-purple-200 hover:bg-purple-900 transition">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-1 text-purple-400"></i><span id="sourceLabel">Checked chapters</span>
+                    </button>
+                </div>
 
-                <!-- Stage Progress Indicators -->
-                <div class="flex items-center justify-between border-b border-purple-900/40 pb-4">
-                    <div class="flex items-center space-x-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-sm text-white shadow-md">
-                            <i class="fa-solid fa-bolt"></i>
+                <!-- Concept List Container (All 5 items fit cleanly) -->
+                <div id="conceptList" class="space-y-2">
+                    <div class="text-center py-6 text-purple-200 text-xs font-medium">
+                        <i class="fa-solid fa-spinner fa-spin text-purple-400 text-lg mb-1.5"></i>
+                        <p>Loading lecture concepts...</p>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- RIGHT COLUMN (7 Cols): Socratic Active-Recall Loop + Pedagogical Architecture Strip -->
+        <section class="lg:col-span-7 flex flex-col gap-5">
+
+            <!-- The Core Socratic Learning Loop Container -->
+            <div class="glass-panel p-5 sm:p-6 rounded-2xl flex flex-col space-y-5 glow-purple" id="practiceContainer">
+
+                <!-- Stage Progress Header -->
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-purple-900/50 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-bold text-sm text-white shadow-md shrink-0">
+                            <i class="fa-solid fa-brain"></i>
                         </div>
                         <div>
-                            <h3 class="text-base sm:text-lg font-black text-white" id="loopHeaderTitle">Interactive Concept Challenge</h3>
-                            <p class="text-xs sm:text-sm text-purple-200 font-medium">Grounded in this video segment</p>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-base sm:text-lg font-black text-white" id="loopHeaderTitle">Socratic Active-Recall Challenge</h3>
+                                <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                                    <i class="fa-solid fa-lock mr-1"></i> No Direct Spoilers
+                                </span>
+                            </div>
+                            <p class="text-xs text-purple-200 font-medium">Explain the clip in your own words — AI diagnoses gaps without spoon-feeding answers</p>
                         </div>
                     </div>
 
                     <!-- Steps Breadcrumbs -->
-                    <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold">
-                        <span id="badgeStep1" class="px-2.5 py-1 rounded-full bg-purple-600 text-white shadow-sm">1. Question</span>
-                        <span class="text-gray-500 font-bold">→</span>
-                        <span id="badgeStep2" class="px-2.5 py-1 rounded-full bg-purple-950 text-gray-400">2. Feedback</span>
-                        <span class="text-gray-500 font-bold">→</span>
-                        <span id="badgeStep3" class="px-2.5 py-1 rounded-full bg-purple-950 text-gray-400">3. Try Again</span>
-                        <span class="text-gray-500 font-bold">→</span>
-                        <span id="badgeStep4" class="px-2.5 py-1 rounded-full bg-purple-950 text-gray-400">4. Challenge</span>
+                    <div class="flex items-center space-x-1 text-xs font-bold">
+                        <span id="badgeStep1" class="px-2.5 py-1 rounded-full bg-purple-600 text-white shadow-sm">1. Explain</span>
+                        <span class="text-gray-500">→</span>
+                        <span id="badgeStep2" class="px-2.5 py-1 rounded-full bg-purple-950 text-gray-400">2. Gap Hint</span>
+                        <span class="text-gray-500">→</span>
+                        <span id="badgeStep3" class="px-2.5 py-1 rounded-full bg-purple-950 text-gray-400">3. Retry</span>
+                        <span class="text-gray-500">→</span>
+                        <span id="badgeStep4" class="px-2.5 py-1 rounded-full bg-purple-950 text-gray-400">4. Real-World Test</span>
                     </div>
                 </div>
 
                 <!-- STEP 1: Challenge Prompt -->
                 <div id="stepPromptBox" class="space-y-4">
-                    <div class="p-5 rounded-2xl bg-purple-950/70 border border-purple-800/70 shadow-lg">
-                        <div class="text-xs sm:text-sm text-purple-300 uppercase font-extrabold tracking-wider mb-1.5 flex items-center space-x-1.5">
-                            <i class="fa-regular fa-circle-question text-purple-400 text-sm"></i>
-                            <span>Challenge Question</span>
+                    <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-purple-950/90 to-indigo-950/70 border border-purple-700/70 shadow-lg">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-xs text-purple-300 uppercase font-extrabold tracking-wider flex items-center space-x-1.5">
+                                <i class="fa-regular fa-circle-question text-purple-400"></i>
+                                <span>Step 2: Concept Retrieval Prompt</span>
+                            </span>
+                            <span class="text-[11px] font-mono text-purple-300/80">100% Grounded in Segment</span>
                         </div>
                         <p id="promptQuestionText" class="text-base sm:text-lg font-bold text-white leading-relaxed">
                             Loading question for this concept...
@@ -252,37 +233,37 @@
 
                     <div>
                         <div class="flex flex-wrap justify-between items-center gap-1 mb-1.5">
-                            <label class="text-sm font-bold text-white flex items-center space-x-2">
-                                <span>Your Explanation (Recall from memory):</span>
-                                <span class="text-xs sm:text-sm text-purple-200 font-normal">(2–4 sentences recommended)</span>
+                            <label for="studentAnswerInput" class="text-xs sm:text-sm font-bold text-white flex items-center space-x-2">
+                                <span>Your Explanation (from memory):</span>
+                                <span class="text-xs text-purple-300 font-normal">(2–4 sentences)</span>
                             </label>
-                            <span class="text-xs text-purple-200 font-mono font-bold" id="charCount">0 chars</span>
+                            <span class="text-xs text-purple-300 font-mono font-bold" id="charCount">0 chars</span>
                         </div>
                         <textarea id="studentAnswerInput" rows="4" 
-                            class="w-full bg-black/50 border border-purple-800/80 rounded-xl p-3.5 text-base text-white placeholder-purple-300/40 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition leading-relaxed font-normal"
-                            placeholder="Explain what the speaker argued in your own words. Focus on the principles, metaphors, or distinctions made in the clip..."></textarea>
+                            class="w-full bg-black/50 border border-purple-800/80 rounded-xl p-3.5 text-sm sm:text-base text-white placeholder-purple-300/40 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition leading-relaxed"
+                            placeholder="Explain what the speaker argued in your own words. Focus on the principles, metaphors, or causal reasons made in the clip..."></textarea>
                     </div>
 
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <!-- Quick Sample Answer Pill for Demo Speed -->
-                        <div class="flex items-center space-x-1.5 p-1.5 rounded-xl bg-purple-950/60 border border-purple-800/50">
-                            <span class="text-xs uppercase font-extrabold text-purple-300 px-2 flex items-center space-x-1">
-                                <i class="fa-solid fa-bolt text-xs text-amber-400"></i>
-                                <span>Demo Fill:</span>
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                        <!-- Quick Sample Answer Pills for Live Judge Demo Speed -->
+                        <div class="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-purple-950/70 border border-purple-800/60">
+                            <span class="text-[11px] uppercase font-extrabold text-purple-300 px-2 flex items-center space-x-1" title="Instant 1-click test responses for live hackathon demonstration">
+                                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+                                <span>1-Click Judge Test:</span>
                             </span>
-                            <button onclick="fillDemoAnswer('partial')" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-200 hover:bg-amber-900 transition">
-                                Partial
+                            <button onclick="fillDemoAnswer('partial')" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-950/90 border border-amber-600/60 text-amber-200 hover:bg-amber-900 transition" title="Fills a 60% partial answer to demonstrate Socratic Gap Hints">
+                                Partial (60%)
                             </button>
-                            <button onclick="fillDemoAnswer('adversarial')" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-950/80 border border-rose-700/60 text-rose-200 hover:bg-rose-900 transition">
-                                Adversarial
+                            <button onclick="fillDemoAnswer('adversarial')" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-950/90 border border-rose-600/60 text-rose-200 hover:bg-rose-900 transition" title="Tests the Anti-Spoiler Guardrail ('Just give me the answer')">
+                                Cheat Attempt
                             </button>
-                            <button onclick="fillDemoAnswer('complete')" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-200 hover:bg-emerald-900 transition">
-                                Strong
+                            <button onclick="fillDemoAnswer('complete')" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-950/90 border border-emerald-600/60 text-emerald-200 hover:bg-emerald-900 transition" title="Fills a 92% strong answer to demonstrate Fast-Track Mastery">
+                                Strong (92%)
                             </button>
                         </div>
 
-                        <button id="submitAnswerBtn" onclick="submitStudentAnswer()" class="px-6 py-3 rounded-xl font-black text-sm sm:text-base text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/40 transition flex items-center space-x-2">
-                            <span>Submit for Gap Analysis</span>
+                        <button id="submitAnswerBtn" onclick="submitStudentAnswer()" class="px-5 py-2.5 rounded-xl font-black text-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-600/40 transition flex items-center space-x-2">
+                            <span>Analyze My Explanation</span>
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </button>
                     </div>
@@ -290,99 +271,89 @@
 
                 <!-- STEP 2: Gap-Based Feedback (Feature 4 - Strict No Answer Reveal) -->
                 <div id="stepFeedbackBox" class="space-y-4 hidden">
-                    <div class="p-5 rounded-2xl bg-purple-950/60 border border-purple-800/70 flex items-start justify-between">
+                    <div class="p-4 rounded-2xl bg-purple-950/70 border border-purple-800/70 flex items-center justify-between gap-3">
                         <div>
-                            <div class="text-sm font-black uppercase tracking-wider text-white mb-1">
-                                Gap-Based Evaluation (No Answers Revealed)
+                            <div class="text-xs sm:text-sm font-black uppercase tracking-wider text-white">
+                                Diagnostic Gap Evaluation (Zero Answers Revealed)
                             </div>
-                            <div class="text-sm text-purple-200 font-medium" id="feedbackOverview">
-                                Analysis of your conceptual coverage:
+                            <div class="text-xs text-purple-200 font-medium" id="feedbackOverview">
+                                AI compared your explanation against the lecture segment:
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span id="feedbackScoreBadge" class="px-3.5 py-1.5 rounded-xl text-base font-black font-mono bg-amber-500/20 border border-amber-500/40 text-amber-300">
-                                Score: 60%
-                            </span>
-                        </div>
+                        <span id="feedbackScoreBadge" class="px-3.5 py-1.5 rounded-xl text-sm sm:text-base font-black font-mono bg-amber-500/20 border border-amber-500/40 text-amber-300 shrink-0">
+                            Score: 60%
+                        </span>
                     </div>
 
-                    <!-- Strong Points -->
-                    <div class="p-4 rounded-xl bg-emerald-950/50 border border-emerald-800/50">
-                        <div class="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-1.5 flex items-center space-x-2">
-                            <i class="fa-solid fa-check-circle text-emerald-400 text-sm"></i>
-                            <span>What You Got Right:</span>
+                    <!-- Side-by-Side Strong Points vs Missing Gaps -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Strong Points -->
+                        <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-700/50">
+                            <div class="text-xs font-black text-emerald-400 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>What You Got Right</span>
+                            </div>
+                            <ul id="strongPointsList" class="text-xs sm:text-sm text-emerald-100 font-medium list-disc list-inside space-y-1.5">
+                                <!-- Populated dynamically -->
+                            </ul>
                         </div>
-                        <ul id="strongPointsList" class="text-sm text-emerald-100 font-medium list-disc list-inside space-y-1.5">
-                            <!-- Populated dynamically -->
-                        </ul>
-                    </div>
 
-                    <!-- Identified Gaps (Never reveals the answer) -->
-                    <div class="p-4 rounded-xl bg-rose-950/50 border border-rose-800/50">
-                        <div class="text-sm font-bold text-rose-300 uppercase tracking-wider mb-1.5 flex items-center space-x-2">
-                            <i class="fa-solid fa-triangle-exclamation text-rose-400 text-sm"></i>
-                            <span>What is Missing / Incomplete:</span>
+                        <!-- Identified Gaps (Never reveals the answer) -->
+                        <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-700/50">
+                            <div class="text-xs font-black text-rose-300 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+                                <i class="fa-solid fa-triangle-exclamation text-rose-400"></i>
+                                <span>What Is Missing (No Spoilers)</span>
+                            </div>
+                            <ul id="identifiedGapsList" class="text-xs sm:text-sm text-rose-100 font-medium list-disc list-inside space-y-1.5">
+                                <!-- Populated dynamically -->
+                            </ul>
                         </div>
-                        <ul id="identifiedGapsList" class="text-sm text-rose-100 font-medium list-disc list-inside space-y-1.5">
-                            <!-- Populated dynamically -->
-                        </ul>
                     </div>
 
                     <!-- Socratic Steering Hint -->
-                    <div class="p-4 rounded-xl bg-indigo-950/60 border border-indigo-700/50 flex items-start space-x-3.5">
+                    <div class="p-4 rounded-xl bg-indigo-950/70 border border-indigo-600/50 flex items-start space-x-3">
                         <i class="fa-solid fa-compass text-indigo-400 text-lg mt-0.5"></i>
                         <div>
-                            <div class="text-sm font-black text-indigo-300 uppercase tracking-wider mb-1">Socratic Cue:</div>
-                            <p id="conceptualHintText" class="text-sm sm:text-base text-white leading-relaxed font-semibold">
+                            <div class="text-xs font-black text-indigo-300 uppercase tracking-wider mb-0.5">Socratic Steering Hint:</div>
+                            <p id="conceptualHintText" class="text-sm text-white leading-relaxed font-semibold">
                                 Think about how the speaker connects the problem of control to understanding.
                             </p>
                         </div>
                     </div>
 
-                    <!-- AI Context Guard & Verification Drawer -->
-                    <div id="aiVerificationBox" class="p-4 rounded-xl bg-purple-950/80 border border-purple-600/60 space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-bold text-white flex items-center space-x-2">
-                                <i class="fa-solid fa-shield-halved text-emerald-400 text-sm"></i>
-                                <span>AI Context Guard (Audited & Verified):</span>
-                            </span>
-                            <span id="groundednessBadge" class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 font-bold">
-                                96% Context Grounded
-                            </span>
+                    <!-- Compact AI Guardrail Verification Bar -->
+                    <div id="aiVerificationBox" class="p-3.5 rounded-xl bg-black/40 border border-purple-700/50 flex flex-wrap items-center justify-between gap-2 text-xs">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                            <span class="font-bold text-white">Anti-Spoiler Guardrail:</span>
+                            <span class="text-emerald-300 font-bold" id="criticSpoilerRisk">0% Answer Leak (No Spoilers)</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2.5 text-xs pt-1">
-                            <div class="p-2.5 rounded-lg bg-black/50 border border-purple-900/60">
-                                <span class="text-purple-200 block text-xs font-medium">Spoiler / Leak Risk:</span>
-                                <span class="text-emerald-300 font-extrabold text-xs sm:text-sm" id="criticSpoilerRisk">0.0% (Constraint 1 Honored)</span>
-                            </div>
-                            <div class="p-2.5 rounded-lg bg-black/50 border border-purple-900/60">
-                                <span class="text-purple-200 block text-xs font-medium">Anti-Hallucination:</span>
-                                <span class="text-indigo-200 font-extrabold text-xs sm:text-sm" id="criticHallucination">Passed (100% Lecture Aligned)</span>
-                            </div>
+                        <div class="flex items-center gap-2">
+                            <span id="groundednessBadge" class="font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+                                96% Transcript Grounded
+                            </span>
+                            <span class="hidden sm:inline text-indigo-200 font-semibold" id="criticHallucination">100% Lecture Aligned</span>
                         </div>
-                        <p class="text-xs text-purple-200/90 font-medium italic" id="criticAuditNote">
-                            Audited against verbatim speaker transcript with causal alignment.
+                        <p class="w-full text-[11px] text-purple-300/80 italic hidden" id="criticAuditNote">
+                            Audited against verbatim speaker transcript.
                         </p>
                     </div>
 
-                    <!-- Dynamic Next Action (Adaptive: Fast-Track if Score >= 80%, Socratic Retry if Gaps Found) -->
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-purple-900/40">
-                        <div id="masteryCelebrationHint" class="text-sm text-purple-100 font-semibold">
+                    <!-- Dynamic Next Action -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-purple-900/40">
+                        <div id="masteryCelebrationHint" class="text-xs sm:text-sm text-purple-100 font-semibold">
                             <!-- Populated dynamically via JS -->
                         </div>
                         <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
-                            <!-- Optional retry button when score >= 80% -->
-                            <button id="btnOptionalRetry" onclick="startRetry()" class="hidden px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-purple-200 hover:text-white bg-white/10 hover:bg-white/20 border border-purple-700/50 transition">
-                                <i class="fa-solid fa-arrows-rotate mr-1"></i> Refine Further
+                            <button id="btnOptionalRetry" onclick="startRetry()" class="hidden px-3.5 py-2 rounded-xl text-xs font-bold text-purple-200 hover:text-white bg-white/10 hover:bg-white/20 border border-purple-700/50 transition">
+                                <i class="fa-solid fa-arrows-rotate mr-1"></i> Refine Answer
                             </button>
-                            <!-- Standard Retry Button (when score < 80%) -->
-                            <button id="btnStandardRetry" onclick="startRetry()" class="px-6 py-3 rounded-xl font-black text-sm sm:text-base text-white bg-amber-600 hover:bg-amber-500 shadow-lg shadow-amber-600/30 transition flex items-center space-x-2">
-                                <i class="fa-solid fa-arrows-rotate mr-1"></i>
-                                <span>Try Again with Hint</span>
+                            <button id="btnStandardRetry" onclick="startRetry()" class="px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm text-white bg-amber-600 hover:bg-amber-500 shadow-lg shadow-amber-600/30 transition flex items-center space-x-1.5">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                                <span>Try Again with Hint →</span>
                             </button>
-                            <!-- Fast-Track Direct Transfer Check Button (when score >= 80%) -->
-                            <button id="btnFastTrackTransfer" onclick="proceedToTransfer()" class="hidden px-7 py-3 rounded-xl font-black text-sm sm:text-base text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/30 transition flex items-center space-x-2 animate-pulse">
-                                <span>Fast-Track to Challenge →</span>
+                            <button id="btnFastTrackTransfer" onclick="proceedToTransfer()" class="hidden px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm text-black bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 shadow-xl shadow-emerald-500/30 transition flex items-center space-x-1.5">
+                                <span>Take Real-World Test →</span>
                             </button>
                         </div>
                     </div>
@@ -390,53 +361,51 @@
 
                 <!-- STEP 3: Retry Flow -->
                 <div id="stepRetryBox" class="space-y-4 hidden">
-                    <div class="p-5 rounded-2xl bg-amber-950/50 border border-amber-800/60 shadow-lg">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <span class="text-sm font-black text-amber-300 uppercase tracking-wider">Second Try (Use the Hint):</span>
-                            <span class="text-xs sm:text-sm text-purple-200 font-medium">First Attempt Score: <strong id="attempt1ScoreLabel" class="text-white font-extrabold text-sm sm:text-base">60%</strong></span>
+                    <div class="p-4 rounded-2xl bg-amber-950/50 border border-amber-700/60 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-black text-amber-300 uppercase tracking-wider block">Step 3: Second Attempt (Close the Gaps)</span>
+                            <p class="text-xs text-amber-100 mt-0.5">Use the Socratic hint below to improve your explanation in your own words.</p>
                         </div>
-                        <p class="text-sm text-amber-100 font-medium leading-relaxed">
-                            Use the hint below to sharpen your explanation. Real understanding comes from your own words!
-                        </p>
+                        <span class="text-xs text-purple-200 font-mono shrink-0">Attempt 1: <strong id="attempt1ScoreLabel" class="text-white font-extrabold text-sm">60%</strong></span>
                     </div>
 
                     <!-- Compact Hint Reminder Box -->
-                    <div class="p-4 rounded-xl bg-purple-950/80 border border-purple-800/70 flex items-start space-x-3">
+                    <div class="p-3.5 rounded-xl bg-purple-950/80 border border-purple-700/70 flex items-start space-x-2.5">
                         <i class="fa-solid fa-lightbulb text-amber-400 mt-0.5 text-sm shrink-0"></i>
-                        <div>
-                            <div class="text-xs font-black uppercase tracking-wider text-amber-300">Your Socratic Hint:</div>
-                            <p id="retryHintReminderText" class="text-sm text-white font-medium mt-1 leading-relaxed italic">
+                        <div class="text-xs">
+                            <span class="font-black uppercase tracking-wider text-amber-300">Socratic Hint: </span>
+                            <span id="retryHintReminderText" class="text-white font-medium italic">
                                 Review the segment and focus on the causal distinction the speaker made.
-                            </p>
+                            </span>
                         </div>
                     </div>
 
                     <textarea id="retryAnswerInput" rows="4" 
-                        class="w-full bg-black/50 border border-amber-700/70 rounded-xl p-3.5 text-base text-white placeholder-amber-200/40 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition leading-relaxed font-normal"
-                        placeholder="Incorporate the missing facets into your revised response..."></textarea>
+                        class="w-full bg-black/50 border border-amber-700/70 rounded-xl p-3.5 text-sm sm:text-base text-white placeholder-amber-200/40 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition leading-relaxed"
+                        placeholder="Incorporate the missing concepts into your revised response..."></textarea>
 
                     <div class="flex justify-between items-center">
-                        <button onclick="fillDemoAnswer('retry')" class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl bg-amber-950/80 border border-amber-700/60 text-amber-200 hover:bg-amber-900 transition">
-                            Fill Improved Attempt
+                        <button onclick="fillDemoAnswer('retry')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-950/80 border border-amber-700/60 text-amber-200 hover:bg-amber-900 transition">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Fill Improved Attempt (88%)
                         </button>
-                        <button id="submitRetryBtn" onclick="submitRetryAnswer()" class="px-6 py-3 rounded-xl font-black text-sm sm:text-base text-white bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-lg shadow-amber-600/40 transition flex items-center space-x-2">
+                        <button id="submitRetryBtn" onclick="submitRetryAnswer()" class="px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm text-white bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-lg shadow-amber-600/40 transition flex items-center space-x-2">
                             <span>Evaluate Retry & Compare</span>
                             <i class="fa-solid fa-chart-line text-xs"></i>
                         </button>
                     </div>
 
                     <!-- Retry Result Badge -->
-                    <div id="retryResultCard" class="hidden p-5 rounded-2xl bg-emerald-950/60 border border-emerald-700/60 space-y-2.5">
+                    <div id="retryResultCard" class="hidden p-4 rounded-2xl bg-emerald-950/60 border border-emerald-600/60 space-y-2">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm font-black uppercase tracking-wider text-emerald-300">Retry Evaluation:</span>
-                            <span id="deltaScoreBadge" class="text-base font-black text-emerald-300 font-mono px-3 py-1 rounded-xl bg-emerald-900/80 border border-emerald-600/50">
-                                +25% Improvement!
+                            <span class="text-xs font-black uppercase tracking-wider text-emerald-300">Retry Improvement Score:</span>
+                            <span id="deltaScoreBadge" class="text-sm font-black text-emerald-300 font-mono px-3 py-1 rounded-xl bg-emerald-900/80 border border-emerald-500/50">
+                                +28% Improvement!
                             </span>
                         </div>
-                        <p id="retryComparisonText" class="text-sm text-emerald-100 font-medium leading-relaxed"></p>
-                        <div class="flex justify-end pt-2">
-                            <button onclick="proceedToTransfer()" class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-md transition">
-                                Advance to Challenge Check →
+                        <p id="retryComparisonText" class="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed"></p>
+                        <div class="flex justify-end pt-1">
+                            <button onclick="proceedToTransfer()" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-black bg-emerald-400 hover:bg-emerald-300 shadow-md transition">
+                                Final Step: Real-World Transfer Test →
                             </button>
                         </div>
                     </div>
@@ -444,54 +413,96 @@
 
                 <!-- STEP 4: Transfer Check (Feature 6 - Cold, Unscaffolded) -->
                 <div id="stepTransferBox" class="space-y-4 hidden">
-                    <div class="p-6 rounded-2xl bg-gradient-to-r from-indigo-950 via-purple-950 to-indigo-950 border border-indigo-500/50 shadow-xl space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs sm:text-sm font-bold uppercase tracking-wider">
-                                <span>🏆 Final Challenge: Real-World Test</span>
+                    <div class="p-5 rounded-2xl bg-gradient-to-r from-indigo-950 via-purple-950 to-indigo-950 border border-indigo-500/50 shadow-xl space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-bold uppercase tracking-wider">
+                                <span>🏆 Step 4: Real-World Transfer Test</span>
                             </span>
-                            <span class="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-500/40">Zero Hints • Cold Application</span>
+                            <span class="text-[11px] font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/40">Zero Hints • Unfamiliar Scenario</span>
                         </div>
-                        <p id="transferQuestionText" class="text-base sm:text-lg font-bold text-white leading-relaxed pt-1">
+                        <p id="transferQuestionText" class="text-sm sm:text-base font-bold text-white leading-relaxed pt-1">
                             Loading real-world challenge question...
                         </p>
-                        <p class="text-xs sm:text-sm text-purple-200 font-medium">
-                            This novel scenario tests whether you can actually apply what you learned to a brand-new problem, proving true conceptual understanding.
+                        <p class="text-xs text-purple-200">
+                            Prove you didn't just memorize the speaker's words by applying the principle to this brand-new scenario.
                         </p>
                     </div>
 
                     <textarea id="transferAnswerInput" rows="4" 
-                        class="w-full bg-black/50 border border-indigo-700/70 rounded-xl p-3.5 text-base text-white placeholder-indigo-300/40 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition leading-relaxed font-normal"
-                        placeholder="Apply the core concept to solve this real-world scenario..."></textarea>
+                        class="w-full bg-black/50 border border-indigo-700/70 rounded-xl p-3.5 text-sm sm:text-base text-white placeholder-indigo-300/40 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition leading-relaxed"
+                        placeholder="Apply the core principle to solve this real-world scenario..."></textarea>
 
                     <div class="flex justify-between items-center">
-                        <button onclick="fillDemoAnswer('transfer')" class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-700/60 text-indigo-200 hover:bg-indigo-900 transition">
-                            Fill Sample Solution
+                        <button onclick="fillDemoAnswer('transfer')" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-700/60 text-indigo-200 hover:bg-indigo-900 transition">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Fill Sample Transfer Solution
                         </button>
-                        <button id="submitTransferBtn" onclick="submitTransferAnswer()" class="px-6 py-3 rounded-xl font-black text-sm sm:text-base text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-600/40 transition">
-                            Evaluate Real-World Test
+                        <button id="submitTransferBtn" onclick="submitTransferAnswer()" class="px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-600/40 transition">
+                            Verify Real-World Mastery
                         </button>
                     </div>
 
                     <!-- Transfer Score & Complete Concept Card -->
-                    <div id="transferResultCard" class="hidden p-5 rounded-2xl bg-purple-950/80 border border-purple-700/60 space-y-3">
+                    <div id="transferResultCard" class="hidden p-4 rounded-2xl bg-purple-950/80 border border-emerald-500/50 space-y-2.5">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm font-black uppercase tracking-wider text-white">Real-World Test Result:</span>
-                            <span id="transferMasteryBadge" class="text-sm font-black font-mono px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                            <span class="text-xs font-black uppercase tracking-wider text-white">Real-World Transfer Result:</span>
+                            <span id="transferMasteryBadge" class="text-xs sm:text-sm font-black font-mono px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                                 Mastered (88%)
                             </span>
                         </div>
-                        <p id="transferFeedbackText" class="text-sm text-purple-100 font-medium leading-relaxed"></p>
+                        <p id="transferFeedbackText" class="text-xs sm:text-sm text-purple-100 font-medium leading-relaxed"></p>
                         <div class="flex justify-between items-center pt-2 border-t border-purple-800/40">
-                            <span class="text-sm text-emerald-300 font-bold">
-                                <i class="fa-solid fa-circle-check mr-1.5"></i> Concept Mastery Recorded!
+                            <span class="text-xs text-emerald-300 font-bold">
+                                <i class="fa-solid fa-circle-check mr-1"></i> Saved to Learning Dashboard!
                             </span>
-                            <button onclick="advanceNextConcept()" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md transition">
-                                Next Concept →
+                            <button onclick="advanceNextConcept()" class="px-4 py-2 rounded-xl text-xs font-bold text-black bg-emerald-400 hover:bg-emerald-300 shadow-md transition">
+                                Next Concept Chapter →
                             </button>
                         </div>
                     </div>
                 </div>
 
+            </div>
+
+            <!-- Compact Pedagogical Value Strip (Eliminates any dead space & reminds judges why ClipGenie wins) -->
+            <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-purple-800/50">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-scale-balanced text-emerald-400"></i>
+                        <span>Why ClipGenie Beats Passive Video & ChatGPT Summarizers</span>
+                    </span>
+                    <a href="/profile" class="text-xs font-bold text-emerald-300 hover:text-emerald-200 underline">
+                        View Saved Mastery Dashboard →
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div class="p-3 rounded-xl bg-purple-950/50 border border-purple-800/50">
+                        <div class="font-bold text-white mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-ban text-rose-400"></i>
+                            <span>1. Zero Spoiler Guardrail</span>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            ChatGPT hands you the summary so your brain stays passive. ClipGenie blocks spoilers and nudges you with Socratic hints.
+                        </p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-purple-950/50 border border-purple-800/50">
+                        <div class="font-bold text-white mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
+                            <span>2. Closed-Loop Retry</span>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            Instead of moving on after a 60% score, you immediately revise your explanation using the hint and measure your delta gain.
+                        </p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-purple-950/50 border border-purple-800/50">
+                        <div class="font-bold text-white mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-flask text-emerald-400"></i>
+                            <span>3. Cold Transfer Test</span>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            True mastery means applying the concept to a brand-new real-world scenario not mentioned in the video lecture.
+                        </p>
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -592,6 +603,6 @@
 
     {% include 'footer.html' %}
 
-    <script src="/static/js/learning_loop.js?v=2.4"></script>
+    <script src="/static/js/learning_loop.js?v=2.5"></script>
 </body>
 </html>

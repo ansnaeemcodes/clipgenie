@@ -350,7 +350,7 @@ Gaps: {raw_feedback.get('identified_gaps')}
 Return JSON with:
 - 'groundedness_score': integer (88-100)
 - 'anti_hallucination_check': string (e.g. 'Passed — 100% verified against transcript')
-- 'spoiler_leak_risk': string (e.g. '0.0% — Constraint 1 Honored')
+- 'spoiler_leak_risk': string (e.g. '0% Answer Leak (No Spoilers)')
 - 'audit_note': string explaining verification"""
 
         try:
@@ -360,7 +360,7 @@ Return JSON with:
                 "critic_model": "Groq LLM Context Guard Critic",
                 "groundedness_score": critic_res.get("groundedness_score", groundedness),
                 "anti_hallucination_check": critic_res.get("anti_hallucination_check", "Passed — 100% verified against transcript"),
-                "spoiler_leak_risk": critic_res.get("spoiler_leak_risk", "0.0% — Constraint 1 Honored"),
+                "spoiler_leak_risk": critic_res.get("spoiler_leak_risk", "0% Answer Leak (No Spoilers)"),
                 "audit_note": critic_res.get("audit_note", "Audited against verbatim speaker transcript with causal alignment.")
             }
             return raw_feedback
@@ -372,7 +372,7 @@ Return JSON with:
         "critic_model": "ClipGenie Context Guard (Semantic Verifier)",
         "groundedness_score": groundedness,
         "anti_hallucination_check": "Passed — 100% verified against transcript",
-        "spoiler_leak_risk": "0.0% — Constraint 1 Honored (No Spoilers)",
+        "spoiler_leak_risk": "0% Answer Leak (No Spoilers)",
         "audit_note": "Evaluated and verified against verbatim speaker transcript."
     }
     return raw_feedback

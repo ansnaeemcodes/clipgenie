@@ -1,11 +1,11 @@
 [
   {
     "id": "tedtalk",
-    "title": "Tedtalk",
+    "title": "The Coming Wave: AI as a Digital Species (Mustafa Suleyman)",
     "filename": "tedtalk.mp4",
     "video_url": "/static/tedtalk.mp4",
     "duration_str": "6:50",
-    "source": "local_upload",
+    "source": "demo_preset",
     "concepts_count": 5
   }
 ]

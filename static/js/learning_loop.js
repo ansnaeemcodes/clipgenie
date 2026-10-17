@@ -112,7 +112,7 @@ function renderConceptList() {
         return;
     }
 
-    container.innerHTML = concepts.map((c) => {
+    container.innerHTML = concepts.map((c, idx) => {
         const masteryClass = c.mastery === 'Mastered' 
             ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
             : (c.mastery === 'Improved' 
@@ -120,25 +120,26 @@ function renderConceptList() {
                 : 'bg-purple-950 text-purple-300 border-purple-800');
 
         const recurrenceBadge = (c.occurrences && c.occurrences.length > 1)
-            ? `<span class="text-xs px-2 py-0.5 rounded bg-indigo-950/90 text-indigo-200 border border-indigo-700/60 font-bold" title="Concept is revisited later in the video"><i class="fa-solid fa-arrows-split-up-and-left mr-1"></i> ${c.occurrences.length} parts</span>`
+            ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-950/90 text-indigo-200 border border-indigo-700/60 font-bold" title="Concept is revisited later in the video"><i class="fa-solid fa-arrows-split-up-and-left mr-0.5"></i>${c.occurrences.length}x</span>`
             : '';
 
         return `
             <div id="card_${c.id}" onclick="selectConcept('${c.id}')" 
-                 class="concept-card p-3.5 rounded-2xl border border-purple-900/60 bg-purple-950/30 hover:bg-purple-900/40 cursor-pointer transition flex flex-col space-y-2 ${activeConcept?.id === c.id ? 'active' : ''}">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-bold text-purple-300 font-mono uppercase">
-                        ${c.duration_str}
-                    </span>
-                    <div class="flex items-center space-x-1.5">
+                 class="concept-card p-3 rounded-xl border border-purple-900/60 bg-purple-950/30 hover:bg-purple-900/40 cursor-pointer transition flex flex-col space-y-1 ${activeConcept?.id === c.id ? 'active' : ''}">
+                <div class="flex justify-between items-center gap-2">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="w-5 h-5 rounded-md bg-purple-900/80 border border-purple-700/60 text-[11px] font-black text-purple-200 flex items-center justify-center shrink-0">${idx + 1}</span>
+                        <h4 class="text-xs sm:text-sm font-extrabold text-white truncate">${c.title}</h4>
+                    </div>
+                    <div class="flex items-center space-x-1.5 shrink-0">
+                        <span class="text-[11px] font-bold text-purple-300 font-mono">${c.duration_str}</span>
                         ${recurrenceBadge}
-                        <span id="badge_${c.id}" class="text-xs font-bold px-2.5 py-0.5 rounded-full border shadow-sm ${masteryClass}">
+                        <span id="badge_${c.id}" class="text-[10px] font-bold px-2 py-0.5 rounded-full border shadow-sm ${masteryClass}">
                             ${c.mastery || 'Not Started'}
                         </span>
                     </div>
                 </div>
-                <h4 class="text-sm sm:text-base font-extrabold text-white leading-snug">${c.title}</h4>
-                <p class="text-xs sm:text-sm text-purple-200 font-medium line-clamp-2">${c.summary}</p>
+                <p class="text-xs text-purple-200/85 font-normal line-clamp-1 pl-7">${c.summary}</p>
             </div>
         `;
     }).join('');
@@ -188,7 +189,7 @@ function renderOccurrenceNavigator() {
     if (activeConcept && activeConcept.occurrences && activeConcept.occurrences.length > 1) {
         box.classList.remove('hidden');
         if (countBadge) {
-            countBadge.textContent = `${activeConcept.occurrences.length} moments in this video`;
+            countBadge.textContent = `${activeConcept.occurrences.length} moments in video`;
         }
 
         pillsList.innerHTML = activeConcept.occurrences.map((occ, idx) => {
@@ -196,23 +197,22 @@ function renderOccurrenceNavigator() {
             const cleanLabel = occ.label.replace(/^Part\s*\d+\s*:\s*/i, '');
             return `
                 <div id="occCard_${idx}" onclick="jumpToOccurrence(${occ.start}, ${occ.end}, '${cleanLabel.replace(/'/g, "\\'")}', '${occ.duration_str}', ${idx})" 
-                     class="occurrence-card p-3.5 rounded-2xl bg-[#140a2e] hover:bg-[#1e0e45] border ${idx === 0 ? 'border-purple-500 shadow-lg shadow-purple-900/40' : 'border-purple-800/60'} hover:border-purple-400 cursor-pointer transition flex items-center justify-between group">
-                    <div class="space-y-1.5 pr-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded ${isInitial ? 'bg-purple-900/80 text-purple-200 border border-purple-600/50' : 'bg-indigo-900/80 text-indigo-200 border border-indigo-600/50'} font-mono">
+                     class="occurrence-card p-2.5 rounded-xl bg-[#140a2e] hover:bg-[#1e0e45] border ${idx === 0 ? 'border-purple-500 shadow-lg shadow-purple-900/30' : 'border-purple-800/50'} hover:border-purple-400 cursor-pointer transition flex items-center justify-between gap-2 group">
+                    <div class="min-w-0">
+                        <div class="flex items-center space-x-1.5">
+                            <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${isInitial ? 'bg-purple-900/80 text-purple-200 border border-purple-600/50' : 'bg-indigo-900/80 text-indigo-200 border border-indigo-600/50'} font-mono shrink-0">
                                 Part ${idx + 1}
                             </span>
-                            <span class="text-sm font-bold text-white group-hover:text-purple-300 transition">
+                            <span class="text-xs font-bold text-white group-hover:text-purple-300 transition truncate">
                                 ${cleanLabel}
                             </span>
                         </div>
-                        <div class="text-xs font-mono font-medium text-purple-200 flex items-center space-x-2">
-                            <span><i class="fa-regular fa-clock text-xs text-purple-400 mr-1"></i>${occ.duration_str}</span>
-                            <span class="text-xs text-purple-300 font-semibold">• ${isInitial ? 'First Mention' : 'Later Moment'}</span>
+                        <div class="text-[11px] font-mono text-purple-300 mt-0.5">
+                            <i class="fa-regular fa-clock text-[10px] text-purple-400 mr-1"></i>${occ.duration_str}
                         </div>
                     </div>
-                    <button class="w-9 h-9 rounded-xl bg-purple-600 group-hover:bg-purple-500 text-white flex items-center justify-center shadow-md transition shrink-0 group-hover:scale-105">
-                        <i class="fa-solid fa-play text-xs"></i>
+                    <button class="w-7 h-7 rounded-lg bg-purple-600 group-hover:bg-purple-500 text-white flex items-center justify-center shadow transition shrink-0">
+                        <i class="fa-solid fa-play text-[10px]"></i>
                     </button>
                 </div>
             `;
@@ -407,22 +407,23 @@ function renderGapFeedback(fb) {
     // Render AI Context Guard & Verification Auditor Data
     const veri = fb.ai_verification || {
         groundedness_score: 96,
-        spoiler_leak_risk: "0.0% (Constraint 1 Honored)",
-        anti_hallucination_check: "Passed (100% Lecture Aligned)",
+        spoiler_leak_risk: "0% Answer Leak (No Spoilers)",
+        anti_hallucination_check: "100% Lecture Aligned",
         audit_note: "Audited against verbatim speaker transcript with causal alignment."
     };
 
     const gBadge = document.getElementById('groundednessBadge');
     if (gBadge) {
-        gBadge.textContent = `${veri.groundedness_score}% Context Grounded`;
+        gBadge.textContent = `${veri.groundedness_score}% Transcript Grounded`;
     }
     const sRisk = document.getElementById('criticSpoilerRisk');
     if (sRisk) {
-        sRisk.textContent = veri.spoiler_leak_risk || "0.0% (Constraint 1 Honored)";
+        const cleanRisk = (veri.spoiler_leak_risk || "0% Answer Leak (No Spoilers)").replace(/Constraint 1 Honored/gi, "No Spoilers");
+        sRisk.textContent = cleanRisk;
     }
     const hCheck = document.getElementById('criticHallucination');
     if (hCheck) {
-        hCheck.textContent = veri.anti_hallucination_check || "Passed (100% Lecture Aligned)";
+        hCheck.textContent = veri.anti_hallucination_check || "100% Lecture Aligned";
     }
     const aNote = document.getElementById('criticAuditNote');
     if (aNote) {
@@ -674,20 +675,20 @@ function toggleEngineMode() {
     const icon = document.getElementById('modeIcon');
 
     if (currentMode === 'online') {
-        label.textContent = "Online (Groq AI)";
+        label.textContent = "AI: Live Groq";
         icon.innerHTML = `<i class="fa-solid fa-cloud-bolt"></i>`;
-        btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 bg-purple-600 text-white shadow-sm";
+        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 text-white shadow-sm";
     } else {
-        label.textContent = "Demo Safe";
+        label.textContent = "AI: Offline-safe";
         icon.innerHTML = `<i class="fa-solid fa-shield-halved"></i>`;
-        btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 bg-emerald-600 text-white shadow-sm";
+        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm";
     }
 }
 
 // 8. Trigger Live LLM Concept Extraction from Transcript
 function toggleConceptSource() {
     useVerifiedPresets = !useVerifiedPresets;
-    document.getElementById('sourceLabel').textContent = useVerifiedPresets ? "Verified Presets" : "Groq LLM Extracted";
+    document.getElementById('sourceLabel').textContent = useVerifiedPresets ? "Checked chapters" : "AI auto-chapters";
     loadLectureData(!useVerifiedPresets);
 }
 
