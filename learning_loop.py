@@ -126,6 +126,7 @@ def call_groq_llm(system_prompt, user_prompt):
                     {"role": "user", "content": user_prompt}
                 ],
                 temperature=0.15,
+                max_completion_tokens=2048,
                 response_format={"type": "json_object"}
             )
             return json.loads(completion.choices[0].message.content)

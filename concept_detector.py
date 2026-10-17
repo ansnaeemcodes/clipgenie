@@ -227,9 +227,10 @@ Return valid JSON with key 'concepts' containing the list of concepts."""
                 model=model_name,
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"Here is the lecture transcript with timestamps:\n\n{transcript_text}\n\nAnalyze and extract concept pillars in JSON:"}
+                    {"role": "user", "content": f"Here is the lecture transcript with timestamps:\n\n{transcript_text}\n\nAnalyze and extract 5 concept pillars in JSON:"}
                 ],
                 temperature=0.2,
+                max_completion_tokens=4096,
                 response_format={"type": "json_object"}
             )
             break
