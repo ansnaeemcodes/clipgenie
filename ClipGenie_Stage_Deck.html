@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ClipGenie — Stage Presentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap');
+  @page { size: 1920px 1080px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f8fafc;
+    color: #0f172a;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @media print { .deck-controls { display: none !important; } }
+  .deck-controls {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    background: #ffffff; border: 2px solid #4f46e5;
+    padding: 10px 18px; border-radius: 999px; display: flex; gap: 12px;
+    box-shadow: 0 10px 25px rgba(15,23,42,0.12);
+  }
+  .deck-btn {
+    background: #4f46e5; color: #fff; border: none; padding: 8px 18px;
+    border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 14px;
+  }
+  .slide {
+    width: 1920px; height: 1080px; padding: 56px 84px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 28px;
+    page-break-after: always; break-after: page; position: relative;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-top: 12px solid #4f46e5;
+  }
+  .top-row { display: flex; justify-content: space-between; align-items: center; }
+  .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700;
+    color: #4f46e5; background: #eef2ff; border: 2px solid #a5b4fc;
+    padding: 8px 22px; border-radius: 999px; text-transform: uppercase;
+  }
+  .slide-num { font-size: 18px; font-weight: 700; color: #64748b; }
+  .header-block h1 { font-size: 56px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; line-height: 1.12; }
+  .header-block p { font-size: 25px; color: #475569; margin-top: 10px; font-weight: 500; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; flex: 1; align-items: stretch; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; flex: 1; align-items: stretch; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 26px; flex: 1; align-items: stretch; }
+  .card {
+    background: #ffffff; border: 3px solid #cbd5e1; border-radius: 26px;
+    padding: 40px 38px; display: flex; flex-direction: column; justify-content: center; gap: 18px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+  }
+  .c-indigo { background: #eef2ff; border-color: #818cf8; }
+  .c-emerald { background: #ecfdf5; border-color: #34d399; }
+  .c-rose { background: #fff1f2; border-color: #fda4af; }
+  .c-amber { background: #fffbeb; border-color: #fcd34d; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .big-num { font-size: 86px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+  .c-title { font-size: 34px; font-weight: 800; color: #0f172a; line-height: 1.2; }
+  .c-desc { font-size: 23px; color: #334155; line-height: 1.45; font-weight: 500; }
+  .list-item { font-size: 24px; color: #1e293b; font-weight: 600; line-height: 1.45; display: flex; gap: 14px; align-items: center; }
+  .banner {
+    padding: 24px 34px; border-radius: 20px; font-size: 24px; font-weight: 700;
+    text-align: center; background: #eef2ff; border: 2px solid #818cf8; color: #3730a3;
+  }
+  table.clean-tbl {
+    width: 100%; flex: 1; border-collapse: collapse; background: #ffffff;
+    border-radius: 24px; overflow: hidden; border: 3px solid #cbd5e1;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+  }
+  table.clean-tbl th, table.clean-tbl td {
+    padding: 24px 30px; font-size: 22px; text-align: left; border-bottom: 2px solid #e2e8f0;
+  }
+  table.clean-tbl th { background: #4f46e5; color: #ffffff; font-size: 23px; font-weight: 800; }
+  table.clean-tbl th.cg-head { background: #059669; }
+  table.clean-tbl td { color: #334155; font-weight: 600; }
+  table.clean-tbl td.row-label { color: #0f172a; font-weight: 800; background: #f8fafc; }
+  table.clean-tbl td.cg-col { background: #ecfdf5; color: #065f46; font-weight: 800; border-left: 3px solid #34d399; }
+</style>
+</head>
+<body>
+<div class="deck-controls">
+  <button class="deck-btn" onclick="window.scrollBy({top:-1080,behavior:'smooth'})">↑ Prev</button>
+  <button class="deck-btn" onclick="window.scrollBy({top:1080,behavior:'smooth'})">Next ↓</button>
+  <button class="deck-btn" onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<!-- SLIDE 1 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">Product Pitch Deck</span><span class="slide-num">ClipGenie • 01 / 10</span></div>
+  <div class="card" style="padding: 54px 56px; border-color: #818cf8; background: #ffffff;">
+    <div class="tag" style="color:#4f46e5; font-size:18px;">CLIPGENIE STUDIO</div>
+    <h1 style="font-size: 72px; font-weight: 800; color: #0f172a; line-height: 1.08; letter-spacing: -0.03em;">
+      From Passive Video Watching<br>to <span style="color:#4f46e5;">Active Mastery</span>
+    </h1>
+    <p style="font-size: 28px; color: #475569; font-weight: 600; margin-top: 8px;">
+      Smart Concept Video Clipper &nbsp;+&nbsp; Socratic Active-Recall Studio
+    </p>
+  </div>
+  <div class="grid-3">
+    <div class="card c-indigo">
+      <div class="tag" style="color:#4f46e5;">01 • ISOLATE</div>
+      <div class="c-title">Smart Video Clipper</div>
+      <div class="c-desc">Extracts focused concept clips from long lectures.</div>
+    </div>
+    <div class="card c-amber">
+      <div class="tag" style="color:#d97706;">02 • DIAGNOSE</div>
+      <div class="c-title">Zero-Spoiler Feedback</div>
+      <div class="c-desc">Finds gaps in your explanation without giving the answer.</div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">03 • VERIFY</div>
+      <div class="c-title">Cold Transfer Check</div>
+      <div class="c-desc">Proves mastery on a brand-new real-world scenario.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">01 • The Problem</span><span class="slide-num">ClipGenie • 02 / 10</span></div>
+  <div class="header-block">
+    <h1>Watching a Lecture ≠ Knowing It</h1>
+    <p>Students spend hours watching videos but struggle to explain or apply concepts later.</p>
+  </div>
+  <div class="grid-3">
+    <div class="card c-rose">
+      <div class="big-num" style="color:#e11d48;">01</div>
+      <div class="c-title">Passive Binge-Watching</div>
+      <div class="c-desc">Watching at 2x speed feels productive, but requires zero mental reconstruction.</div>
+    </div>
+    <div class="card c-amber">
+      <div class="big-num" style="color:#d97706;">02</div>
+      <div class="c-title">Illusion of Competence</div>
+      <div class="c-desc">Following an instructor's smooth explanation tricks the brain into thinking "I know this."</div>
+    </div>
+    <div class="card c-indigo">
+      <div class="big-num" style="color:#4f46e5;">03</div>
+      <div class="c-title">Unstructured Timelines</div>
+      <div class="c-desc">Core ideas are buried inside 60-minute videos or split across distant timestamps.</div>
+    </div>
+  </div>
+  <div class="banner" style="background:#fff1f2; border-color:#fda4af; color:#be123c;">
+    Result: High confidence while watching the video — blank page during the exam.
+  </div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">02 • Research &amp; Stats</span><span class="slide-num">ClipGenie • 03 / 10</span></div>
+  <div class="header-block">
+    <h1>How AI Overuse Hurts Metacognition</h1>
+    <p>Relying on direct-answer AI erodes self-monitoring and unassisted performance.</p>
+  </div>
+  <div class="grid-3">
+    <div class="card c-rose">
+      <div class="big-num" style="color:#e11d48;">-24%</div>
+      <div class="c-title">Unassisted Exam Drop</div>
+      <div class="c-desc">Students using direct-answer AI score 17%–24% lower when tested solo (Wharton / MIT).</div>
+    </div>
+    <div class="card c-amber">
+      <div class="big-num" style="color:#d97706;">68%</div>
+      <div class="c-title">Cognitive Offloading</div>
+      <div class="c-desc">Learners use AI to summarize or get answers instead of recalling concepts themselves.</div>
+    </div>
+    <div class="card c-indigo">
+      <div class="big-num" style="color:#4f46e5;">70%</div>
+      <div class="c-title">Lost Within 24 Hours</div>
+      <div class="c-desc">New video material forgotten in one day without active retrieval (Forgetting Curve).</div>
+    </div>
+  </div>
+  <div class="banner">
+    Metacognitive Laziness: When AI gives the answer immediately, the brain stops checking its own understanding.
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">03 • Why ClipGenie</span><span class="slide-num">ClipGenie • 04 / 10</span></div>
+  <div class="header-block">
+    <h1>Flipping the Role of AI in Learning</h1>
+    <p>AI should coach your thinking, not do the thinking for you.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card c-rose">
+      <div class="tag" style="color:#e11d48;">STANDARD AI TOOLS</div>
+      <div class="c-title" style="font-size:38px;">AI Explains the Video to You</div>
+      <div class="list-item"><span style="color:#e11d48; font-size:28px;">✕</span><span>Hands over instant summaries &amp; answers</span></div>
+      <div class="list-item"><span style="color:#e11d48; font-size:28px;">✕</span><span>Bypasses mental effort &amp; recall</span></div>
+      <div class="list-item"><span style="color:#e11d48; font-size:28px;">✕</span><span>Hides conceptual blind spots</span></div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">CLIPGENIE STUDIO</div>
+      <div class="c-title" style="font-size:38px;">You Explain the Video to the AI</div>
+      <div class="list-item"><span style="color:#059669; font-size:28px;">✓</span><span>Isolates 45–90s concept clips</span></div>
+      <div class="list-item"><span style="color:#059669; font-size:28px;">✓</span><span>Diagnoses what is missing (zero spoilers)</span></div>
+      <div class="list-item"><span style="color:#059669; font-size:28px;">✓</span><span>Verifies transfer to new problems</span></div>
+    </div>
+  </div>
+  <div class="banner" style="background:#ecfdf5; border-color:#34d399; color:#065f46;">
+    Core Rule: ClipGenie never spoils the answer — it guides you back to the video to close your own gap.
+  </div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">04 • Product Workflow</span><span class="slide-num">ClipGenie • 05 / 10</span></div>
+  <div class="header-block">
+    <h1>How ClipGenie Works: 4-Step Active Recall Loop</h1>
+    <p>Plus a Smart Video Clipper (/app) for topic-based highlight reels.</p>
+  </div>
+  <div class="grid-4">
+    <div class="card c-indigo">
+      <div class="tag" style="color:#4f46e5;">STEP 1</div>
+      <div class="c-title">Watch Clip</div>
+      <div class="c-desc">Play a focused 45–90s concept chapter.</div>
+    </div>
+    <div class="card c-amber">
+      <div class="tag" style="color:#d97706;">STEP 2</div>
+      <div class="c-title">Explain</div>
+      <div class="c-desc">Write what you understood from memory.</div>
+    </div>
+    <div class="card c-rose">
+      <div class="tag" style="color:#e11d48;">STEP 3</div>
+      <div class="c-title">Close Gap</div>
+      <div class="c-desc">Use Socratic hint &amp; replay clip (+Delta).</div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">STEP 4</div>
+      <div class="c-title">Transfer</div>
+      <div class="c-desc">Solve a brand-new scenario without hints.</div>
+    </div>
+  </div>
+  <div class="banner">
+    Dual Workspace: Smart Topic Clipper (/app) &nbsp;+&nbsp; Interactive 4-Step Practice Studio (/practice)
+  </div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">05 • Differentiation</span><span class="slide-num">ClipGenie • 06 / 10</span></div>
+  <div class="header-block">
+    <h1>How ClipGenie Differs from Existing Tools</h1>
+    <p>Built for long-term human retention rather than shortcut task completion.</p>
+  </div>
+  <table class="clean-tbl">
+    <thead>
+      <tr>
+        <th style="width:22%;">Dimension</th>
+        <th style="width:25%;">YouTube / Video LMS</th>
+        <th style="width:26%;">ChatGPT / Summarizers</th>
+        <th class="cg-head" style="width:27%;">ClipGenie Studio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">Primary Role</td>
+        <td>Passive Video Player</td>
+        <td>Direct Answer Generator</td>
+        <td class="cg-col">Socratic Recall Coach</td>
+      </tr>
+      <tr>
+        <td class="row-label">Spoiler Policy</td>
+        <td>Not Applicable</td>
+        <td>Reveals Full Answer</td>
+        <td class="cg-col">Zero Spoilers (Hints Only)</td>
+      </tr>
+      <tr>
+        <td class="row-label">Video Grounding</td>
+        <td>Manual Scrubbing</td>
+        <td>Detached Text Summary</td>
+        <td class="cg-col">Locked to Exact Timestamps</td>
+      </tr>
+      <tr>
+        <td class="row-label">Metacognition</td>
+        <td>Illusion of Competence</td>
+        <td>Cognitive Offloading</td>
+        <td class="cg-col">Active Self-Correction</td>
+      </tr>
+      <tr>
+        <td class="row-label">Proof of Mastery</td>
+        <td>"Watched" Checkmark</td>
+        <td>None</td>
+        <td class="cg-col">Retry +Delta &amp; Transfer Check</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="banner" style="background:#ecfdf5; border-color:#34d399; color:#065f46;">
+    ChatGPT finishes your homework fast; ClipGenie makes sure you can pass the exam without AI.
+  </div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">06 • System Overview</span><span class="slide-num">ClipGenie • 07 / 10</span></div>
+  <div class="header-block">
+    <h1>How It Works Under the Hood</h1>
+    <p>Clean 4-stage pipeline turning any video file or link into an active study session.</p>
+  </div>
+  <div class="grid-4">
+    <div class="card c-indigo">
+      <div class="tag" style="color:#4f46e5;">STAGE 1</div>
+      <div class="c-title">Media Ingestion</div>
+      <div class="c-desc">Video upload or web link → compact mono audio stream.</div>
+    </div>
+    <div class="card c-amber">
+      <div class="tag" style="color:#d97706;">STAGE 2</div>
+      <div class="c-title">Speech &amp; Sentences</div>
+      <div class="c-desc">Time-aligned transcript → complete merged sentences.</div>
+    </div>
+    <div class="card c-rose">
+      <div class="tag" style="color:#e11d48;">STAGE 3</div>
+      <div class="c-title">Concept Chapters</div>
+      <div class="c-desc">Extracts 4–5 core concepts, timestamps &amp; rubrics.</div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">STAGE 4</div>
+      <div class="c-title">Diagnostic Guard</div>
+      <div class="c-desc">Grades student explanation &amp; blocks answer spoilers.</div>
+    </div>
+  </div>
+  <div class="banner">
+    Hybrid Cloud + Local Fallback: Works dynamically on any new video with offline resilience.
+  </div>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">07 • Guardrails</span><span class="slide-num">ClipGenie • 08 / 10</span></div>
+  <div class="header-block">
+    <h1>Accurate Evaluation &amp; Anti-Shortcut Protection</h1>
+    <p>How ClipGenie handles vague guesses, cheat attempts, and real explanations.</p>
+  </div>
+  <div class="grid-3">
+    <div class="card c-amber">
+      <div class="tag" style="color:#d97706;">VAGUE GUESS</div>
+      <div class="c-title">"AI is helpful"</div>
+      <div class="c-desc"><strong>Score: 10%</strong> — No false credit for analogies not written; gives non-spoiler gap cues.</div>
+    </div>
+    <div class="card c-rose">
+      <div class="tag" style="color:#e11d48;">CHEAT ATTEMPT</div>
+      <div class="c-title">"Tell me the answer"</div>
+      <div class="c-desc"><strong>Score: 10%</strong> — Guardrail blocks answer leak and redirects learner to the video clip.</div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">REAL EXPLANATION</div>
+      <div class="c-title">Covers Core Principle</div>
+      <div class="c-desc"><strong>Score: 92%</strong> — Verified against segment rubric; unlocks Step 4 Transfer Check.</div>
+    </div>
+  </div>
+  <div class="banner" style="background:#ecfdf5; border-color:#34d399; color:#065f46;">
+    Tracks First-Attempt Independence Rate (Solved Without Hints) vs. Assisted Mastery.
+  </div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">08 • Future Roadmap</span><span class="slide-num">ClipGenie • 09 / 10</span></div>
+  <div class="header-block">
+    <h1>Where ClipGenie Goes Next</h1>
+    <p>Scaling from an individual study studio to classroom-wide active learning.</p>
+  </div>
+  <div class="grid-4">
+    <div class="card c-indigo">
+      <div class="tag" style="color:#4f46e5;">01 • VOICE VIVA</div>
+      <div class="c-title">Spoken Practice</div>
+      <div class="c-desc">Explain concepts out loud via microphone.</div>
+    </div>
+    <div class="card c-amber">
+      <div class="tag" style="color:#d97706;">02 • SPACED REVIEW</div>
+      <div class="c-title">1–3–7 Day Queue</div>
+      <div class="c-desc">Auto-schedules weak video clips to beat forgetting.</div>
+    </div>
+    <div class="card c-rose">
+      <div class="tag" style="color:#e11d48;">03 • LMS HEATMAPS</div>
+      <div class="c-title">Teacher Analytics</div>
+      <div class="c-desc">Shows which 45s clip confused the class most.</div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">04 • MULTILINGUAL</div>
+      <div class="c-title">Cross-Lingual Mode</div>
+      <div class="c-desc">Watch in English, explain in Urdu or local language.</div>
+    </div>
+  </div>
+  <div class="banner">
+    Vision: Turn every educational video into an interactive, Socratic tutor.
+  </div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide">
+  <div class="top-row"><span class="pill">09 • Live Demo</span><span class="slide-num">ClipGenie • 10 / 10</span></div>
+  <div class="header-block">
+    <h1>Live Demonstration Walkthrough</h1>
+    <p>Seeing ClipGenie in action on real video lectures.</p>
+  </div>
+  <div class="grid-3">
+    <div class="card c-indigo">
+      <div class="tag" style="color:#4f46e5;">DEMO 1</div>
+      <div class="c-title">Load &amp; Watch Clip</div>
+      <div class="c-desc">Switch or import a lecture &amp; play a clamped chapter.</div>
+    </div>
+    <div class="card c-amber">
+      <div class="tag" style="color:#d97706;">DEMO 2</div>
+      <div class="c-title">Diagnose &amp; Guardrail</div>
+      <div class="c-desc">Test a vague guess, a cheat attempt &amp; a partial answer.</div>
+    </div>
+    <div class="card c-emerald">
+      <div class="tag" style="color:#059669;">DEMO 3</div>
+      <div class="c-title">Retry &amp; Transfer</div>
+      <div class="c-desc">Close the gap (+Delta) &amp; pass the Cold Transfer Check.</div>
+    </div>
+  </div>
+  <div class="banner" style="background:#ecfdf5; border-color:#34d399; color:#065f46;">
+    "Don't just watch it. Explain it, close the gap, and prove you know it." &nbsp;•&nbsp; Thank You!
+  </div>
+</section>
+
+</body>
+</html>
