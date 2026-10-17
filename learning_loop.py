@@ -141,19 +141,37 @@ def call_groq_llm(system_prompt, user_prompt):
         )
         return json.loads(completion.choices[0].message.content)
 
-def generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode="auto"):
+def _get_video_concept_data(video_id, concept_id):
+    """Loads cached concept data (question, key_points, transfer_question) for a specific video_id."""
+    if not video_id or video_id == "tedtalk":
+        return OFFLINE_DEMO_KNOWLEDGE.get(concept_id)
+    cache_path = os.path.join(config.CACHE_DIR, f"{video_id}_llm_concepts.json")
+    if os.path.exists(cache_path):
+        try:
+            with open(cache_path, "r", encoding="utf-8") as f:
+                concepts = json.load(f)
+                for c in concepts:
+                    if c.get("id") == concept_id:
+                        return c
+                if concepts:
+                    return concepts[0]
+        except Exception as e:
+            logger.warning(f"Could not read concept data from {cache_path}: {e}")
+    return None
+
+def generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode="auto", video_id="tedtalk"):
     """
     Feature 3: Retrieval Prompt Generation
     Generates open-ended retrieval question grounded strictly in the transcript segment.
     mode: 'auto' | 'online' | 'offline'
     """
     is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
-    is_tedtalk = ("digital companion" in transcript_text.lower() or "homo-technologicus" in transcript_text.lower() or "8 trillion" in transcript_text.lower() or "digital species" in transcript_text.lower() or "mustafa" in transcript_text.lower() or not transcript_text.strip())
+    concept_meta = _get_video_concept_data(video_id, concept_id)
+
     if is_offline and mode != "online":
-        if is_tedtalk and concept_id in OFFLINE_DEMO_KNOWLEDGE:
-            demo_data = OFFLINE_DEMO_KNOWLEDGE[concept_id]
+        if concept_meta and concept_meta.get("question"):
             return {
-                "question": demo_data["question"],
+                "question": concept_meta["question"],
                 "grounded_concept": concept_title,
                 "mode": "offline_cached"
             }
@@ -181,14 +199,19 @@ Generate the retrieval practice question in JSON:"""
         return call_groq_llm(system_prompt, user_prompt)
     except Exception as e:
         logger.warning(f"LLM question generation fallback to offline knowledge: {e}")
-        demo_data = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
+        if concept_meta and concept_meta.get("question"):
+            return {
+                "question": concept_meta["question"],
+                "grounded_concept": concept_title,
+                "mode": "offline_fallback"
+            }
         return {
-            "question": demo_data["question"],
+            "question": f"Based on this clip ('{concept_title}'), explain the speaker's core argument, framework, or practical takeaway in your own words.",
             "grounded_concept": concept_title,
             "mode": "offline_fallback"
         }
 
-def evaluate_gap_feedback(concept_id, question, student_answer, transcript_text, mode="auto"):
+def evaluate_gap_feedback(concept_id, question, student_answer, transcript_text, mode="auto", video_id="tedtalk"):
     """
     Feature 4: Gap-Based Feedback
     CRITICAL CONSTRAINT: NEVER reveals the correct answer.
@@ -224,11 +247,10 @@ def evaluate_gap_feedback(concept_id, question, student_answer, transcript_text,
 
     # 2. Check if offline requested
     is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
-    is_tedtalk = ("digital companion" in transcript_text.lower() or "homo-technologicus" in transcript_text.lower() or "8 trillion" in transcript_text.lower() or "digital species" in transcript_text.lower() or "mustafa" in transcript_text.lower() or not transcript_text.strip())
+    concept_meta = _get_video_concept_data(video_id, concept_id)
     if is_offline and mode != "online":
-        if is_tedtalk:
-            demo = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
-            key_points = demo["key_points"]
+        if concept_meta and concept_meta.get("key_points"):
+            key_points = concept_meta["key_points"]
         else:
             raw_sents = [s.strip() for s in re.split(r'[.!?]+', transcript_text) if len(s.strip()) > 25]
             key_points = raw_sents[:4] if raw_sents else ["Core argument and mechanism explained in the lecture segment"]
@@ -389,12 +411,12 @@ Return JSON with:
     }
     return raw_feedback
 
-def evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answer, transcript_text, mode="auto"):
+def evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answer, transcript_text, mode="auto", video_id="tedtalk"):
     """
     Feature 5: Retry Flow & Comparison Scoring
     Compares second attempt against first attempt, highlighting closed gaps.
     """
-    eval_2 = evaluate_gap_feedback(concept_id, "Retry attempt", attempt_2_answer, transcript_text, mode=mode)
+    eval_2 = evaluate_gap_feedback(concept_id, "Retry attempt", attempt_2_answer, transcript_text, mode=mode, video_id=video_id)
     score_2 = eval_2.get("score", 0)
     delta = score_2 - attempt_1_score
 
@@ -411,18 +433,24 @@ def evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answ
     eval_2["comparison_message"] = comparison_message
     return eval_2
 
-def generate_transfer_question(concept_id, concept_title, transcript_text, mode="auto"):
+def generate_transfer_question(concept_id, concept_title, transcript_text, mode="auto", video_id="tedtalk"):
     """
     Feature 6: Transfer Check Question
     Generates a genuinely different, cold, unscaffolded question applying the concept to a new scenario.
     """
     is_offline = (mode == "offline") or (mode == "auto" and config.DEMO_SAFE_MODE) or not config.GROQ_API_KEY
+    concept_meta = _get_video_concept_data(video_id, concept_id)
     if is_offline and mode != "online":
-        demo = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
+        if concept_meta and concept_meta.get("transfer_question"):
+            return {
+                "transfer_question": concept_meta["transfer_question"],
+                "concept_id": concept_id,
+                "mode": "offline_cached"
+            }
         return {
-            "transfer_question": demo["transfer_question"],
+            "transfer_question": f"How would you apply the core principle of '{concept_title}' from this lecture to solve a brand-new real-world workflow problem?",
             "concept_id": concept_id,
-            "mode": "offline_cached"
+            "mode": "offline_transcript_grounded"
         }
 
     system_prompt = """You are the ClipGenie Transfer Assessment Engine.
@@ -442,14 +470,19 @@ Generate transfer question in JSON:"""
     try:
         return call_groq_llm(system_prompt, user_prompt)
     except Exception as e:
-        demo = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
+        if concept_meta and concept_meta.get("transfer_question"):
+            return {
+                "transfer_question": concept_meta["transfer_question"],
+                "concept_id": concept_id,
+                "mode": "offline_fallback"
+            }
         return {
-            "transfer_question": demo["transfer_question"],
+            "transfer_question": f"How would you apply the core principle of '{concept_title}' from this lecture to solve a brand-new real-world workflow problem?",
             "concept_id": concept_id,
             "mode": "offline_fallback"
         }
 
-def evaluate_transfer_answer(concept_id, transfer_question, student_answer, transcript_text, mode="auto"):
+def evaluate_transfer_answer(concept_id, transfer_question, student_answer, transcript_text, mode="auto", video_id="tedtalk"):
     """
     Evaluates transfer check attempt cold to verify real understanding vs hint-following.
     """
@@ -479,8 +512,14 @@ Evaluate:"""
 
     # Local embedding or fallback
     embedder = get_local_embedder()
-    demo = OFFLINE_DEMO_KNOWLEDGE.get(concept_id, OFFLINE_DEMO_KNOWLEDGE["concept_1"])
-    transfer_kps = demo.get("transfer_key_points", demo["key_points"])
+    concept_meta = _get_video_concept_data(video_id, concept_id)
+    if concept_meta and concept_meta.get("transfer_key_points"):
+        transfer_kps = concept_meta["transfer_key_points"]
+    elif concept_meta and concept_meta.get("key_points"):
+        transfer_kps = concept_meta["key_points"]
+    else:
+        raw_sents = [s.strip() for s in re.split(r'[.!?]+', transcript_text) if len(s.strip()) > 25]
+        transfer_kps = raw_sents[:3] if raw_sents else ["Applying the core principle to a novel real-world context"]
     
     score = 70 # baseline
     if embedder and len(student_answer.strip()) > 15:

@@ -871,18 +871,19 @@ function resetImportProgress() {
     document.getElementById('progressBarFill').style.width = '20%';
 }
 
-// Demo Helper: Instant Fill for presentation walkthrough
+// Demo Helper: Instant Fill for presentation walkthrough (dynamic per active concept & video)
 function fillDemoAnswer(type) {
+    const customAnswers = (activeConcept && activeConcept.demo_answers) ? activeConcept.demo_answers : {};
     if (type === 'partial') {
-        document.getElementById('studentAnswerInput').value = DEMO_PRESETS.partial;
+        document.getElementById('studentAnswerInput').value = customAnswers.partial || DEMO_PRESETS.partial;
     } else if (type === 'adversarial') {
-        document.getElementById('studentAnswerInput').value = DEMO_PRESETS.adversarial;
+        document.getElementById('studentAnswerInput').value = customAnswers.adversarial || DEMO_PRESETS.adversarial;
     } else if (type === 'complete') {
-        document.getElementById('studentAnswerInput').value = DEMO_PRESETS.complete;
+        document.getElementById('studentAnswerInput').value = customAnswers.complete || DEMO_PRESETS.complete;
     } else if (type === 'retry') {
-        document.getElementById('retryAnswerInput').value = DEMO_PRESETS.retry;
+        document.getElementById('retryAnswerInput').value = customAnswers.retry || customAnswers.complete || DEMO_PRESETS.retry;
     } else if (type === 'transfer') {
-        document.getElementById('transferAnswerInput').value = DEMO_PRESETS.transfer;
+        document.getElementById('transferAnswerInput').value = customAnswers.transfer || DEMO_PRESETS.transfer;
     }
     setupCharCounter();
 }

@@ -199,6 +199,10 @@ For each concept, provide:
 - duration_str: formatted "MM:SS - MM:SS"
 - key_terms: array of 4 key conceptual terms
 - core_principle: the key thesis or mental model the student must master
+- question: an open-ended Socratic retrieval question grounded strictly in this video segment
+- key_points: array of 3-4 key conceptual points from the segment that answer the question
+- transfer_question: a cold real-world scenario applying this concept to a brand-new situation
+- transfer_key_points: array of 2-3 key points required to solve the transfer scenario
 - occurrences: ARRAY of all occurrences of this concept across the talk, each with:
     * start: float
     * end: float
@@ -303,6 +307,13 @@ def extract_concepts_locally_from_transcript(raw_segments, num_concepts=5):
         if len(summary) > 200:
             summary = summary[:197].rsplit(" ", 1)[0] + "..."
 
+        key_points = [s['text'].strip() for s in chunk[:3] if len(s['text'].strip()) > 15]
+        if not key_points:
+            key_points = [summary]
+
+        question = f"In this clip ({dur_str}), how does the speaker explain {title_keywords.lower()}, and what is the main principle or workflow introduced?"
+        transfer_question = f"Suppose a team is applying the speaker's principle on {title_keywords.lower()} to a real-world project. Based on this segment, what key steps or guardrails must they follow?"
+
         extracted.append({
             "id": f"concept_{i+1}",
             "title": title,
@@ -312,6 +323,16 @@ def extract_concepts_locally_from_transcript(raw_segments, num_concepts=5):
             "duration_str": dur_str,
             "key_terms": top_terms,
             "core_principle": summary,
+            "question": question,
+            "key_points": key_points,
+            "transfer_question": transfer_question,
+            "transfer_key_points": key_points[:2],
+            "demo_answers": {
+                "partial": key_points[0],
+                "complete": " ".join(key_points),
+                "retry": " ".join(key_points),
+                "transfer": " ".join(key_points)
+            },
             "occurrences": [
                 {
                     "start": c_start,

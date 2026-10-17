@@ -497,7 +497,7 @@ def api_generate_prompt():
     segments = groq_transcription.get_or_create_transcript(video_path)
     transcript_text = concept_detector.get_transcript_for_concept(segments, start, end, occurrences=occurrences)
     
-    result = learning_loop.generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode=mode)
+    result = learning_loop.generate_retrieval_prompt(concept_id, concept_title, transcript_text, mode=mode, video_id=video_id)
     return jsonify(result)
 
 @app.route('/api/practice/feedback', methods=['POST'])
@@ -517,7 +517,7 @@ def api_practice_feedback():
     segments = groq_transcription.get_or_create_transcript(video_path)
     transcript_text = concept_detector.get_transcript_for_concept(segments, start, end, occurrences=occurrences)
     
-    feedback = learning_loop.evaluate_gap_feedback(concept_id, question, student_answer, transcript_text, mode=mode)
+    feedback = learning_loop.evaluate_gap_feedback(concept_id, question, student_answer, transcript_text, mode=mode, video_id=video_id)
     return jsonify(feedback)
 
 @app.route('/api/practice/retry', methods=['POST'])
@@ -538,7 +538,7 @@ def api_practice_retry():
     segments = groq_transcription.get_or_create_transcript(video_path)
     transcript_text = concept_detector.get_transcript_for_concept(segments, start, end, occurrences=occurrences)
     
-    result = learning_loop.evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answer, transcript_text, mode=mode)
+    result = learning_loop.evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answer, transcript_text, mode=mode, video_id=video_id)
     return jsonify(result)
 
 @app.route('/api/practice/transfer-question', methods=['POST'])
@@ -557,7 +557,7 @@ def api_transfer_question():
     segments = groq_transcription.get_or_create_transcript(video_path)
     transcript_text = concept_detector.get_transcript_for_concept(segments, start, end, occurrences=occurrences)
     
-    result = learning_loop.generate_transfer_question(concept_id, concept_title, transcript_text, mode=mode)
+    result = learning_loop.generate_transfer_question(concept_id, concept_title, transcript_text, mode=mode, video_id=video_id)
     return jsonify(result)
 
 @app.route('/api/practice/transfer-eval', methods=['POST'])
@@ -577,7 +577,7 @@ def api_transfer_eval():
     segments = groq_transcription.get_or_create_transcript(video_path)
     transcript_text = concept_detector.get_transcript_for_concept(segments, start, end, occurrences=occurrences)
     
-    result = learning_loop.evaluate_transfer_answer(concept_id, transfer_question, student_answer, transcript_text, mode=mode)
+    result = learning_loop.evaluate_transfer_answer(concept_id, transfer_question, student_answer, transcript_text, mode=mode, video_id=video_id)
     return jsonify(result)
 
 if __name__ == '__main__':
