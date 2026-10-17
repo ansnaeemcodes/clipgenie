@@ -177,22 +177,23 @@ def extract_concepts_via_llm(raw_segments, video_name_or_path):
     base = os.path.splitext(os.path.basename(video_name_or_path))[0]
     cache_path = os.path.join(config.CACHE_DIR, f"{base}_llm_concepts.json")
 
-    # Format concise transcript with timestamps (cap at 28,000 chars to stay safely within Groq token limits on long videos)
-    lines = [f"{s['start']:.1f}s - {s['end']:.1f}s: {s['text']}" for s in raw_segments]
+    # Merge micro-segments into complete sentences and cap at 15,000 chars (~3,600 tokens)
+    # so we always stay well below Groq on_demand 8,000 TPM limit
+    merged_sentences = reconstruct_complete_sentences(raw_segments) or raw_segments
+    lines = [f"{s['start']:.1f}s - {s['end']:.1f}s: {s['text']}" for s in merged_sentences]
     transcript_text = "\n".join(lines)
-    if len(transcript_text) > 28000:
-        transcript_text = transcript_text[:28000] + "\n...[Transcript truncated for length]..."
+    if len(transcript_text) > 15000:
+        transcript_text = transcript_text[:15000] + "\n...[Transcript truncated for token budget]..."
 
     system_prompt = """You are an elite AI-in-Education curriculum architect.
-Your job is to CRITIQUE and ANALYZE this full lecture transcript, and extract the 4-5 major core conceptual pillars taught.
+Your job is to CRITIQUE and ANALYZE this lecture transcript, and extract 4-5 major core conceptual pillars taught.
 
 CRITICAL INSTRUCTION FOR MULTI-OCCURRENCE CONCEPTS:
-Lecturers frequently revisit an earlier concept later in the talk with new context, real-world examples, or synthesis.
-For EACH concept, you must identify ALL occurrences across the entire lecture where this concept is discussed.
+For EACH concept, identify where this concept is discussed in the transcript.
 
 For each concept, provide:
 - id: string ("concept_1", "concept_2", etc.)
-- title: clear, compelling conceptual title
+- title: clear, compelling conceptual title (e.g. "The Knife Analogy: Dual-Use Nature of AI")
 - summary: 2-sentence pedagogical summary of what this concept teaches
 - start: float primary start timestamp in seconds
 - end: float primary end timestamp in seconds
@@ -203,27 +204,42 @@ For each concept, provide:
 - key_points: array of 3-4 key conceptual points from the segment that answer the question
 - transfer_question: a cold real-world scenario applying this concept to a brand-new situation
 - transfer_key_points: array of 2-3 key points required to solve the transfer scenario
-- occurrences: ARRAY of all occurrences of this concept across the talk, each with:
+- demo_answers: object with keys:
+    * partial: a 1-2 sentence partial student answer (~60% score) that gets one part right but misses a key nuance
+    * complete: a 3-sentence comprehensive student answer (~92% score) covering all key_points
+    * retry: an improved 3-sentence student answer closing the gap
+    * transfer: a strong 2-3 sentence solution to the transfer_question
+- occurrences: ARRAY of occurrences of this concept across the talk, each with:
     * start: float
     * end: float
-    * label: descriptive label (e.g. "Part 1: Initial Concept", "Part 2: Later Callback & Example")
+    * label: descriptive label (e.g. "Part 1: Initial Concept")
     * duration_str: "MM:SS - MM:SS"
 
 Return valid JSON with key 'concepts' containing the list of concepts."""
 
     client = groq.Groq(api_key=config.GROQ_API_KEY)
-    logger.info(f"Calling Groq LLM ({config.GROQ_MODEL}) to analyze transcript & multi-occurrence concepts...")
-    
-    response = client.chat.completions.create(
-        model=config.GROQ_MODEL,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"Here is the complete lecture transcript with timestamps:\n\n{transcript_text}\n\nAnalyze and extract concept pillars with all video occurrences in JSON:"}
-        ],
-        temperature=0.2,
-        response_format={"type": "json_object"}
-    )
-    
+    response = None
+    last_err = None
+    for model_name in [config.GROQ_MODEL, "openai/gpt-oss-20b", config.GROQ_BACKUP_MODEL]:
+        try:
+            logger.info(f"Calling Groq LLM ({model_name}) to analyze transcript & multi-occurrence concepts...")
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": f"Here is the lecture transcript with timestamps:\n\n{transcript_text}\n\nAnalyze and extract concept pillars in JSON:"}
+                ],
+                temperature=0.2,
+                response_format={"type": "json_object"}
+            )
+            break
+        except Exception as e:
+            last_err = e
+            logger.warning(f"Groq model {model_name} failed during concept extraction: {e}")
+
+    if response is None:
+        raise RuntimeError(f"All Groq models failed: {last_err}")
+
     data = json.loads(response.choices[0].message.content)
     concepts = data.get("concepts", [])
     if concepts:
@@ -358,13 +374,17 @@ def get_lecture_concepts(video_name_or_path, raw_segments, force_auto=False):
             with open(cache_path, "r", encoding="utf-8") as f:
                 cached = json.load(f)
                 if cached:
-                    logger.info(f"Loaded {len(cached)} concepts from cache: {cache_path}")
-                    return cached
+                    first_q = cached[0].get("question", "") if isinstance(cached, list) else ""
+                    is_heuristic_fallback = first_q.startswith("In this clip (") and bool(config.GROQ_API_KEY)
+                    if not is_heuristic_fallback:
+                        logger.info(f"Loaded {len(cached)} concepts from cache: {cache_path}")
+                        return cached
+                    logger.info(f"Upgrading heuristic concept cache {cache_path} via Groq LLM...")
         except Exception as e:
             logger.warning(f"Error reading concept cache: {e}")
 
-    # If force_auto is requested (or no cache exists yet) and API key is present, run live LLM extraction
-    if (force_auto or not os.path.exists(cache_path)) and config.GROQ_API_KEY and base != "tedtalk":
+    # If force_auto is requested (or no valid LLM cache exists yet) and API key is present, run live LLM extraction
+    if config.GROQ_API_KEY and base != "tedtalk":
         try:
             return extract_concepts_via_llm(raw_segments, video_name_or_path)
         except Exception as e:
