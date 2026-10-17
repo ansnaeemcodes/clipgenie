@@ -418,13 +418,19 @@
                             <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-bold uppercase tracking-wider">
                                 <span>🏆 Step 4: Real-World Transfer Test</span>
                             </span>
-                            <span class="text-[11px] font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/40">Zero Hints • Unfamiliar Scenario</span>
+                            <div class="flex items-center gap-2">
+                                <button onclick="proceedToTransfer()" class="text-[11px] font-bold text-indigo-200 hover:text-white bg-indigo-900/70 hover:bg-indigo-800 px-2.5 py-0.5 rounded-full border border-indigo-500/40 transition flex items-center gap-1" title="Generate a fresh real-world question for this video clip">
+                                    <i class="fa-solid fa-rotate text-[10px]"></i>
+                                    <span>New Question</span>
+                                </button>
+                                <span class="text-[11px] font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/40">Zero Hints • Everyday Scenario</span>
+                            </div>
                         </div>
                         <p id="transferQuestionText" class="text-sm sm:text-base font-bold text-white leading-relaxed pt-1">
                             Loading real-world challenge question...
                         </p>
                         <p class="text-xs text-purple-200">
-                            Prove you didn't just memorize the speaker's words by applying the principle to this brand-new scenario.
+                            Apply what you just learned in this video clip to this simple real-life situation.
                         </p>
                     </div>
 
@@ -603,6 +609,6 @@
 
     {% include 'footer.html' %}
 
-    <script src="/static/js/learning_loop.js?v=2.9"></script>
+    <script src="/static/js/learning_loop.js?v=3.0"></script>
 </body>
 </html>

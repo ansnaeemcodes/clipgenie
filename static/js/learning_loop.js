@@ -539,11 +539,14 @@ async function submitRetryAnswer() {
 // 6. Proceed to Transfer Check (Feature 6)
 async function proceedToTransfer() {
     document.getElementById('stepRetryBox').classList.add('hidden');
+    document.getElementById('stepFeedbackBox').classList.add('hidden');
     document.getElementById('stepTransferBox').classList.remove('hidden');
+    document.getElementById('transferResultCard').classList.add('hidden');
+    document.getElementById('transferAnswerInput').value = '';
     document.getElementById('badgeStep4').className = "px-2 py-0.5 rounded-full bg-purple-600 text-white";
 
     const qEl = document.getElementById('transferQuestionText');
-    qEl.textContent = "Formulating unscaffolded transfer scenario...";
+    qEl.textContent = "Creating a fresh everyday real-world scenario from this video clip...";
 
     try {
         const res = await fetch('/api/practice/transfer-question', {
@@ -556,13 +559,16 @@ async function proceedToTransfer() {
                 start: activeConcept.start,
                 end: activeConcept.end,
                 occurrences: activeConcept.occurrences || null,
-                mode: currentMode
+                mode: 'online'
             })
         });
         const data = await res.json();
         qEl.textContent = data.transfer_question;
+        if (activeConcept && data.sample_answer) {
+            activeConcept.latest_transfer_sample_answer = data.sample_answer;
+        }
     } catch (err) {
-        qEl.textContent = "How would you apply the core principle of this concept to a new, unfamiliar situation?";
+        qEl.textContent = "Imagine a friend is using this idea in daily school or work life. Based on what the speaker explained in this clip, what is the main thing they should keep in mind?";
     }
 }
 
@@ -885,7 +891,7 @@ function fillDemoAnswer(type) {
     } else if (type === 'retry') {
         document.getElementById('retryAnswerInput').value = customAnswers.retry || customAnswers.complete || dynamicComplete;
     } else if (type === 'transfer') {
-        document.getElementById('transferAnswerInput').value = customAnswers.transfer || dynamicTransfer;
+        document.getElementById('transferAnswerInput').value = c.latest_transfer_sample_answer || customAnswers.transfer || dynamicTransfer;
     }
     const input = document.getElementById('studentAnswerInput');
     const counter = document.getElementById('charCount');

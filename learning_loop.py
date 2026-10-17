@@ -112,7 +112,7 @@ def is_adversarial_answer_request(user_text):
             return True
     return False
 
-def call_groq_llm(system_prompt, user_prompt):
+def call_groq_llm(system_prompt, user_prompt, temperature=0.15):
     """Helper to query Groq LLM API with multi-model fallback."""
     import groq
     client = groq.Groq(api_key=config.GROQ_API_KEY)
@@ -125,7 +125,7 @@ def call_groq_llm(system_prompt, user_prompt):
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                temperature=0.15,
+                temperature=temperature,
                 max_completion_tokens=2048,
                 response_format={"type": "json_object"}
             )
@@ -424,39 +424,51 @@ def evaluate_retry(concept_id, attempt_1_score, attempt_1_answer, attempt_2_answ
 def generate_transfer_question(concept_id, concept_title, transcript_text, mode="auto", video_id="videoplayback"):
     """
     Feature 6: Transfer Check Question
-    Generates a genuinely different, cold, unscaffolded question applying the concept to a new scenario.
+    Generates a fresh, different, easy-to-understand real-world scenario question every time,
+    strictly grounded in the exact video clip and concept the student just studied.
     """
+    import random
     concept_meta = _get_video_concept_data(video_id, concept_id)
     cached_tq = concept_meta.get("transfer_question", "") if concept_meta else ""
-    is_generic_tq = cached_tq.startswith("Suppose a team is applying the speaker's principle") or cached_tq.startswith("How would you apply the core principle")
+    cached_demo = (concept_meta.get("demo_answers") or {}).get("transfer", "") if concept_meta else ""
 
-    if mode != "online" and cached_tq and not is_generic_tq:
-        return {
-            "transfer_question": cached_tq,
-            "concept_id": concept_id,
-            "mode": "video_concept_grounded"
-        }
+    everyday_contexts = [
+        "a college student using an app for daily life",
+        "a school classroom or teacher helping students",
+        "a small local shop or restaurant owner",
+        "a doctor or nurse in a local clinic",
+        "a friend group or family using technology at home",
+        "a student project team working on a deadline",
+        "a customer support helper at a small company",
+        "a fitness coach or tutor guiding a beginner"
+    ]
+    chosen_context = random.choice(everyday_contexts)
 
     if config.GROQ_API_KEY:
-        system_prompt = """You are the ClipGenie Transfer Assessment Engine.
-Create a genuinely different, unscaffolded real-world transfer question that tests whether the student truly understands the underlying principle from this specific lecture segment by applying it to a brand-new, concrete real-world scenario.
-CONSTRAINTS:
-1. Must be directly grounded in the exact topic and principle taught in the provided transcript segment.
-2. Describe a short, vivid real-world scenario (e.g., a workplace, school, engineering, or policy situation) and ask the student how the speaker's principle applies.
-3. No hints, no spoilers.
-4. Return valid JSON with key: 'transfer_question'."""
+        system_prompt = """You are a friendly teacher creating a simple, everyday Real-World Transfer Question for a student who just watched a short video clip.
+STRICT RULES:
+1. Base the question 100% on the specific idea, example, or lesson taught in the provided video transcript segment.
+2. Write in VERY EASY, SIMPLE, EVERYDAY WORDS (high-school / first-year student level). Avoid heavy academic or policy jargon (do NOT use phrases like "governance policies", "epistemological", "paradigm", or "mechanistic infallibility").
+3. Keep the question short (2 simple sentences max):
+   - Sentence 1: Give a relatable everyday real-life situation (using the suggested everyday setting).
+   - Sentence 2: Ask a simple, direct question about how the lesson from this video clip applies to that situation.
+4. Make it fresh and different every time.
+5. Also provide 'sample_answer': a clear, simple 2-sentence student answer that solves this exact question using the video clip's lesson.
+6. Return valid JSON with keys: 'transfer_question' and 'sample_answer'."""
 
-        user_prompt = f"""Concept Title: {concept_title}
-Transcript Segment:
-\"\"\"{transcript_text}\"\"\"
+        user_prompt = f"""Video Part / Concept Title: {concept_title}
+Everyday Setting to Use for This Question: {chosen_context}
+Video Clip Transcript:
+\"\"\"{transcript_text[:2000]}\"\"\"
 
-Generate the real-world transfer scenario question in JSON:"""
+Generate a fresh, simple, everyday real-world question and matching sample_answer in JSON:"""
 
         try:
-            res = call_groq_llm(system_prompt, user_prompt)
+            res = call_groq_llm(system_prompt, user_prompt, temperature=0.85)
             if res and res.get("transfer_question"):
                 return {
                     "transfer_question": res["transfer_question"],
+                    "sample_answer": res.get("sample_answer") or cached_demo,
                     "concept_id": concept_id,
                     "mode": "live_llm"
                 }
@@ -466,11 +478,13 @@ Generate the real-world transfer scenario question in JSON:"""
     if cached_tq:
         return {
             "transfer_question": cached_tq,
+            "sample_answer": cached_demo,
             "concept_id": concept_id,
             "mode": "offline_fallback"
         }
     return {
-        "transfer_question": f"How would you apply the core principle of '{concept_title}' from this lecture segment to solve a brand-new real-world scenario?",
+        "transfer_question": f"Imagine a friend is trying to use the idea of '{concept_title}' from this video clip in their daily school or work life. Based on what the speaker explained, what is the main thing they should keep in mind?",
+        "sample_answer": cached_demo,
         "concept_id": concept_id,
         "mode": "offline_fallback"
     }
